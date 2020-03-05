@@ -1,22 +1,101 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://xn--rhqzbx01dkolumh6qm.xyz/</id>
-    <title>Huanyue&apos;s Blog</title>
-    <updated>2020-03-05T00:06:56.986Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://xn--rhqzbx01dkolumh6qm.xyz/"/>
-    <link rel="self" href="https://xn--rhqzbx01dkolumh6qm.xyz/atom.xml"/>
-    <subtitle>Do not go gentle into that good night</subtitle>
-    <logo>https://xn--rhqzbx01dkolumh6qm.xyz/images/avatar.png</logo>
-    <icon>https://xn--rhqzbx01dkolumh6qm.xyz/favicon.ico</icon>
-    <rights>All rights reserved 2020, Huanyue&apos;s Blog</rights>
-    <entry>
-        <title type="html"><![CDATA[题解 P5578 【[PA2014]Fiolki】]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p5578-pa2014fiolki/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p5578-pa2014fiolki/">
-        </link>
-        <updated>2020-03-05T00:02:39.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="题目链接"><a href="https://www.luogu.com.cn/problem/P5578">题目链接</a></h2>
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>题解 P5578 【[PA2014]Fiolki】 | Huanyue&#39;s Blog</title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://xn--rhqzbx01dkolumh6qm.xyz//media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://xn--rhqzbx01dkolumh6qm.xyz//media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="题解 P5578 【[PA2014]Fiolki】 | Huanyue&#39;s Blog » Feed" href="https://xn--rhqzbx01dkolumh6qm.xyz//atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://xn--rhqzbx01dkolumh6qm.xyz//styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="题解 P5578 【[PA2014]Fiolki】"/>
+    <meta property="og:url" content="https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p5578-pa2014fiolki/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Huanyue&#39;s Blog"/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://xn--rhqzbx01dkolumh6qm.xyz/">Huanyue&#39;s Blog</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="https://huanyue-233.github.io/tags">标签</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://xn--rhqzbx01dkolumh6qm.xyz//media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/Solution/" class="tag">题解</a>
+            
+            <a href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/OI/" class="tag">OI-Learning</a>
+            
+        </span>
+            <h1>题解 P5578 【[PA2014]Fiolki】</h1>
+            <span class="meta">
+            	Posted on
+              2020-03-05，5 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h2 id="题目链接"><a href="https://www.luogu.com.cn/problem/P5578">题目链接</a></h2>
 <p>先考虑大模拟,直接进行模拟实验步骤有,同时在每一步反应中检测所有可生成的沉淀<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>m</mi><mi>k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(mk)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">)</span></span></span></span>,然后看数据范围,显然没有那么简单.</p>
 <p>同样我们可以通过数据范围可以猜到这大概是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>,重新读题</p>
 <p>第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个步骤是将第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>个瓶子内的所有液体倒入第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>b</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">b_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>个瓶子，此后第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>个瓶子<strong>不会再被</strong>用到。</p>
@@ -173,26 +252,91 @@ int main()
     return 0;
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[嘉兴一中信奥社简介]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/JZOI_Main/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/JZOI_Main/">
-        </link>
-        <updated>2020-03-04T11:52:14.000Z</updated>
-        <content type="html"><![CDATA[<p>更新于:2020/3/4 Huanyue</p>
-<h2 id="1嘉兴一中">1.嘉兴一中</h2>
-<p> 嘉兴一中历史悠久,是浙江省一级重点中学,坐落于南湖之滨.是一所综合性的学术高中.学校为学生提供平台,支持学生的特长发展,为参加各个学科竞赛的学生提供帮助.2000年左右,竞赛成绩尤为突出.曾创造了浙江省一个班级14人获14个全国高中数学联赛一等奖的记录,至今无人打破.</p>
-<h2 id="2创信奥社">2.创·信奥社</h2>
-<p> 从陆品燕(2001届毕业生,CCF青年科学家,ICCM获奖者)始,至陆宇鹏(2019届毕业生,在读北京大学计算机系),即使没有学校正面的支持,嘉兴一中总有着一群热衷于信息学的人.<br>
-;2018年9月,缪慎浩,同为热衷于信息学的OIer中的一个加入了嘉兴一中.他,创设了信奥社.</p>
-<h2 id="3起信奥社">3.起·信奥社</h2>
-<p> 自从信奥社创建之后,它就有着一个不同于其他社团的使命—带动嘉兴一中信息学的发展创始人缪慎浩招募了一群有着兴趣的社员,并且凭一己之力,为社员讲课.他还为让社员得到更好的发展.向校长请求资金援助,以招来更好的老师.<br>
- 光阴似箭,来到了2019年,这一年里,发生了不知道多少的事情,NOIP暂停,CSP-J/S推出,自主招生被砍等等.尽管是这样,也抵不住OIer的热情.2019年,社员们参加了CSP-S2019,获得了四个省二等奖,一个省三等奖.信息学奥赛得到了学校的重视.在社团骨干的努力下,陈国平副校长出手,学校开始出资源来培养信息学人才.从此,嘉中信奥社打开了新的篇章.</p>
-<h2 id="历届社长">历届社长</h2>
-<p>2019/9/15-2019/11/18 缪慎浩(2021届)<br>
-2019/11/19-至今           刘星雨(2022届)</p>
-]]></content>
-    </entry>
-</feed>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://xn--rhqzbx01dkolumh6qm.xyz/post/JZOI_Main/">
+              <span class="post-title">
+                嘉兴一中信奥社简介&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://xn--rhqzbx01dkolumh6qm.xyz//atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span>Huanyue&#39;s Blog</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
