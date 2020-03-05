@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://xn--rhqzbx01dkolumh6qm.xyz/</id>
     <title>Huanyue&apos;s Blog</title>
-    <updated>2020-03-05T00:06:56.986Z</updated>
+    <updated>2020-03-05T00:18:21.426Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://xn--rhqzbx01dkolumh6qm.xyz/"/>
     <link rel="self" href="https://xn--rhqzbx01dkolumh6qm.xyz/atom.xml"/>
@@ -10,6 +10,457 @@
     <logo>https://xn--rhqzbx01dkolumh6qm.xyz/images/avatar.png</logo>
     <icon>https://xn--rhqzbx01dkolumh6qm.xyz/favicon.ico</icon>
     <rights>All rights reserved 2020, Huanyue&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[题解 P4857 [PA2013]Konduktorzy]]></title>
+        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p4857-pa2013konduktorzy/</id>
+        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p4857-pa2013konduktorzy/">
+        </link>
+        <updated>2020-03-05T00:15:36.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="题目链接"><a href="https://www.luogu.com.cn/problem/P4857">题目链接</a></h2>
+<p>如果你是看到<strong>能够继续检票</strong>无法理解,所以戳进了题解,</p>
+<p>这个根本没用,实际就是向前走.可以回去再思考一下</p>
+<p>读完题,不看数据范围,<s>你一定会认为这是憨憨的优先队列模拟</s></p>
+<p>当你地看到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>≤</mo><mn>2</mn><mo>∗</mo><mn>1</mn><msup><mn>0</mn><mn>13</mn></msup></mrow><annotation encoding="application/x-tex">n \leq 2*10^{13}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span></span>,嗯,有意思.</p>
+<p><s>仔细思索后,你点击了 查看题解 看到了这段文字</s></p>
+<p>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>≤</mo><mn>1</mn><msup><mn>0</mn><mn>5</mn></msup></mrow><annotation encoding="application/x-tex">n \leq 10^5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span>,用优先队列是轻松跑过的,</p>
+<p>但仔细想一下,对于在最后一段之前的模拟,都是没有必要的</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi><mo>≤</mo><mn>1</mn><msup><mn>0</mn><mn>5</mn></msup></mrow><annotation encoding="application/x-tex">k\leq 10^5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83041em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span> 那么用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>是可以接受的,</p>
+<p>那么假设所有检票员都走到了位置<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span>,有</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>t</mi><mi>e</mi><mi>p</mi><mo>=</mo><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></msubsup><mo>⌊</mo><mi>x</mi><mi mathvariant="normal">/</mi><msub><mi>a</mi><mi>i</mi></msub><mo>⌋</mo></mrow><annotation encoding="application/x-tex">step=\sum^{k}_{i=1}\lfloor x/a_i\rfloor</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.2887179999999998em;vertical-align:-0.29971000000000003em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9890079999999999em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mopen">⌊</span><span class="mord mathdefault">x</span><span class="mord">/</span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">⌋</span></span></span></span></p>
+<p>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>t</mi><mi>e</mi><mi>p</mi><mo>&lt;</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">step&lt;n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>说明所有检票员都尽量走到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span>,并且还有没用完指令</p>
+<p>我们可以<strong>二分</strong>满足<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>t</mi><mi>e</mi><mi>p</mi><mo>≤</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">step\leq n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8304100000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>的最大<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span>,</p>
+<p>再将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span>适当前推,计算出一个所有人在的位置.</p>
+<p>再计算出走到这个位置所花的步数,与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>相减.</p>
+<p>剩下的交给堆模拟</p>
+<pre><code class="language-cpp">/*
+ * @Author: Huanyue 
+ * @Date: 2020-02-15 10:48:32 
+ * @Last Modified by: Huanyue
+ * @Last Modified time: 2020-02-15 10:51:16
+ */
+#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#define MAXN 100005
+#define LL long long int
+#define max(a, b) ((a) &gt; (b) ? (a) : (b))
+#define min(a, b) ((a) &lt; (b) ? (a) : (b))
+using namespace std;
+
+int n, num[MAXN];
+LL m, l, r, mid, temp, ans[MAXN];
+
+inline bool check(LL mid)
+{
+    LL t = m;
+    for (int i = 1; i &lt;= n; ++i)
+    {
+        t -= mid / num[i];
+        if (t &lt; 0)
+            return 0;
+    }
+    return 1;
+}
+
+int mv[MAXN + MAXN];
+LL cnt[MAXN];
+inline void pushup(int &amp;p)
+{
+    int &amp;r = mv[p];
+    r = p;
+    if (cnt[mv[p &lt;&lt; 1]] &lt; cnt[r] || cnt[mv[p &lt;&lt; 1]] == cnt[r] &amp;&amp; mv[p &lt;&lt; 1] &lt; r)
+        r = mv[p &lt;&lt; 1];
+    if (cnt[mv[p &lt;&lt; 1 | 1]] &lt; cnt[r] || cnt[mv[p &lt;&lt; 1 | 1]] == cnt[r] &amp;&amp; mv[p &lt;&lt; 1 | 1] &lt; r)
+        r = mv[p &lt;&lt; 1 | 1];
+}
+
+void update(int u, LL d)
+{
+    if (d &lt; cnt[u])
+        return;
+    cnt[u] = d;
+    for (; u; u &gt;&gt;= 1)
+        pushup(u);
+}
+
+char w;
+inline void GET(int &amp;t)
+{
+    do
+        w = getchar();
+    while (w &lt; '0' || w &gt; '9');
+    do
+    {
+        t = t * 10 + w - '0';
+        w = getchar();
+    } while (w &gt;= '0' &amp;&amp; w &lt;= '9');
+}
+
+int main()
+{
+    cnt[0] = 9223372036854775807ll;
+    scanf(&quot;%lld&quot;, &amp;m), GET(n);
+    for (int i = 1; i &lt;= n; ++i)
+        GET(num[i]), l = max(l, num[i]);
+    r = l * m, ++l;
+    while (l &lt;= r)
+    {
+        mid = (l + r) / 2;
+        if (check(mid))
+            temp = mid, l = mid + 1;
+        else
+            r = mid - 1;
+    }
+
+    LL t = temp;
+    for (int i = 1; i &lt;= n &amp;&amp; t; ++i)
+        t = min(t, max((temp / num[i] - 1) * num[i], 0));
+    LL used = 0;
+    int tmp;
+    for (int i = 1; i &lt;= n; ++i)
+    {
+        used += t / num[i];
+        update(i, t / num[i] * num[i]);
+    }
+    while (used &lt; m)
+    {
+        tmp = mv[1];
+        ans[tmp] = ++used;
+        update(tmp, cnt[tmp] + num[tmp]);
+    }
+    for (int i = 1; i &lt; n; ++i)
+        printf(&quot;%lld &quot;, ans[i]);
+    printf(&quot;%lld\n&quot;, ans[n]);
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[题解 P1728 【[PA2014]Parking】]]></title>
+        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p1728-pa2014parking/</id>
+        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p1728-pa2014parking/">
+        </link>
+        <updated>2020-03-05T00:08:55.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="题目链接"><a href="https://www.luogu.com.cn/problem/P1728">题目链接</a></h2>
+<p>这么前面的题目竟然没有题解,赶紧来占个位</p>
+<p><s>这道题看上去很裸,实际上也很裸</s></p>
+<p>把车车看成矩形</p>
+<p>首先使这些矩形不相交</p>
+<p>就是一个矩形接一个矩形串起来(羊肉串)</p>
+<p>假如两个矩形需要调换的话，那么必须保证,两个矩形的宽相加<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>≤</mo><mi>w</mi></mrow><annotation encoding="application/x-tex">\leq w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span><br>
+如果都能满足就是合法的,否则不合法</p>
+<p>然后就<s>随便维护</s>一下就行了(树状数组/线段树)</p>
+<p>摆放顺序的话那么最右是最后一个放的，没有任何障碍，</p>
+<p>因此可以采用倒推,从大到小枚举位置,用树状数组维护前缀最值就可以了。</p>
+<p>如题解所述,代码也奇短无比</p>
+<pre><code class="language-cpp">/*
+ * @Author: Huanyue 
+ * @Date: 2020-02-13 10:42:52 
+ * @Last Modified by: Huanyue
+ * @Last Modified time: 2020-02-13 11:10:53
+ */
+
+#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;queue&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+#define rgi register
+typedef long long ll;
+using namespace std;
+
+const int N = 5e4 + 10;
+const int inf = 0x3f3f3f3f;
+
+inline void write(register int x)
+{
+    if (x &lt; 0)
+    {
+        putchar('-'), x = -x;
+    }
+    if (x &gt;= 10)
+    {
+        write(x / 10);
+    }
+    putchar('0' + x % 10);
+}
+
+inline int read()
+{
+    int x = 0, f = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9')
+    {
+        if (ch == '-')
+            f = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+    {
+        x = ((x &lt;&lt; 3) + (x &lt;&lt; 1) + (ch ^ 48));
+        ch = getchar();
+    }
+    return x * f;
+}
+
+struct mat
+{
+    int x1, y1, x2, y2, width, id;
+    friend bool operator&lt;(const mat &amp;a, const mat &amp;b)
+    {
+        if (a.x1 == b.x1)
+            return a.x2 &lt; b.x2;
+        return a.x1 &lt; b.x1;
+    }
+} initial[N], target[N];
+
+int n, w, rk[N];
+//树状数组
+int tree[N];
+inline int lowbit(int x)
+{
+    return x &amp; (-x);
+}
+inline void modify(int x, int v)
+{
+    for (rgi int i = x; i &lt;= n; i += lowbit(i))
+        tree[i] = max(tree[i], v);//维护前缀最大值
+}
+inline int query(int x)
+{
+    int ret = 0;
+    for (int i = x; i; i -= lowbit(i))
+        ret = max(ret, tree[i]);
+    return ret;
+}
+
+int main()
+{
+    int T = read();
+    while (T--)
+    {
+        memset(tree, 0, sizeof(tree));
+        memset(rk, 0, sizeof(rk)); //多组数据,接的memset
+        n = read(), w = read();
+        for (rgi int i = 1; i &lt;= n; i++)
+        {
+            initial[i].x1 = read();
+            initial[2].y1 = read();
+            initial[i].x2 = read();
+            initial[i].y2 = read();
+            if (initial[i].x1 &gt; initial[i].x2)
+                swap(initial[i].x1, initial[i].x2);
+            if (initial[i].y1 &gt; initial[i].y2)
+                swap(initial[i].y1, initial[i].y2);
+
+            initial[i].id = i;
+            initial[i].width = initial[i].y2 - initial[i].y1; //计算宽度
+        }
+        for (rgi int i = 1; i &lt;= n; i++)
+        {
+            target[i].x1 = read(), target[i].y1 = read(), target[i].x2 = read(), target[i].y2 = read();
+            if (target[i].x1 &gt; target[i].x2)
+                swap(target[i].x1, target[i].x2);
+            if (target[i].y1 &gt; target[i].y2)
+                swap(target[i].y1, target[i].y2);
+            target[i].id = i;
+            target[i].width = target[i].y2 - target[i].y1;
+        }
+
+        sort(initial + 1, initial + n + 1);
+        sort(target + 1, target + n + 1);
+
+        for (int i = 1; i &lt;= n; i++)
+            rk[initial[i].id] = i;
+        
+        bool flag = true;//答案标记
+
+        for (rgi int i = n; i; i--)
+        {
+            if (query(rk[target[i].id]) + target[i].width &gt; w)
+                flag = false;
+            if (!flag)
+                break;
+            modify(rk[target[i].id], target[i].width);
+        }
+        if (flag)
+            puts(&quot;TAK&quot;);
+        else
+            puts(&quot;NIE&quot;);
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[题解P4025 [PA2014]Bohater]]></title>
+        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p4025-pa2014bohater/</id>
+        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p4025-pa2014bohater/">
+        </link>
+        <updated>2020-03-05T00:07:34.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="题目链接"><a href="https://www.luogu.com.cn/problem/P4025">题目链接</a></h2>
+<p>读完题我大概就能想到是贪心无疑了,</p>
+<p>这道题的灵魂就是<s>狗头保命</s></p>
+<p>显然的是,首先,我们要先打能回血的,别跟我说,<s>我超勇的,一刀999</s></p>
+<p>那么对于打回血的怪,我们有两种贪心策略</p>
+<ul>
+<li>按照<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>d</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">d_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>升序打</li>
+<li>按照<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>降序打</li>
+</ul>
+<p>如果按照<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>升序,我们可以构造出</p>
+<p>a=9999999999,d=100000000,</p>
+<p>打BOSS奖励虽然丰厚,但是你<s>开局一条狗</s></p>
+<p>所以还是乖乖做个肝帝,勇贪心策略一吧.</p>
+<p><strong>于是你养成了套神装</strong></p>
+<p>好了接下来这题的难点来了,接下来的贪心策略是什么</p>
+<ul>
+<li>
+<p>按照<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>d</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">d_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>升序打</p>
+</li>
+<li>
+<p>按照<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>d</mi><mi>i</mi></msub><mo>−</mo><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">d_i-a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>升序打</p>
+</li>
+<li>
+<p>按照<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>降序打</p>
+</li>
+</ul>
+<p>我一开始都直接否定了第三种贪心策略,然后试了两次前两种,然后就被自己<s>构造的数据卡掉了</s></p>
+<p>我就不给出数据了,直接想吧.</p>
+<p>再打这些掉血的怪中,如果有一个皮糙肉厚的大BOSS,同时打完它也有大量的回复血量,</p>
+<p>然而我们打不死,</p>
+<p>那么我们不应该先打比较菜<s>升级</s>的吗.</p>
+<p><strong>我们已知但是在这组怪中,打完后都会掉血,那么你打完菜的之后,你依然打不过大BOSS了吗?</strong></p>
+<p>所以<s>菜是原罪</s></p>
+<p>好的给出严格证明</p>
+<p>​				设最后剩下<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>的生命值，显然<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>的大小与顺序无关,我们从最后状况往前推.</p>
+<p>​				于是问题转化成这样,当前我有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>的血量,每倒推一个怪之后,会加上这个怪的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">d</span></span></span></span>,扣去<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>,</p>
+<p>随后我突然想起来刚刚我好像解决过这个问题.</p>
+<p>​				还没懂?从头再读一遍.</p>
+<p>CODE</p>
+<pre><code class="language-cpp">/*
+ * @Author: Huanyue 
+ * @Date: 2020-02-13 09:19:22 
+ * @Last Modified by: Huanyue
+ * @Last Modified time: 2020-02-13 10:14:43
+ */
+
+#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;queue&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+#define rgi register
+typedef long long ll;
+using namespace std;
+
+const int N = 1e5 + 10;
+const int inf = 0x3f3f3f3f;
+
+inline void write(register int x)
+{
+    if (x &lt; 0)
+    {
+        putchar('-'), x = -x;
+    }
+    if (x &gt;= 10)
+    {
+        write(x / 10);
+    }
+    putchar('0' + x % 10);
+}
+
+inline int read()
+{
+    int x = 0, f = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9')
+    {
+        if (ch == '-')
+            f = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+    {
+        x = ((x &lt;&lt; 3) + (x &lt;&lt; 1) + (ch ^ 48));
+        ch = getchar();
+    }
+    return x * f;
+}
+
+struct master
+{
+    int id, a, d;
+    master(int id = 0, int a = 0, int d = 0) : id(id), a(a), d(d) {}
+} add[100005], minu[100005];
+int n, addcnt, minucnt;
+long long z;
+
+bool cmp1(master a, master b)
+{
+    return a.a &gt; b.a;
+}
+bool cmp2(master a, master b)
+{
+    return a.d &lt; b.d;
+}
+int main()
+{
+    n = read(), z = read();
+    for (rgi int i = 1; i &lt;= n; i++)
+    {
+        int d = read(), a = read();
+        if (a &gt;= d)
+            add[++addcnt] = master(i, a, d);
+        else
+            minu[++minucnt] = master(i, a, d);
+    }
+
+    sort(minu + 1, minu + minucnt + 1, cmp1);
+    sort(add + 1, add + addcnt + 1, cmp2);
+    
+    for (rgi int i = 1; i &lt;= addcnt; i++)
+    {
+        if (add[i].d &gt;= z)
+        {
+            printf(&quot;NIE\n&quot;);
+            return 0;
+        }
+        else
+            z = z - add[i].d + add[i].a;
+    }
+
+    for (rgi int i = 1; i &lt;= minucnt; i++)
+    {
+        if (minu[i].d &gt;= z)
+        {
+            printf(&quot;NIE\n&quot;);
+            return 0;
+        }
+        else
+            z = z - minu[i].d + minu[i].a;
+    }
+
+    printf(&quot;TAK\n&quot;);
+    for (rgi int i = 1; i &lt;= addcnt; i++)
+    {
+        write(add[i].id);
+        putchar(' ');
+    }
+    for (rgi int i = 1; i &lt;= minucnt; i++)
+    {
+        write(minu[i].id);
+        putchar(' ');
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[题解 P5578 【[PA2014]Fiolki】]]></title>
         <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p5578-pa2014fiolki/</id>

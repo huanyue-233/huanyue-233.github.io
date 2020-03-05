@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-       <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta content="yes" name="apple-mobile-web-app-capable" />
   <meta content="black" name="apple-mobile-web-app-status-bar-style" />
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>归档 | Huanyue&#39;s Blog</title>
+  <title>题解 P1728 【[PA2014]Parking】 | Huanyue&#39;s Blog</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://xn--rhqzbx01dkolumh6qm.xyz//media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://xn--rhqzbx01dkolumh6qm.xyz//media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="归档 | Huanyue&#39;s Blog » Feed" href="https://xn--rhqzbx01dkolumh6qm.xyz//atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="题解 P1728 【[PA2014]Parking】 | Huanyue&#39;s Blog » Feed" href="https://xn--rhqzbx01dkolumh6qm.xyz//atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://xn--rhqzbx01dkolumh6qm.xyz//styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,6 +25,11 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="题解 P1728 【[PA2014]Parking】"/>
+    <meta property="og:url" content="https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p1728-pa2014parking/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Huanyue&#39;s Blog"/>
   </head>
   <body>
   	<!-- Navigation -->
@@ -67,75 +72,193 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1 class="tag-tl">Archives</h1>
+          	<span class="tags">
+          	 
+        </span>
+            <h1>题解 P1728 【[PA2014]Parking】</h1>
+            <span class="meta">
+            	Posted on
+              2020-03-05，4 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
+
   <!-- Post Content -->
   <article>
     <div class="container">
       <div class="row">
-        
-      
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="post-archives">
-    <h2 class="year">2020</h2>
-    
-                
-        <a href="https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p4857-pa2013konduktorzy/" class="post">
-          <h2 class="post-title Archives">
-            题解 P4857 [PA2013]Konduktorzy
-          </h2>
-          <div class="time post-meta">2020-03-05</div>
-        </a>
-  
-                    
-                
-        <a href="https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p1728-pa2014parking/" class="post">
-          <h2 class="post-title Archives">
-            题解 P1728 【[PA2014]Parking】
-          </h2>
-          <div class="time post-meta">2020-03-05</div>
-        </a>
-  
-                    
-                
-        <a href="https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p4025-pa2014bohater/" class="post">
-          <h2 class="post-title Archives">
-            题解P4025 [PA2014]Bohater
-          </h2>
-          <div class="time post-meta">2020-03-05</div>
-        </a>
-  
-                    
-                
-        <a href="https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p5578-pa2014fiolki/" class="post">
-          <h2 class="post-title Archives">
-            题解 P5578 【[PA2014]Fiolki】
-          </h2>
-          <div class="time post-meta">2020-03-05</div>
-        </a>
-  
-                    
-                
-        <a href="https://xn--rhqzbx01dkolumh6qm.xyz/post/JZOI_Main/" class="post">
-          <h2 class="post-title Archives">
-            嘉兴一中信奥社简介
-          </h2>
-          <div class="time post-meta">2020-03-04</div>
-        </a>
-  
-                    
-        </div>
-        </div>
+          <h2 id="题目链接"><a href="https://www.luogu.com.cn/problem/P1728">题目链接</a></h2>
+<p>这么前面的题目竟然没有题解,赶紧来占个位</p>
+<p><s>这道题看上去很裸,实际上也很裸</s></p>
+<p>把车车看成矩形</p>
+<p>首先使这些矩形不相交</p>
+<p>就是一个矩形接一个矩形串起来(羊肉串)</p>
+<p>假如两个矩形需要调换的话，那么必须保证,两个矩形的宽相加<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>≤</mo><mi>w</mi></mrow><annotation encoding="application/x-tex">\leq w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span><br>
+如果都能满足就是合法的,否则不合法</p>
+<p>然后就<s>随便维护</s>一下就行了(树状数组/线段树)</p>
+<p>摆放顺序的话那么最右是最后一个放的，没有任何障碍，</p>
+<p>因此可以采用倒推,从大到小枚举位置,用树状数组维护前缀最值就可以了。</p>
+<p>如题解所述,代码也奇短无比</p>
+<pre><code class="language-cpp">/*
+ * @Author: Huanyue 
+ * @Date: 2020-02-13 10:42:52 
+ * @Last Modified by: Huanyue
+ * @Last Modified time: 2020-02-13 11:10:53
+ */
+
+#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;queue&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+#define rgi register
+typedef long long ll;
+using namespace std;
+
+const int N = 5e4 + 10;
+const int inf = 0x3f3f3f3f;
+
+inline void write(register int x)
+{
+    if (x &lt; 0)
+    {
+        putchar('-'), x = -x;
+    }
+    if (x &gt;= 10)
+    {
+        write(x / 10);
+    }
+    putchar('0' + x % 10);
+}
+
+inline int read()
+{
+    int x = 0, f = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9')
+    {
+        if (ch == '-')
+            f = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+    {
+        x = ((x &lt;&lt; 3) + (x &lt;&lt; 1) + (ch ^ 48));
+        ch = getchar();
+    }
+    return x * f;
+}
+
+struct mat
+{
+    int x1, y1, x2, y2, width, id;
+    friend bool operator&lt;(const mat &amp;a, const mat &amp;b)
+    {
+        if (a.x1 == b.x1)
+            return a.x2 &lt; b.x2;
+        return a.x1 &lt; b.x1;
+    }
+} initial[N], target[N];
+
+int n, w, rk[N];
+//树状数组
+int tree[N];
+inline int lowbit(int x)
+{
+    return x &amp; (-x);
+}
+inline void modify(int x, int v)
+{
+    for (rgi int i = x; i &lt;= n; i += lowbit(i))
+        tree[i] = max(tree[i], v);//维护前缀最大值
+}
+inline int query(int x)
+{
+    int ret = 0;
+    for (int i = x; i; i -= lowbit(i))
+        ret = max(ret, tree[i]);
+    return ret;
+}
+
+int main()
+{
+    int T = read();
+    while (T--)
+    {
+        memset(tree, 0, sizeof(tree));
+        memset(rk, 0, sizeof(rk)); //多组数据,接的memset
+        n = read(), w = read();
+        for (rgi int i = 1; i &lt;= n; i++)
+        {
+            initial[i].x1 = read();
+            initial[2].y1 = read();
+            initial[i].x2 = read();
+            initial[i].y2 = read();
+            if (initial[i].x1 &gt; initial[i].x2)
+                swap(initial[i].x1, initial[i].x2);
+            if (initial[i].y1 &gt; initial[i].y2)
+                swap(initial[i].y1, initial[i].y2);
+
+            initial[i].id = i;
+            initial[i].width = initial[i].y2 - initial[i].y1; //计算宽度
+        }
+        for (rgi int i = 1; i &lt;= n; i++)
+        {
+            target[i].x1 = read(), target[i].y1 = read(), target[i].x2 = read(), target[i].y2 = read();
+            if (target[i].x1 &gt; target[i].x2)
+                swap(target[i].x1, target[i].x2);
+            if (target[i].y1 &gt; target[i].y2)
+                swap(target[i].y1, target[i].y2);
+            target[i].id = i;
+            target[i].width = target[i].y2 - target[i].y1;
+        }
+
+        sort(initial + 1, initial + n + 1);
+        sort(target + 1, target + n + 1);
+
+        for (int i = 1; i &lt;= n; i++)
+            rk[initial[i].id] = i;
         
+        bool flag = true;//答案标记
+
+        for (rgi int i = n; i; i--)
+        {
+            if (query(rk[target[i].id]) + target[i].width &gt; w)
+                flag = false;
+            if (!flag)
+                break;
+            modify(rk[target[i].id], target[i].width);
+        }
+        if (flag)
+            puts(&quot;TAK&quot;);
+        else
+            puts(&quot;NIE&quot;);
+    }
+    return 0;
+}
+</code></pre>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p4025-pa2014bohater/">
+              <span class="post-title">
+                题解P4025 [PA2014]Bohater&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+        </div>
       </div>
     </div>
   </article>
-
-
  <!-- Footer -->
   <footer>
     <div class="container">
@@ -207,3 +330,4 @@
   })(this));</script>
   </body>
 </html>
+
