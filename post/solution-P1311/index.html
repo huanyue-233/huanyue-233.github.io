@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
- <head>
-     <meta charset="utf-8" />
+
+<head>
+   <meta charset="utf-8" />
   <title>题解 P1311 选择客栈 | Huanyue&#39;s Blog</title>
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
   <link rel="stylesheet" href="https://xn--rhqzbx01dkolumh6qm.xyz//styles/main.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
    <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
- </head>
- <body>
-     <div class="sidebar animated fadeInDown">
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+   <div class="sidebar animated fadeInDown">
    <div class="logo-title">
     <div class="title">
-     <img src="https://xn--rhqzbx01dkolumh6qm.xyz//images/avatar.png?v=1583495399657" style="width:127px;" />
+     <img src="https://xn--rhqzbx01dkolumh6qm.xyz//images/avatar.png?v=1583496806109" style="width:127px;" />
 
      <h3 title=""><a href="/">Huanyue</a></h3>
 
@@ -72,15 +75,15 @@
      </div>
     </div>
    </div>
-   <div class="autopagerize_page_element">
-    <div class="content">
-     <div class="post-page">
-      <div class="post animated fadeInDown">
-       <div class="post-title">
-        <h3><a>题解 P1311 选择客栈</a></h3>
-       </div>
-       <div class="post-content">
-        <p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>做法明显,枚举<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo separator="true">,</mo><mi>r</mi></mrow><annotation encoding="application/x-tex">l,r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span></p>
+    <div class="autopagerize_page_element">
+      <div class="content">
+        <div class="post-page">
+          <div class="post animated fadeInDown">
+            <div class="post-title">
+              <h3><a>题解 P1311 选择客栈</a></h3>
+            </div>
+            <div class="post-content">
+              <p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>做法明显,枚举<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo separator="true">,</mo><mi>r</mi></mrow><annotation encoding="application/x-tex">l,r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span></p>
 <p>方案数与中间合法的咖啡店数量无关,只要求有就行了.</p>
 <p>对于一个客栈,</p>
 <p>它对答案的贡献 = 左边合法数量+右边合法数量.</p>
@@ -163,52 +166,66 @@ int main()
     return 0;
 }</code></pre>
 
-       </div>
-       <div class="post-footer">
-        <div class="meta">
-         <div class="info">
-          <i class="fa fa-sun-o"></i>
-          <span class="date">2020-03-06</span>
-          <i class="fa fa-tag"></i>
+            </div>
+            <div class="post-footer">
+              <div class="meta">
+                <div class="info">
+                  <i class="fa fa-sun-o"></i>
+                  <span class="date">2020-03-06</span>
+                  <i class="fa fa-tag"></i>
+                  
+                  <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/ZhzQ8L3hQ/" title="递推">递推 </a>
+                  
+                  <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/Solution/" title="题解">题解 </a>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="share">
+            <div class="evernote">
+              <a class="fa fa-bookmark"
+                href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();"
+                ref="nofollow" target="_blank"></a>
+            </div>
+            <div class="weibo">
+              <a class="fa fa-weibo"
+                href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a>
+            </div>
+            <div class="twitter">
+              <a class="fa fa-twitter" href="http://twitter.com/home?status=,https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P1311/,;"></a>
+            </div>
+          </div>
+          <div class="pagination">
+            <ul class="clearfix">
+              
+              <li class="pre pagbuttons"><a class="btn" role="navigation" href="https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P1351/"
+                  title="题解 P1351 联合权值">上一篇</a></li>
+              
+              
+              <li class="next pagbuttons"><a class="btn" role="navigation" href="https://xn--rhqzbx01dkolumh6qm.xyz/post/Solution-P1040/"
+                  title=" 题解 P1040 加分二叉树">下一篇</a></li>
+              
+            </ul>
+          </div>
           
-          <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/ZhzQ8L3hQ/" title="递推">递推 </a>
-          
-          <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/Solution/" title="题解">题解 </a>
-          
-         </div>
         </div>
-       </div>
       </div>
-      <div class="share">
-       <div class="evernote">
-        <a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a>
-       </div>
-       <div class="weibo">
-        <a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a>
-       </div>
-       <div class="twitter">
-        <a class="fa fa-twitter" href="http://twitter.com/home?status=,https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P1311/,;"></a>
-       </div>
-      </div>
-      <div class="pagination">
-       <ul class="clearfix">
-
-        <li class="pre pagbuttons"><a class="btn" role="navigation" href="https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P1351/" title="题解 P1351 联合权值">上一篇</a></li>
-         
-        
-        <li class="next pagbuttons"><a class="btn" role="navigation" href="https://xn--rhqzbx01dkolumh6qm.xyz/post/Solution-P1040/" title=" 题解 P1040 加分二叉树">下一篇</a></li>
-        
-       </ul>
-      </div>
-        
-     </div>
     </div>
-   </div>
   </div>
-  <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/jquery.js"></script>
+   <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/jquery.js"></script>
   <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/jquery-migrate-1.2.1.min.js"></script>
   <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/jquery.appear.js"></script>
 
 
- </body>
+</body>
+<div id="vcomments"></div>
+<script>
+  new Valine({
+    el: '#vcomments',
+    appId: 'TnUPSWRUHHH8P0MLys12cnHf-gzGzoHsz',
+    appKey: 'dfCVcnEUoTo8wBWYF39aaU4E'
+  })
+</script>
+
 </html>
