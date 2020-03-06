@@ -2,7 +2,7 @@
 <html lang="zh-CN">
  <head>
      <meta charset="utf-8" />
-  <title>题解 P1311 选择客栈 | Huanyue&#39;s Blog</title>
+  <title>题解 P1351 联合权值 | Huanyue&#39;s Blog</title>
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
   <link rel="stylesheet" href="https://xn--rhqzbx01dkolumh6qm.xyz//styles/main.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
@@ -13,7 +13,7 @@
      <div class="sidebar animated fadeInDown">
    <div class="logo-title">
     <div class="title">
-     <img src="https://xn--rhqzbx01dkolumh6qm.xyz//images/avatar.png?v=1583473229900" style="width:127px;" />
+     <img src="https://xn--rhqzbx01dkolumh6qm.xyz//images/avatar.png?v=1583481066130" style="width:127px;" />
 
      <h3 title=""><a href="/">Huanyue</a></h3>
 
@@ -77,91 +77,75 @@
      <div class="post-page">
       <div class="post animated fadeInDown">
        <div class="post-title">
-        <h3><a>题解 P1311 选择客栈</a></h3>
+        <h3><a>题解 P1351 联合权值</a></h3>
        </div>
        <div class="post-content">
-        <p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>做法明显,枚举<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo separator="true">,</mo><mi>r</mi></mrow><annotation encoding="application/x-tex">l,r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span></p>
-<p>方案数与中间合法的咖啡店数量无关,只要求有就行了.</p>
-<p>对于一个客栈,</p>
-<p>它对答案的贡献 = 左边合法数量+右边合法数量.</p>
-<p>并且具有一个性质,</p>
-<p>统计客栈<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>的贡献,如果客栈<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi></mrow><annotation encoding="application/x-tex">l</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span>合法,那么<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>≤</mo><mi>l</mi></mrow><annotation encoding="application/x-tex">\leq l</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span>的同色客栈必然合法.</p>
-<p>那么就可以考虑用递推解决了.</p>
-<p>记录一个左边最近的合法咖啡店<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span></span></span></span></p>
-<p>如果扫到的咖啡店合法,更新<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span>,并从上一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span>暴力更新各个颜色的数量.</p>
-<p>然后统计答案,就完了</p>
+        <p>显然的,这个图是一颗无根树</p>
+<p>边权为一,说明这两个点之间有一个中结点,我们可以通过枚举中结点来实现计算.</p>
+<p>计算时,不能枚举两个结点.</p>
+<p>我们要计算</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathsize="1.44em"><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>t</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi></mrow></msubsup><msubsup><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>t</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi></mrow></msubsup><mn>2</mn><mo>×</mo><mi>i</mi><mo>×</mo><mi>j</mi></mstyle></mrow><annotation encoding="application/x-tex">\Large \sum \limits ^{total}_{i=1} \sum \limits ^{total} _ {j=1} 2 \times i \times j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.8034543999999997em;vertical-align:-1.5970072em;"></span><span class="mop op-limits sizing reset-size6 size8"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5322550000000001em;"><span style="top:-2.565995em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.4400049999999998em;"><span class="pstrut" style="height:3.44em;"></span><span><span class="mop op-symbol small-op">∑</span></span></span><span style="top:-4.390005em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.974005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits sizing reset-size6 size8"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5322550000000001em;"><span style="top:-2.565995em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.440005em;"><span class="pstrut" style="height:3.44em;"></span><span><span class="mop op-symbol small-op">∑</span></span></span><span style="top:-4.390005em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1090327777777778em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord sizing reset-size6 size8">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size8">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.069704em;vertical-align:-0.1199952em;"></span><span class="mord mathdefault sizing reset-size6 size8">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size8">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.2297023999999999em;vertical-align:-0.2799936em;"></span><span class="mord mathdefault sizing reset-size6 size8" style="margin-right:0.05724em;">j</span></span></span></span></p>
+<p>考虑如何转化,回想完全平方</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>a</mi><mo>+</mo><mi>b</mi><msup><mo>)</mo><mn>2</mn></msup><mo>=</mo><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>a</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">(a+b)^2=a^2+b^2+2ab</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span></span></span></span></p>
+<p>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>项有</p>
+<p>$\Large \sum \limits ^{total}_{i=1} \sum \limits ^{total} _ {j=1} 2 \times i \times j+\sum \limits ^ {total} _ {i=1}i^2= (\sum \limits _{i=1} ^ {total} i)^2 $</p>
+<p>那么移项之后,可以发现,<strong>联合权值等于和的平方 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span> 平方和</strong></p>
+<p>最大权值只要找到最大的两个的两个权值就行了</p>
 <pre><code class="language-cpp">/*
  * @Author: Huanyue 
- * @Date: 2020-03-06 13:34:26 
+ * @Date: 2020-03-06 15:48:36 
  * @Last Modified by:   Huanyue 
- * @Last Modified time: 2020-03-06 13:34:26 
+ * @Last Modified time: 2020-03-06 15:48:36 
  */
-
-#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
-#include &lt;algorithm&gt;
-#include &lt;cstring&gt;
-#include &lt;queue&gt;
-#include &lt;utility&gt;
-#include &lt;vector&gt;
-#define rgi register
-typedef long long ll;
-typedef unsigned long long ull;
 using namespace std;
-
-const int N = 1e5 + 10;
-const int inf = 0x3f3f3f3f;
-
-inline void write(register int x)
+struct edge
 {
-    if (x &lt; 0)
-    {
-        putchar('-'), x = -x;
-    }
-    if (x &gt;= 10)
-    {
-        write(x / 10);
-    }
-    putchar('0' + x % 10);
-}
-
-inline int read()
+    int next;
+    int to;
+} a[400005];
+int edgenum, head[200005], w[200005];
+int n, ans, maxx;
+void add(int u, int v)
 {
-    int x = 0, f = 1;
-    char ch = getchar();
-    while (ch &lt; '0' || ch &gt; '9')
-    {
-        if (ch == '-')
-            f = -1;
-        ch = getchar();
-    }
-    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
-    {
-        x = ((x &lt;&lt; 3) + (x &lt;&lt; 1) + (ch ^ 48));
-        ch = getchar();
-    }
-    return x * f;
+    a[++edgenum].next = head[u];
+    a[edgenum].to = v;
+    head[u] = edgenum;
 }
-
-int n, k, p, t, ans, price, num[110], color[200100];
 int main()
 {
-    n = read(), k = read(), p = read();
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt; n; i++)
+    {
+        int u, v;
+        scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        add(u, v);
+        add(v, u);
+    }
+    for (int i = 1; i &lt;= n; i++)
+        scanf(&quot;%d&quot;, &amp;w[i]);
     for (int i = 1; i &lt;= n; i++)
     {
-        color[i] = read(), price = read();
-        if (price &lt;= p)
+        int max1 = 0, max2 = 0;
+        int t1 = 0, t2 = 0;
+        for (int j = head[i]; j; j = a[j].next)
         {
-            for (int j = i; j &gt; t; j--)
-                num[color[j]]++;
-            t = i, ans += num[color[i]] - 1;
+            if (w[a[j].to] &gt; max1)
+                max2 = max1, max1 = w[a[j].to];
+            else if (w[a[j].to] &gt; max2)
+                max2 = w[a[j].to];
+            t1 = (t1 + w[a[j].to]) % 10007;
+            t2 = (t2 + w[a[j].to] * w[a[j].to]) % 10007;
         }
-        else
-            ans += num[color[i]];
+        t1 = t1 * t1 % 10007;
+        ans = (ans + t1 + 10007 - t2) % 10007;
+        if (maxx &lt; max1 * max2)
+            maxx = max1 * max2;
     }
-    write(ans);
+    printf(&quot;%d %d\n&quot;, maxx, ans);
     return 0;
-}</code></pre>
+}
+</code></pre>
 
        </div>
        <div class="post-footer">
@@ -171,7 +155,7 @@ int main()
           <span class="date">2020-03-06</span>
           <i class="fa fa-tag"></i>
           
-          <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/ZhzQ8L3hQ/" title="递推">递推 </a>
+          <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/XKtQVFCQJO/" title="数学">数学 </a>
           
           <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/Solution/" title="题解">题解 </a>
           
@@ -194,7 +178,7 @@ int main()
        <ul class="clearfix">
 
         
-        <li class="next pagbuttons"><a class="btn" role="navigation" href="https://xn--rhqzbx01dkolumh6qm.xyz/post/Solution-P1040/" title=" 题解 P1040 加分二叉树">下一篇</a></li>
+        <li class="next pagbuttons"><a class="btn" role="navigation" href="https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P1311/" title=" 题解 P1311 选择客栈">下一篇</a></li>
         
        </ul>
       </div>
