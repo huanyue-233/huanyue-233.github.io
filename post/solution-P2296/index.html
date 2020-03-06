@@ -2,7 +2,7 @@
 <html lang="zh-CN">
  <head>
      <meta charset="utf-8" />
-  <title>题解 P1728 [PA2014]Parking | Huanyue&#39;s Blog</title>
+  <title>题解 P2296 寻找道路 | Huanyue&#39;s Blog</title>
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
   <link rel="stylesheet" href="https://xn--rhqzbx01dkolumh6qm.xyz//styles/main.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
@@ -77,26 +77,20 @@
      <div class="post-page">
       <div class="post animated fadeInDown">
        <div class="post-title">
-        <h3><a>题解 P1728 [PA2014]Parking</a></h3>
+        <h3><a>题解 P2296 寻找道路</a></h3>
        </div>
        <div class="post-content">
-        <h2 id="题目链接"><a href="https://www.luogu.com.cn/problem/P1728">题目链接</a></h2>
-<p>这么前面的题目竟然没有题解,赶紧来占个位</p>
-<p><s>这道题看上去很裸,实际上也很裸</s></p>
-<p>把车车看成矩形</p>
-<p>首先使这些矩形不相交</p>
-<p>就是一个矩形接一个矩形串起来(羊肉串)</p>
-<p>假如两个矩形需要调换的话，那么必须保证,两个矩形的宽相加<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>≤</mo><mi>w</mi></mrow><annotation encoding="application/x-tex">\leq w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span><br>
-如果都能满足就是合法的,否则不合法</p>
-<p>然后就<s>随便维护</s>一下就行了(树状数组/线段树)</p>
-<p>摆放顺序的话那么最右是最后一个放的，没有任何障碍，</p>
-<p>因此可以采用倒推,从大到小枚举位置,用树状数组维护前缀最值就可以了。</p>
-<p>如题解所述,代码也奇短无比</p>
+        <h2 id="题目链接"><a href="luogu.com.cn/problem/P2296">题目链接</a></h2>
+<p>这道题还是比较简单的</p>
+<p>反向建边,终点bfs,据题意删除所有无法到达的点</p>
+<p>从起点bfs找最短路,没了</p>
+<p>这道题细节还是比较多</p>
+<p>队列类模板+vector存图</p>
 <pre><code class="language-cpp">/*
  * @Author: Huanyue 
- * @Date: 2020-02-13 10:42:52 
+ * @Date: 2020-03-06 17:42:39 
  * @Last Modified by: Huanyue
- * @Last Modified time: 2020-02-13 11:10:53
+ * @Last Modified time: 2020-03-06 19:27:38
  */
 
 #include &lt;iostream&gt;
@@ -108,10 +102,8 @@
 #include &lt;vector&gt;
 #define rgi register
 typedef long long ll;
+typedef unsigned long long ull;
 using namespace std;
-
-const int N = 5e4 + 10;
-const int inf = 0x3f3f3f3f;
 
 inline void write(register int x)
 {
@@ -143,92 +135,144 @@ inline int read()
     }
     return x * f;
 }
+const int N = 10010, M = 200010;
 
-struct mat
+vector&lt;int&gt; g[N], _g[N];
+bool can[N], Can[N];
+int dis[N];
+
+const int QueueLen = 1e5;
+const int Error_Number = -1; //队列长度
+template &lt;class T&gt;
+class Queue //最普通的队列
 {
-    int x1, y1, x2, y2, width, id;
-    friend bool operator&lt;(const mat &amp;a, const mat &amp;b)
+public:
+    T Q[QueueLen];
+    int head, tail;
+    Queue()
     {
-        if (a.x1 == b.x1)
-            return a.x2 &lt; b.x2;
-        return a.x1 &lt; b.x1;
+        head = tail = 0;
     }
-} initial[N], target[N];
+    bool full();
+    bool empty();
+    void push(T x);
+    void pop();
+    T front();
+};
 
-int n, w, rk[N];
-//树状数组
-int tree[N];
-inline int lowbit(int x)
+template &lt;class T&gt;
+bool Queue&lt;T&gt;::full()
 {
-    return x &amp; (-x);
-}
-inline void modify(int x, int v)
-{
-    for (rgi int i = x; i &lt;= n; i += lowbit(i))
-        tree[i] = max(tree[i], v);//维护前缀最大值
-}
-inline int query(int x)
-{
-    int ret = 0;
-    for (int i = x; i; i -= lowbit(i))
-        ret = max(ret, tree[i]);
-    return ret;
+    if (tail == QueueLen)
+        return 1;
+    return 0;
 }
 
+template &lt;class T&gt;
+bool Queue&lt;T&gt;::empty()
+{
+    if (head == tail)
+        return true;
+    return false;
+}
+
+template &lt;class T&gt; //tail空
+void Queue&lt;T&gt;::push(T x)
+{
+    if (full())
+        return;
+    Q[tail++] = x;
+}
+
+template &lt;class T&gt;
+void Queue&lt;T&gt;::pop()
+{
+    if (empty())
+        return;
+    head++;
+}
+
+template &lt;class T&gt;
+T Queue&lt;T&gt;::front() //队首
+{
+    if (empty())
+        return Error_Number;
+    return Q[head];
+}
 int main()
 {
-    int T = read();
-    while (T--)
+    int n = read(), m = read();
+    for (rgi int i = 1; i &lt;= m; i++)
     {
-        memset(tree, 0, sizeof(tree));
-        memset(rk, 0, sizeof(rk)); //多组数据,接的memset
-        n = read(), w = read();
-        for (rgi int i = 1; i &lt;= n; i++)
-        {
-            initial[i].x1 = read();
-            initial[2].y1 = read();
-            initial[i].x2 = read();
-            initial[i].y2 = read();
-            if (initial[i].x1 &gt; initial[i].x2)
-                swap(initial[i].x1, initial[i].x2);
-            if (initial[i].y1 &gt; initial[i].y2)
-                swap(initial[i].y1, initial[i].y2);
-
-            initial[i].id = i;
-            initial[i].width = initial[i].y2 - initial[i].y1; //计算宽度
-        }
-        for (rgi int i = 1; i &lt;= n; i++)
-        {
-            target[i].x1 = read(), target[i].y1 = read(), target[i].x2 = read(), target[i].y2 = read();
-            if (target[i].x1 &gt; target[i].x2)
-                swap(target[i].x1, target[i].x2);
-            if (target[i].y1 &gt; target[i].y2)
-                swap(target[i].y1, target[i].y2);
-            target[i].id = i;
-            target[i].width = target[i].y2 - target[i].y1;
-        }
-
-        sort(initial + 1, initial + n + 1);
-        sort(target + 1, target + n + 1);
-
-        for (int i = 1; i &lt;= n; i++)
-            rk[initial[i].id] = i;
-        
-        bool flag = true;//答案标记
-
-        for (rgi int i = n; i; i--)
-        {
-            if (query(rk[target[i].id]) + target[i].width &gt; w)
-                flag = false;
-            if (!flag)
-                break;
-            modify(rk[target[i].id], target[i].width);
-        }
-        if (flag)
-            puts(&quot;TAK&quot;);
-        else
-            puts(&quot;NIE&quot;);
+        int u = read(), v = read();
+        g[u].push_back(v);
+        _g[v].push_back(u);
     }
+    int s = read(), t = read();
+    can[t] = 1;
+    Queue&lt;int&gt; q;
+    q.push(t);
+    while (!q.empty())
+    {
+        int now = q.front();
+        q.pop();
+        for (vector&lt;int&gt;::iterator iter = _g[now].begin(); iter != _g[now].end(); iter++)
+        {
+            if (!can[*iter])
+            {
+                q.push(*iter);
+                can[*iter] = 1;
+            }
+        }
+    }
+    if (!can[s])
+    {
+        puts(&quot;-1&quot;);
+        return 0;
+    }
+    // cout &lt;&lt; &quot;!!!&quot;;
+    for (rgi int i = 1; i &lt;= n; i++)
+    {
+        if (can[i])
+        {
+            Can[i] = 1;
+            for (vector&lt;int&gt;::iterator iter = g[i].begin(); iter != g[i].end(); iter++)
+            {
+                if (!can[*iter])
+                {
+                    Can[i] = 0;
+                    break;
+                }
+            }
+        }
+    }
+    if (!Can[s])
+    {
+        puts(&quot;-1&quot;);
+        return 0;
+    }
+    // cout &lt;&lt; &quot;!!!&quot;;
+    dis[s] = 1;
+    q.push(s);
+    while (!q.empty())
+    {
+        int now = q.front();
+        q.pop();
+        if (now == t)
+        {
+            cout &lt;&lt; dis[t] - 1;
+            return 0;
+        }
+        for (vector&lt;int&gt;::iterator iter = g[now].begin(); iter != g[now].end(); iter++)
+        {
+            if (Can[*iter] &amp;&amp; !dis[*iter])
+            {
+                dis[*iter] = dis[now] + 1;
+                q.push(*iter);
+            }
+        }
+    }
+    cout &lt;&lt; &quot;-1&quot;;
     return 0;
 }
 </code></pre>
@@ -238,12 +282,14 @@ int main()
         <div class="meta">
          <div class="info">
           <i class="fa fa-sun-o"></i>
-          <span class="date">2020-03-05</span>
+          <span class="date">2020-03-06</span>
           <i class="fa fa-tag"></i>
           
-          <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/TV52WkBpw/" title="树状数组">树状数组 </a>
+          <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/ndAJyjNXZ/" title="bfs">bfs </a>
           
-          <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/Solution/" title="题解">题解 </a>
+          <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/EpmeF0bv-1/" title="最短路">最短路 </a>
+          
+          <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/PLL_OPtZpH/" title="图论">图论 </a>
           
          </div>
         </div>
@@ -257,16 +303,14 @@ int main()
         <a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a>
        </div>
        <div class="twitter">
-        <a class="fa fa-twitter" href="http://twitter.com/home?status=,https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-1728/,;"></a>
+        <a class="fa fa-twitter" href="http://twitter.com/home?status=,https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P2296/,;"></a>
        </div>
       </div>
       <div class="pagination">
        <ul class="clearfix">
 
-        <li class="pre pagbuttons"><a class="btn" role="navigation" href="https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P4857/" title="题解 P4857 [PA2013]Konduktorzy">上一篇</a></li>
-         
         
-        <li class="next pagbuttons"><a class="btn" role="navigation" href="https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P4025/" title=" 题解 P4025 [PA2014]Bohater">下一篇</a></li>
+        <li class="next pagbuttons"><a class="btn" role="navigation" href="https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P1541/" title=" 题解 P1541 乌龟棋">下一篇</a></li>
         
        </ul>
       </div>
