@@ -10,13 +10,23 @@
    <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a57d81636cc5476a3201af5c04d7a989";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
 </head>
 
 <body>
    <div class="sidebar animated fadeInDown">
    <div class="logo-title">
     <div class="title">
-     <img src="https://xn--rhqzbx01dkolumh6qm.xyz//images/avatar.png?v=1583538950172" style="width:127px;" />
+     <img src="https://xn--rhqzbx01dkolumh6qm.xyz//images/avatar.png?v=1583540421160" style="width:127px;" />
 
      <h3 title=""><a href="/">Huanyue</a></h3>
 
@@ -112,14 +122,18 @@
           </div>
           
           
-          <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-          <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+          <!-- id 将作为查询条件 -->
+          <span id="/url/chrome/" class="leancloud-visitors view" data-flag-title="Chrome">
+            <em class="post-meta-item-text">阅读量 </em>
+            <i class="leancloud-visitors-count">loading</i>
+          </span>
           <div id="vcomments"></div>
           <script>
             new Valine({
               el: '#vcomments',
               appId: 'TnUPSWRUHHH8P0MLys12cnHf-gzGzoHsz',
               appKey: 'dfCVcnEUoTo8wBWYF39aaU4E',
+              visitor:true
             })
           </script>
         </div>
