@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://xn--rhqzbx01dkolumh6qm.xyz/</id>
     <title>Huanyue&apos;s Blog</title>
-    <updated>2020-03-07T07:57:49.961Z</updated>
+    <updated>2020-03-07T14:00:07.779Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://xn--rhqzbx01dkolumh6qm.xyz/"/>
     <link rel="self" href="https://xn--rhqzbx01dkolumh6qm.xyz/atom.xml"/>
@@ -10,6 +10,164 @@
     <logo>https://xn--rhqzbx01dkolumh6qm.xyz/images/avatar.png</logo>
     <icon>https://xn--rhqzbx01dkolumh6qm.xyz/favicon.ico</icon>
     <rights>All rights reserved 2020, Huanyue&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[题解 P1027 Car的旅行路线]]></title>
+        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p1027-car-de-lu-xing-lu-xian/</id>
+        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/ti-jie-p1027-car-de-lu-xing-lu-xian/">
+        </link>
+        <updated>2020-03-07T08:47:36.000Z</updated>
+        <content type="html"><![CDATA[<p>点乘得到直角推出第四个点,<br>
+建图:<br>
+城市内 铁路费用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>×</mo></mrow><annotation encoding="application/x-tex">\times</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">×</span></span></span></span>距离<br>
+不同城市 距离<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>×</mo></mrow><annotation encoding="application/x-tex">\times</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">×</span></span></span></span>单位费用<br>
+然后以起点城市的四个点跑四遍最短路.<br>
+再从终点城市四个点找到最小值.</p>
+<pre><code class="language-cpp">/*
+ * @Author: Huanyue 
+ * @Date: 2020-03-07 21:58:28 
+ * @Last Modified by:   Huanyue 
+ * @Last Modified time: 2020-03-07 21:58:28 
+ */
+
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#define ri register int
+using namespace std;
+
+const int MAXN = 160020;
+const double INF = 1e18;
+int tz, n, m, s, t, u[MAXN], v[MAXN], fst[MAXN], nxt[MAXN];
+double wf, x[MAXN], y[MAXN], wt[MAXN], w[MAXN], fm[10], fz[10], nowx[10], nowy[10], dis[MAXN], ans;
+bool book[MAXN];
+
+double dist(int a, int b)
+{
+    return sqrt((x[a] - x[b]) * (x[a] - x[b]) + (y[a] - y[b]) * (y[a] - y[b]));
+}
+
+void clean()
+{
+    m = 0, ans = INF;
+    memset(fst, 0, sizeof(fst));
+    memset(nxt, 0, sizeof(nxt));
+    memset(book, 0, sizeof(book));
+}
+
+struct node
+{
+    int num;
+    double c;
+};
+priority_queue&lt;node&gt; Q;
+bool operator&lt;(const node &amp;a, const node &amp;b)
+{
+    return a.c &gt; b.c;
+}
+
+void Dijkstra(int s)
+{
+    memset(book, 0, sizeof(book));
+    for (ri i = 1; i &lt;= n; i++)
+        dis[i] = INF;
+    dis[s] = 0;
+    Q.push((node){s, 0});
+    while (!Q.empty())
+    {
+        int nowx = Q.top().num;
+        Q.pop();
+        if (book[nowx])
+            continue;
+        book[nowx] = 1;
+        for (ri k = fst[nowx]; k &gt; 0; k = nxt[k])
+        {
+            if (dis[v[k]] &gt; dis[u[k]] + w[k])
+            {
+                dis[v[k]] = dis[u[k]] + w[k];
+                Q.push((node){v[k], dis[v[k]]});
+            }
+        }
+    }
+}
+
+void mathmatic(int num)
+{
+    for (ri i = 1; i &lt;= 3; i++)
+    {
+        int cnt = 0;
+        for (ri j = 1; j &lt;= 3; j++)
+        {
+            if (j == i)
+                continue;
+            cnt++;
+            fm[cnt] = x[(num - 1) * 4 + i] - x[(num - 1) * 4 + j], nowx[cnt] = x[(num - 1) * 4 + j];
+            fz[cnt] = y[(num - 1) * 4 + i] - y[(num - 1) * 4 + j], nowy[cnt] = y[(num - 1) * 4 + j];
+        }
+        if ((fm[1] == 0 &amp;&amp; fz[2] == 0) || (fm[2] == 0 &amp;&amp; fz[1] == 0))
+        {
+            double lx = x[(num - 1) * 4 + i] - nowx[1], ly = y[(num - 1) * 4 + i] - nowy[1];
+            x[num * 4] = nowx[2] - lx, y[num * 4] = nowy[2] - ly;
+            break;
+        }
+        if ((fm[1] * fm[2]) / (fz[1] * fz[2]) == -1)
+        {
+            double lx = x[(num - 1) * 4 + i] - nowx[1], ly = y[(num - 1) * 4 + i] - nowy[1];
+            x[num * 4] = nowx[2] - lx, y[num * 4] = nowy[2] - ly;
+            break;
+        }
+    }
+}
+
+void build()
+{
+    for (ri i = 1; i &lt;= n * 4; i++)
+        for (ri j = 1; j &lt;= n * 4; j++)
+        {
+            ++m;
+            u[m] = i, v[m] = j;
+            if ((i - 1) - (i - 1) % 4 == (j - 1) - (j - 1) % 4)
+                w[m] = dist(i, j) * wt[i];
+            else
+                w[m] = dist(i, j) * wf;
+            nxt[m] = fst[u[m]], fst[u[m]] = m;
+        }
+}
+
+void work()
+{
+    clean();
+    scanf(&quot;%d%lf%d%d&quot;, &amp;n, &amp;wf, &amp;s, &amp;t);
+    for (ri i = 1; i &lt;= n; i++)
+    {
+        for (ri j = 1; j &lt;= 3; j++)
+            scanf(&quot;%lf%lf&quot;, &amp;x[(i - 1) * 4 + j], &amp;y[(i - 1) * 4 + j]);
+        scanf(&quot;%lf&quot;, &amp;wt[(i - 1) * 4 + 1]);
+        for (ri j = 2; j &lt;= 4; j++)
+            wt[(i - 1) * 4 + j] = wt[(i - 1) * 4 + 1];
+        mathmatic(i);
+    }
+    build();
+    n *= 4;
+    for (ri i = 1; i &lt;= 4; i++)
+    {
+        Dijkstra((s - 1) * 4 + i);
+        for (ri j = 1; j &lt;= 4; j++)
+            ans = min(ans, dis[(t - 1) * 4 + j]);
+    }
+    printf(&quot;%.1f&quot;, floor(ans * 10 + 0.5) / 10);
+}
+
+int main()
+{
+    scanf(&quot;%d&quot;, &amp;tz);
+    for (ri i = 1; i &lt;= tz; i++)
+        work();
+    return 0;
+}</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[题解 P1026 统计单词个数]]></title>
         <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P1026/</id>
@@ -977,172 +1135,6 @@ int main()
             puts(&quot;TAK&quot;);
         else
             puts(&quot;NIE&quot;);
-    }
-    return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[题解 P4025 [PA2014]Bohater]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P4025/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P4025/">
-        </link>
-        <updated>2020-03-05T00:07:34.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="题目链接"><a href="https://www.luogu.com.cn/problem/P4025">题目链接</a></h2>
-<p>读完题我大概就能想到是贪心无疑了,</p>
-<p>这道题的灵魂就是<s>狗头保命</s></p>
-<p>显然的是,首先,我们要先打能回血的,别跟我说,<s>我超勇的,一刀999</s></p>
-<p>那么对于打回血的怪,我们有两种贪心策略</p>
-<ul>
-<li>按照<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>d</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">d_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>升序打</li>
-<li>按照<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>降序打</li>
-</ul>
-<p>如果按照<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>升序,我们可以构造出</p>
-<p>a=9999999999,d=100000000,</p>
-<p>打BOSS奖励虽然丰厚,但是你<s>开局一条狗</s></p>
-<p>所以还是乖乖做个肝帝,勇贪心策略一吧.</p>
-<p><strong>于是你养成了套神装</strong></p>
-<p>好了接下来这题的难点来了,接下来的贪心策略是什么</p>
-<ul>
-<li>
-<p>按照<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>d</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">d_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>升序打</p>
-</li>
-<li>
-<p>按照<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>d</mi><mi>i</mi></msub><mo>−</mo><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">d_i-a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>升序打</p>
-</li>
-<li>
-<p>按照<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>降序打</p>
-</li>
-</ul>
-<p>我一开始都直接否定了第三种贪心策略,然后试了两次前两种,然后就被自己<s>构造的数据卡掉了</s></p>
-<p>我就不给出数据了,直接想吧.</p>
-<p>再打这些掉血的怪中,如果有一个皮糙肉厚的大BOSS,同时打完它也有大量的回复血量,</p>
-<p>然而我们打不死,</p>
-<p>那么我们不应该先打比较菜<s>升级</s>的吗.</p>
-<p><strong>我们已知但是在这组怪中,打完后都会掉血,那么你打完菜的之后,你依然打不过大BOSS了吗?</strong></p>
-<p>所以<s>菜是原罪</s></p>
-<p>好的给出严格证明</p>
-<p>​				设最后剩下<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>的生命值，显然<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>的大小与顺序无关,我们从最后状况往前推.</p>
-<p>​				于是问题转化成这样,当前我有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>的血量,每倒推一个怪之后,会加上这个怪的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">d</span></span></span></span>,扣去<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>,</p>
-<p>随后我突然想起来刚刚我好像解决过这个问题.</p>
-<p>​				还没懂?从头再读一遍.</p>
-<p>CODE</p>
-<pre><code class="language-cpp">/*
- * @Author: Huanyue 
- * @Date: 2020-02-13 09:19:22 
- * @Last Modified by: Huanyue
- * @Last Modified time: 2020-02-13 10:14:43
- */
-
-#include &lt;iostream&gt;
-#include &lt;cstdio&gt;
-#include &lt;algorithm&gt;
-#include &lt;cstring&gt;
-#include &lt;queue&gt;
-#include &lt;utility&gt;
-#include &lt;vector&gt;
-#define rgi register
-typedef long long ll;
-using namespace std;
-
-const int N = 1e5 + 10;
-const int inf = 0x3f3f3f3f;
-
-inline void write(register int x)
-{
-    if (x &lt; 0)
-    {
-        putchar('-'), x = -x;
-    }
-    if (x &gt;= 10)
-    {
-        write(x / 10);
-    }
-    putchar('0' + x % 10);
-}
-
-inline int read()
-{
-    int x = 0, f = 1;
-    char ch = getchar();
-    while (ch &lt; '0' || ch &gt; '9')
-    {
-        if (ch == '-')
-            f = -1;
-        ch = getchar();
-    }
-    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
-    {
-        x = ((x &lt;&lt; 3) + (x &lt;&lt; 1) + (ch ^ 48));
-        ch = getchar();
-    }
-    return x * f;
-}
-
-struct master
-{
-    int id, a, d;
-    master(int id = 0, int a = 0, int d = 0) : id(id), a(a), d(d) {}
-} add[100005], minu[100005];
-int n, addcnt, minucnt;
-long long z;
-
-bool cmp1(master a, master b)
-{
-    return a.a &gt; b.a;
-}
-bool cmp2(master a, master b)
-{
-    return a.d &lt; b.d;
-}
-int main()
-{
-    n = read(), z = read();
-    for (rgi int i = 1; i &lt;= n; i++)
-    {
-        int d = read(), a = read();
-        if (a &gt;= d)
-            add[++addcnt] = master(i, a, d);
-        else
-            minu[++minucnt] = master(i, a, d);
-    }
-
-    sort(minu + 1, minu + minucnt + 1, cmp1);
-    sort(add + 1, add + addcnt + 1, cmp2);
-    
-    for (rgi int i = 1; i &lt;= addcnt; i++)
-    {
-        if (add[i].d &gt;= z)
-        {
-            printf(&quot;NIE\n&quot;);
-            return 0;
-        }
-        else
-            z = z - add[i].d + add[i].a;
-    }
-
-    for (rgi int i = 1; i &lt;= minucnt; i++)
-    {
-        if (minu[i].d &gt;= z)
-        {
-            printf(&quot;NIE\n&quot;);
-            return 0;
-        }
-        else
-            z = z - minu[i].d + minu[i].a;
-    }
-
-    printf(&quot;TAK\n&quot;);
-    for (rgi int i = 1; i &lt;= addcnt; i++)
-    {
-        write(add[i].id);
-        putchar(' ');
-    }
-    for (rgi int i = 1; i &lt;= minucnt; i++)
-    {
-        write(minu[i].id);
-        putchar(' ');
     }
     return 0;
 }
