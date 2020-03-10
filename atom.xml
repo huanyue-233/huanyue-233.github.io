@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://xn--rhqzbx01dkolumh6qm.xyz/</id>
     <title>Huanyue&apos;s Blog</title>
-    <updated>2020-03-09T09:13:31.166Z</updated>
+    <updated>2020-03-10T07:52:32.910Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://xn--rhqzbx01dkolumh6qm.xyz/"/>
     <link rel="self" href="https://xn--rhqzbx01dkolumh6qm.xyz/atom.xml"/>
@@ -10,6 +10,178 @@
     <logo>https://xn--rhqzbx01dkolumh6qm.xyz/images/avatar.png</logo>
     <icon>https://xn--rhqzbx01dkolumh6qm.xyz/favicon.ico</icon>
     <rights>All rights reserved 2020, Huanyue&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[题解 P4513 小白逛公园]]></title>
+        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P4513/</id>
+        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P4513/">
+        </link>
+        <updated>2020-03-10T07:51:47.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="题目链接"><a href="https://www.luogu.com.cn/problem/P4513">题目链接</a></h3>
+<p>动态维护区间最大子段和</p>
+<p>线段树解决</p>
+<p>每个结点包含以下信息:</p>
+<p>lm 最大前缀和</p>
+<p>rm 最大后缀和</p>
+<p>mx 最大子段和</p>
+<p>sum 区间和</p>
+<p>转移:</p>
+<pre><code class="language-cpp">sum(o) = sum(ls(o)) + sum(rs(o));
+lm(o) = max(sum(ls(o)) + lm(rs(o)), lm(ls(o)));
+rm(o) = max(sum(rs(o)) + rm(ls(o)), rm(rs(o)));
+mx(o) = max(max(mx(ls(o)), mx(rs(o))), rm(ls(o)) + lm(rs(o)));
+</code></pre>
+<p>代码</p>
+<pre><code class="language-cpp">/*
+ * @Author: Huanyue 
+ * @Date: 2020-03-10 11:11:43 
+ * @Last Modified by: Huanyue
+ * @Last Modified time: 2020-03-10 15:28:08
+ */
+
+#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;queue&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+#define rgi register
+typedef long long ll;
+typedef unsigned long long ull;
+using namespace std;
+
+const int N = 5e5 + 10;
+const int inf = 0x3f3f3f3f;
+
+inline void write(register int x)
+{
+    if (x &lt; 0)
+    {
+        putchar('-'), x = -x;
+    }
+    if (x &gt;= 10)
+    {
+        write(x / 10);
+    }
+    putchar('0' + x % 10);
+}
+
+inline int read()
+{
+    int x = 0, f = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9')
+    {
+        if (ch == '-')
+            f = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+    {
+        x = ((x &lt;&lt; 3) + (x &lt;&lt; 1) + (ch ^ 48));
+        ch = getchar();
+    }
+    return x * f;
+}
+
+struct Seg
+{
+    int sum, mx, lm, rm;
+#define sum(x) tree[x].sum
+#define mx(i) tree[i].mx
+#define lm(i) tree[i].lm
+#define rm(i) tree[i].rm
+} tree[N &lt;&lt; 2];
+inline int ls(int o)
+{
+    return o &lt;&lt; 1;
+}
+inline int rs(int o)
+{
+    return o &lt;&lt; 1 | 1;
+}
+void pushup(int o)
+{
+    sum(o) = sum(ls(o)) + sum(rs(o));
+    lm(o) = max(sum(ls(o)) + lm(rs(o)), lm(ls(o)));
+    rm(o) = max(sum(rs(o)) + rm(ls(o)), rm(rs(o)));
+    mx(o) = max(max(mx(ls(o)), mx(rs(o))), rm(ls(o)) + lm(rs(o)));
+}
+
+void build(int o, int l, int r)
+{
+    if (l == r)
+    {
+        lm(o) = rm(o) = mx(o) = sum(o) = read();
+        return;
+    }
+    int mid = (l + r) &gt;&gt; 1;
+    build(ls(o), l, mid);
+    build(rs(o), mid + 1, r);
+    pushup(o);
+}
+int ql, qr;
+Seg query(int o, int l, int r)
+{
+    // cout &lt;&lt; o &lt;&lt; &quot; &quot; &lt;&lt; l &lt;&lt; &quot; &quot; &lt;&lt; r &lt;&lt; endl;
+    if (ql &lt;= l &amp;&amp; r &lt;= qr)
+        return tree[o];
+    int mid = (l + r) &gt;&gt; 1;
+    if (qr &lt;= mid)
+        return query(ls(o), l, mid);
+    else if (ql &gt; mid)
+        return query(rs(o), mid + 1, r);
+    else
+    {
+        Seg ll = query(ls(o), l, mid), rr = query(rs(o), mid + 1, r), res;
+        res.sum = ll.sum + rr.sum;
+        res.lm = max(ll.sum + rr.lm, ll.lm);
+        res.rm = max(rr.rm, rr.sum + ll.rm);
+        res.mx = max(max(ll.mx, rr.mx), ll.rm + rr.lm);
+        return res;
+    }
+}
+int pos, k;
+void modify(int o, int l, int r)
+{
+    if (l == r)
+    {
+        sum(o) = lm(o) = rm(o) = mx(o) = k;
+        return;
+    }
+    int mid = (l + r) &gt;&gt; 1;
+    if (pos &lt;= mid)
+        modify(ls(o), l, mid);
+    else
+        modify(rs(o), mid + 1, r);
+    pushup(o);
+}
+int main()
+{
+    int n = read(), m = read();
+    build(1, 1, n);
+    while (m--)
+    {
+        int opt = read();
+        if (opt == 1)
+        {
+            ql = read(), qr = read();
+            if (ql &gt; qr)
+                swap(ql, qr);
+            write(query(1, 1, n).mx);
+            putchar('\n');
+        }
+        else
+        {
+            pos = read(), k = read();
+            modify(1, 1, n);
+        }
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[题解 P1783 海滩防御]]></title>
         <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/solution-P1783/</id>
@@ -968,53 +1140,6 @@ int main()
     return 0;
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[小黑语录]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/xiaohei-yulu/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/xiaohei-yulu/">
-        </link>
-        <updated>2020-03-05T06:57:02.000Z</updated>
-        <content type="html"><![CDATA[<p>第六次更新2020/3/7<br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391499998.png" alt="" loading="lazy"><br>
-下面语录</p>
-<h3 id="1洗脑社创始人">1.洗脑社创始人</h3>
-<p><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391505304.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391510805.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391743842.png" alt="" loading="lazy"></p>
-<h3 id="2切题切菜">2.切题=切菜</h3>
-<p><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391539108.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391554797.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391549989.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391563042.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391572324.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583630570024.png" alt="" loading="lazy"></p>
-<h3 id="3文化课奆佬">3.文化课奆佬</h3>
-<p><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391619490.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391630620.jpg" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391636466.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391641426.jpg" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583567443132.png" alt="" loading="lazy"></p>
-<h3 id="3难免也有憨憨的时候">3.难免也有<s>憨憨</s>的时候</h3>
-<p><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391841659.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391849577.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391854805.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391870843.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583392038166.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583567448334.png" alt="" loading="lazy"></p>
-<h3 id="4杂七杂八">4.杂七杂八</h3>
-<p><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583391895650.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583392002062.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583402792246.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583392066746.jpg" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583402892953.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583392072982.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583392076935.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583567866523.png" alt="" loading="lazy"><br>
-<img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1583392087328.png" alt="" loading="lazy"></p>
-<h3 id="出品huanyue-鸣谢bf小黑awm提供素材">出品:Huanyue 鸣谢BF,小黑AWM提供素材</h3>
-<h3 id="提供素材请qq联系810257987">提供素材,请QQ联系810257987</h3>
 ]]></content>
     </entry>
 </feed>
