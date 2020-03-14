@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://xn--rhqzbx01dkolumh6qm.xyz/</id>
     <title>Huanyue&apos;s Blog</title>
-    <updated>2020-03-14T08:23:09.601Z</updated>
+    <updated>2020-03-14T08:34:59.527Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://xn--rhqzbx01dkolumh6qm.xyz/"/>
     <link rel="self" href="https://xn--rhqzbx01dkolumh6qm.xyz/atom.xml"/>
@@ -76,20 +76,20 @@
 <p>总复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>W</mi><mo>×</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O (W \times n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">W</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p>
 <pre><code class="language-cpp">for(int i=1;i&lt;=n;i++)//枚举物品种类 
 {
-    cin&gt;&gt;c[i]&gt;&gt;w[i]&gt;&gt;num[i];//c,w,num分别对应 体积,价值,个数 
-    if(V/c[i] &lt;num[i]) num[i]=V/c[i];//求lim
-    for(int mo=0;mo&lt;c[i];mo++)//枚举余数 
+    cin&gt;&gt;w[i]&gt;&gt;v[i]&gt;&gt;p[i];//c,w,num分别对应 重量,价值,个数 
+    if(W/w[i] &lt;p[i]) p[i]=W/w[i];//求lim
+    for(int mo=0;mo&lt;w[i];mo++)//枚举余数 
     {
         head=tail=0;//队列初始化 
-        for(int k=0;k&lt;=(V-mo)/c[i];k++) 
+        for(int k=0;k&lt;=(V-mo)/w[i];k++) 
         {
             int x=k;
-            int y=f[k*c[i]+mo]-k*w[i];
+            int y=f[k*w[i]+mo]-k*v[i];
             while(head&lt;tail &amp;&amp; que[head].pos&lt;k-num)head++;//限制长度
             while(head&lt;tail &amp;&amp; que[tail-1].value&lt;=y)tail--;
             que[tail].value=y,que[tail].pos=x;
             tail++;
-            f[k*c[i]+mo]=que[head].value+k*w[i];
+            f[k*w[i]+mo]=que[head].value+k*v[i];
             //加上k*w[i]的原因:
             //我们的单调队列维护的是前i-1种的状态最大值.
             //因此这里加上k*w[i].
