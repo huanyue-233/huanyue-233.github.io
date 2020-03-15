@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://xn--rhqzbx01dkolumh6qm.xyz/</id>
     <title>Huanyue&apos;s Blog</title>
-    <updated>2020-03-15T06:13:00.299Z</updated>
+    <updated>2020-03-15T06:16:55.806Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://xn--rhqzbx01dkolumh6qm.xyz/"/>
     <link rel="self" href="https://xn--rhqzbx01dkolumh6qm.xyz/atom.xml"/>
@@ -12,8 +12,8 @@
     <rights>All rights reserved 2020, Huanyue&apos;s Blog</rights>
     <entry>
         <title type="html"><![CDATA[分组背包(Packet Backpack)]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/fen-zu-bei-bao-packet-backpack/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/fen-zu-bei-bao-packet-backpack/">
+        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/Packet Backpack/</id>
+        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/Packet Backpack/">
         </link>
         <updated>2020-03-15T06:11:27.000Z</updated>
         <content type="html"><![CDATA[<h2 id="问题模型">问题模型</h2>
@@ -30,7 +30,6 @@
 </code></pre>
 <h2 id="例题">例题</h2>
 <p><a href="https://www.luogu.com.cn/problem/P1757">P1757 通天之分组背包</a></p>
-<p><a href="https://www.luogu.com.cn/problem/P1336">P1336 最佳课题选择</a></p>
 <p><a href="https://www.luogu.com.cn/problem/P5322">P5322 [BJOI2019]排兵布阵</a></p>
 ]]></content>
     </entry>
