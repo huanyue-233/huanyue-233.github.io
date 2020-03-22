@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>分治法(partition) | Huanyue&#39;s Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://xn--rhqzbx01dkolumh6qm.xyz//styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+  
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://xn--rhqzbx01dkolumh6qm.xyz//images/avatar.png?v=1584842129563" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>Do not go gentle into that good night</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+  <div class="main">
+     <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+     <li><a  href="https://xn--rhqzbx01dkolumh6qm.xyz/post/about">关于</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+    <div class="autopagerize_page_element">
+      <div class="content">
+        <div class="post-page">
+          <div class="post animated fadeInDown">
+            <div class="post-title">
+              <h3><a>分治法(partition)</a></h3>
+            </div>
+            <div class="post-content">
+              <h2 id="概述">概述</h2>
+<p>很多算法都是<strong>递归</strong>的: 为了解决一个给定的问题,算法一次或多次递归地调用自身来解决紧密相关的若干个子问题.</p>
+<p>这些算法符合分治法的思想,分治,即&quot;分而治之&quot;:意思是分别治理；利用手段使国家、民族或宗教等产生分裂，然后对其进行控制和统治。出自《群经平议·周官二》 &quot; 凡邦之有疾病者，疕疡者造焉，则使医分而治之，是亦不自医也。&quot;</p>
+<p>分支算法在每层递归的时候都有三个步骤:</p>
+<figure data-type="image" tabindex="1"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1584842127646.png" alt="" loading="lazy"></figure>
+<h3 id="分解">分解</h3>
+<p>将原问题分为若干个子问题,这些子问题是原问题的规模较小的实例</p>
+<h3 id="解决">解决</h3>
+<p>解决这些子问题,递归地求解各个子问题,如果子问题的规模足够小,则直接求解</p>
+<h3 id="合并">合并</h3>
+<p>合并这些子问题的解成原问题的解.</p>
+<h2 id="实例归并排序merge_sort">实例:归并排序(merge_Sort)</h2>
+<p>归并排序是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>的排序算法中的一种,稳定并且严格<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n logn)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>.</p>
+<h3 id="程序流程">程序流程</h3>
+<blockquote>
+<p>将给定的包含<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>个元素的数组分割为两个局部数组,每个数组个包含<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">n/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord">2</span></span></span></span>个元素</p>
+<p>对两个局部数组分别执行<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>e</mi><mi>r</mi><mi>g</mi><mi>e</mi><mi>S</mi><mi>o</mi><mi>r</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">mergeSort</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span></span></span></span>排序.</p>
+<p>通过<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>e</mi><mi>r</mi><mi>g</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">merge</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span></span></span></span>将两个已排序完毕的局部数组&quot;整合&quot;成一个数组.</p>
+</blockquote>
+<p>在归并排序中,合并两个已排序的数组的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>e</mi><mi>r</mi><mi>g</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">merge</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span></span></span></span>是整个算法的基础,要将包含<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">n1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord">1</span></span></span></span>个整数的数组<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">L</span></span></span></span>以及包含<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">n2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord">2</span></span></span></span>个整数的数组<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span></span></span>合并道数组<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span></span></span></span>.如果我们在合并时直接套用普通的排序算法,显然就浪费了其各自已经排序的性质.接下来介绍<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>e</mi><mi>r</mi><mi>g</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">merge</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span></span></span></span>的实现</p>
+<h4 id="merge">merge</h4>
+<p>由于两个数组都已经按照优先值排列,因此,在前面的元素输出前,后面的元素一定不会被输出.因此,用两个指针分别指向<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">L</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span></span></span>的首个未输出元素，只要输出两个元素中的优先元素即可．为了方便,我们可以在两个数组后放置两个<strong>哨兵</strong>.</p>
+<p>示例:C++ 升序排序</p>
+<pre><code class="language-cpp">void merge(int A[],int left,int mid,int right)//需要排序的数组,起点,分割点,终点+1
+{
+    int n1=mid-left;
+    int n2=right-mid;
+    for(int i=0;i&lt;n1;i++)
+        L[i]=A[left+i];
+   	for(int i=0;i&lt;n2;i++)
+        R[i]=A[mid+i];
+    L[n1]=R[n2]=0x7fffffff;//设置哨兵
+    int i=0,j=0;//指针
+    for(int k=left;k&lt;right;k++)
+        if(L[i]&lt;=R[j])//带等号,维持稳定的性质
+        	A[k]=L[i++];
+   		else
+            A[K]=R[j++];
+}
+</code></pre>
+<p>实现了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mn>1</mn><mo>+</mo><mi>n</mi><mn>2</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n1+n2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mord">2</span><span class="mclose">)</span></span></span></span>的排序</p>
+<h4 id="复杂度分析">复杂度分析</h4>
+<p>因为我们通过二分递归,会将数据分为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>n</mi></mrow><annotation encoding="application/x-tex">log_2n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">n</span></span></span></span>层,每层<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>e</mi><mi>r</mi><mi>g</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">merge</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span></span></span></span>的复杂度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>,那么总复杂度就实现了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(nlogn)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p>
+<p>####　代码示例</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+const int N = 500000, inf = 0x7fffffff;
+int L[N / 2 + 2], R[N / 2 + 2];
+
+void merge(int A[], int left, int mid, int right) //需要排序的数组,起点,分割点,终点+1
+{
+    int n1 = mid - left;
+    int n2 = right - mid;
+    for (int i = 0; i &lt; n1; i++)
+        L[i] = A[left + i];
+    for (int i = 0; i &lt; n2; i++)
+        R[i] = A[mid + i];
+    L[n1] = R[n2] = 0x7fffffff; //设置哨兵
+    int i = 0, j = 0;           //指针
+    for (int k = left; k &lt; right; k++)
+        if (L[i] &lt;= R[j]) //带等号,维持稳定的性质
+            A[k] = L[i++];
+        else
+            A[k] = R[j++];
+}
+
+void mergeSort(int A[], int left, int right)
+{
+    if (left + 1 &lt; right)
+    {
+        int mid = ((left + right) &gt;&gt; 1);
+        mergeSort(A, left, mid);
+        mergeSort(A, mid, right);
+        merge(A, left, mid, right);
+    }
+}
+
+int main()
+{
+    int A[N], n; //当然可以将数组开在全局,省去递归时数组的调用
+    cin &gt;&gt; n;
+    for (int i = 1; i &lt;= n; i++)
+        cin &gt;&gt; A[i];
+    mergeSort(A, 1, n + 1);
+    for (int i = 1; i &lt; n; i++)
+    {
+        cout &lt;&lt; A[i] &lt;&lt; &quot; &quot;;
+    }
+    cout &lt;&lt; A[n] &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+
+            </div>
+            <div class="post-footer">
+              <div class="meta">
+                <div class="info">
+                  <i class="fa fa-sun-o"></i>
+                  <span class="date">2020-03-22</span>
+                  <i class="fa fa-tag"></i>
+                  
+                  <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/nEcv8qg6Y/" title="算法">算法 </a>
+                  
+                  <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/pRcQ7fzN0d/" title="分治法">分治法 </a>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+
+          <span id="busuanzi_container_page_pv">
+            本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+          </span>
+          <div id="vcomments"></div>
+          <script>
+            new Valine({
+              el: '#vcomments',
+              appId: 'TnUPSWRUHHH8P0MLys12cnHf-gzGzoHsz',
+              appKey: 'dfCVcnEUoTo8wBWYF39aaU4E',
+              visitor: true
+            })
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+   <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/jquery.js"></script>
+ <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+</body>
+
+</html>
