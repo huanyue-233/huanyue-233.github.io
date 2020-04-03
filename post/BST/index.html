@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>二叉搜索树(Binary Search Tree,BST) | Huanyue&#39;s Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://xn--rhqzbx01dkolumh6qm.xyz//styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+  
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://xn--rhqzbx01dkolumh6qm.xyz//images/avatar.png?v=1585902693858" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>Do not go gentle into that good night</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+  <div class="main">
+     <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+     <li><a  href="https://xn--rhqzbx01dkolumh6qm.xyz/post/about">关于</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+    <div class="autopagerize_page_element">
+      <div class="content">
+        <div class="post-page">
+          <div class="post animated fadeInDown">
+            <div class="post-title">
+              <h3><a>二叉搜索树(Binary Search Tree,BST)</a></h3>
+            </div>
+            <div class="post-content">
+              <h1 id="二叉搜索树bst">二叉搜索树(BST)</h1>
+<h2 id="概述">概述</h2>
+<p>二叉搜索树显然是一颗二叉树,它具有下列性质:</p>
+<p>对于每个结点,若其左子树不为空,则左子树上所有结点都小于该结点的值;右子树上的所有结点都大于该节点的值.</p>
+<figure data-type="image" tabindex="1"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902604679.png" alt="" loading="lazy"></figure>
+<h2 id="功能">功能</h2>
+<p>二叉搜索树维护的是一个集合，有以下功能</p>
+<ul>
+<li>查找 给定一个值，查询树中是否有该值,如果有,返回其位置</li>
+<li>插入 插入一个值(可以重复,据需要而定)</li>
+<li>删除 删除一个值</li>
+</ul>
+<h2 id="定义">定义</h2>
+<p>节点上应存储以下信息</p>
+<ul>
+<li>指针-&gt;左儿子 ls</li>
+<li>指针-&gt;右儿子 rs</li>
+<li>该节点的值 key</li>
+<li>指针-&gt;父节点 p</li>
+</ul>
+<pre><code class="language-cpp">struct node
+{
+    int ls, rs, key, p;
+} bst[1000];
+</code></pre>
+<p>如果没有子/父节点，因此设为一个特殊值，这里用0</p>
+<h2 id="前序遍历与中序遍历">前序遍历与中序遍历</h2>
+<h3 id="前序遍历">前序遍历</h3>
+<pre><code class="language-cpp">void preorder(Node *u) //前序遍历
+{
+    if (u == NIL)
+        return;
+    printf(&quot; %d&quot;, u-&gt;key);
+    preorder(u-&gt;ls);
+    preorder(u-&gt;rs);
+}
+</code></pre>
+<h3 id="中序遍历">中序遍历</h3>
+<pre><code class="language-cpp">void inorder(Node *u) //中序遍历
+{
+    if (u == NIL)
+        return;
+    inorder(u-&gt;ls);
+    printf(&quot; %d&quot;, u-&gt;key);
+    inorder(u-&gt;rs);
+}
+</code></pre>
+<h2 id="搜索">搜索</h2>
+<p>通过树的性质,如果查询的值比结点大,那么一定不在其左子树中,只需递归入右子树,反而反之.</p>
+<p>如果结点值相等,直接return 该结点编号</p>
+<p>如果该节点不等于查找的值,并且是叶子结点 return 0</p>
+<pre><code class="language-cpp">Node *search(Node *u, int k)
+{
+    while (u != NIL &amp;&amp; k != u-&gt;key)
+    {
+        if (k &lt; u-&gt;key)
+            u = u-&gt;ls;
+        else
+            u = u-&gt;rs;
+    }
+    return u;
+}
+</code></pre>
+<h2 id="最大关键字和最小关键字">最大关键字和最小关键字</h2>
+<p>从树根开始沿着左儿子指针一直走,知道遇到0为止,由于BST的性质,该元素一定是该树的最小元素</p>
+<pre><code class="language-cpp">int treemin(int x)
+{
+    while (x)
+        x = bst[x].ls;
+    return x;
+}
+</code></pre>
+<p>同理,不停向右能找到最大元素</p>
+<pre><code class="language-cpp">int treemax(int x)
+{
+    while (x)
+        x = bst[x].rs;
+    return x;
+}
+</code></pre>
+<h2 id="后继和前驱">后继和前驱</h2>
+<p>在线性表中,一个元素的后继和前驱定义为其前一个元素或后一个元素,而在BST这种树形结构中,后继和前驱定义为中序遍历所构成的线性表中的前一个元素或后一个元素.由于BST的性质,中序遍历是递增的.因此前驱一定是小于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>s</mi><mi>t</mi><mo>[</mo><mi>x</mi><mo>]</mo><mi mathvariant="normal">.</mi><mi>k</mi><mi>e</mi><mi>y</mi></mrow><annotation encoding="application/x-tex">bst[x].key</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mopen">[</span><span class="mord mathdefault">x</span><span class="mclose">]</span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>的最大元素,二后继是大于其的最小元素.当然,最小关键字没有前驱,最大关键字没有后继.</p>
+<p>因此这样定义<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>的前驱和后继</p>
+<p>前驱:小于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>的最大元素</p>
+<p>后继:大于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>的最小元素</p>
+<h3 id="后继">后继</h3>
+<p>分为三种情况</p>
+<p>1.没有该元素</p>
+<p>2.该元素无右子树</p>
+<p>3.该元素有右子树</p>
+<h4 id="有右子树">有右子树</h4>
+<p>因为后继是大于它的最小元素,因此如果其有右子树,那么直接返回右子树中的最小值.</p>
+<h4 id="没有该元素">没有该元素</h4>
+<p>如果没有该元素,那么显然是我们在搜索过程中递归到了某个不存在的叶子结点,虽然这个值在树中不存在,但可以构建一个,可以在该位置暂时插入一个,实际操作中可以不用实实在在将插入写出来,这样就转换成了情况2.</p>
+<figure data-type="image" tabindex="2"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902622743.png" alt="" loading="lazy"></figure>
+<p>例如上图,我们在查找值8的时候会递归入橙色点,那么我们在这建立一个虚拟的结点.</p>
+<h4 id="该元素无右子树">该元素无右子树</h4>
+<p>如果右子树为空,那么它一定市某棵最大子树的最大关键字,而这个最大子树根节点的父节点就是首个比它大的值.</p>
+<figure data-type="image" tabindex="3"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902628041.png" alt="" loading="lazy"></figure>
+<p>例如,在上面这张图中,8没有右子树,其为根节点为5的子树中的最大值,因此其后继是5的父节点10</p>
+<p>那么如何求得这个最大子树的根节点呢,通过观察可以得到该节点的性质.</p>
+<blockquote>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>是该子树的最大关键字</p>
+<p>该节点一定是父节点的左儿子</p>
+</blockquote>
+<p>因此求法如下</p>
+<p>设<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>的父节点,如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>的右儿子,令<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">x=y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>重复此步骤,如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">y=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>左儿子,那么<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>就是要找的最大子树的根节点,因此直接return y</p>
+<pre><code class="language-cpp">Node *treeSuccessor(Node *x)
+{
+    if (x-&gt;rs != NIL)
+        return treeMin(x-&gt;rs);
+    Node *y = x-&gt;p;
+    while (y != NIL &amp;&amp; x == y-&gt;rs)
+    {
+        x = y;
+        y = y-&gt;p;
+    }
+    return y;
+}
+</code></pre>
+<h3 id="前驱">前驱</h3>
+<p>与后继思想一样,自行脑补,直接放代码</p>
+<h2 id="插入">插入</h2>
+<p>根据定义，我们只要在插入时奖该元素与根节点进行比较，相等直接return，如果比它小，就递归入左子树，否则递归入右子树。</p>
+<pre><code class="language-cpp">void insert(int k) //插入
+{
+    Node *y = NIL, *x = root, *z;
+    z = (Node *)malloc(sizeof(Node)); //分配空间
+    z-&gt;key = k;
+    z-&gt;ls = NIL;
+    z-&gt;rs = NIL;
+    while (x != NIL)
+    {
+        y = x;
+        if (z-&gt;key &lt; x-&gt;key)
+            x = x-&gt;ls;
+        else
+            x = x-&gt;rs;
+    }
+
+    z-&gt;p = y;
+    if (y == NIL)
+        root = z;
+    else if (z-&gt;key &lt; y-&gt;key)
+        y-&gt;ls = z;
+    else
+        y-&gt;rs = z;
+}
+</code></pre>
+<h2 id="删除">删除</h2>
+<p>删除的第一步显然是要先找到它,因此我们要先进行一遍搜索,找到该键值的位置,接下来考虑如何删除</p>
+<h3 id="1叶子结点">1.叶子结点</h3>
+<figure data-type="image" tabindex="4"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902636789.png" alt="" loading="lazy"></figure>
+<p>当其是叶子结点的时候,考虑直接删除父节点与它的关系,之后树的性质不变,因此可以直接删除.如上图,直接删去橙色线.</p>
+<h3 id="2有一个子节点">2.有一个子节点</h3>
+<figure data-type="image" tabindex="5"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902640863.png" alt="" loading="lazy"></figure>
+<p>由于其有子节点(8),因此在删除其后要考虑将以子节点为根的子树(这里只有8)放置于哪里.由于性质,父节点(5)一定比该结点的子树(7,8)小或者大,因此该结点的子树(8)也一定比其父节点小/大,因此,直接将其父节点(5)的与其子节点(8)相连即可.(孙子变儿子)</p>
+<figure data-type="image" tabindex="6"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902645689.png" alt="" loading="lazy"></figure>
+<h3 id="3有两个子节点">3.有两个子节点</h3>
+<figure data-type="image" tabindex="7"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902650029.png" alt="" loading="lazy"></figure>
+<p>有两个子节点，在删除时就需要考虑子树间的关系，这里直接给出删除方法</p>
+<blockquote>
+<p>将该节点的中序遍历上后一个节点（16）的值复制到该节点，再<strong>删除</strong>后一个节点（16）</p>
+</blockquote>
+<p>这里显然用到了递归，但由于中序遍历的性质，递归删除的节点不可能有两个儿子。</p>
+<p>随后来证明其正确性</p>
+<p>由BST的性质，其中序遍历一定有序，因此后一个节点一定时比被删除节点大的最小节点。因此，将其复制上来后，左子树中的点一定比它小，右子树中的点依旧比它大，维护了BST的性质。</p>
+<pre><code class="language-cpp">void treeDelete(Node *z)
+{
+    Node *y;
+    Node *x;
+
+    //确定要删除的结点
+    if (z-&gt;ls == NIL || z-&gt;rs == NIL)
+        y = z;
+    else
+        y = treeSuccessor(z);
+    if (y-&gt;ls != NIL)
+        x = y-&gt;ls;
+    else
+        x = y-&gt;rs;
+
+    if (x != NIL)
+        x-&gt;p = y-&gt;p; //孙子变儿子
+
+    if (y-&gt;p == NIL)
+        root = x;
+    else if (y == y-&gt;p-&gt;ls)
+        y-&gt;p-&gt;ls = x;
+    else
+        y-&gt;p-&gt;rs = x;
+    if (y != z)
+        z-&gt;key = y-&gt;key;
+    free(y);
+    return;
+}
+
+</code></pre>
+<h2 id="占位求k排名求排名第k">占位求k排名,求排名第k</h2>
+
+            </div>
+            <div class="post-footer">
+              <div class="meta">
+                <div class="info">
+                  <i class="fa fa-sun-o"></i>
+                  <span class="date">2020-04-03</span>
+                  <i class="fa fa-tag"></i>
+                  
+                  <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/OWPT2B8tl/" title="BST">BST </a>
+                  
+                  <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/gBwVvABDA/" title="数据结构">数据结构 </a>
+                  
+                  <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/AmB1Br-C5/" title="算法笔记">算法笔记 </a>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+
+          <span id="busuanzi_container_page_pv">
+            本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+          </span>
+          <div id="vcomments"></div>
+          <script>
+            new Valine({
+              el: '#vcomments',
+              appId: 'TnUPSWRUHHH8P0MLys12cnHf-gzGzoHsz',
+              appKey: 'dfCVcnEUoTo8wBWYF39aaU4E',
+              visitor: true
+            })
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+   <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/jquery.js"></script>
+ <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+</body>
+
+</html>
