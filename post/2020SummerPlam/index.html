@@ -3,7 +3,7 @@
 
 <head>
    <meta charset="utf-8" />
-  <title>题解 P2574 XOR的艺术 | Huanyue&#39;s Blog</title>
+  <title>2022暑假plan备忘 | Huanyue&#39;s Blog</title>
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
   <link rel="stylesheet" href="https://xn--rhqzbx01dkolumh6qm.xyz//styles/main.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
@@ -83,108 +83,87 @@
         <div class="post-page">
           <div class="post animated fadeInDown">
             <div class="post-title">
-              <h3><a>题解 P2574 XOR的艺术</a></h3>
+              <h3><a>2022暑假plan备忘</a></h3>
             </div>
             <div class="post-content">
-              <p>据题意,变化就是将区间中的每个数异或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>,那么对于同一个点,异或两次可以忽略,<br>
-对于一个长度为len的区间,如果有n个1,那么异或后就有len-n个1<br>
-线段树板子,修改lazytag就行</p>
-<pre><code class="language-cpp">#include&lt;cstdio&gt;
-using namespace std;
-const int N=200005;
-
-int n,m,Sum[N&lt;&lt;2],Lazy[N&lt;&lt;2];
-//char str[N];
-
-void read(int &amp;now)
-{
-    now=0;char c=getchar();
-    while(c&lt;'0'||c&gt;'9')c=getchar();
-    while(c&gt;='0'&amp;&amp;c&lt;='9')now=now*10+c-'0',c=getchar();
-}
-
-void PushUp(int rt)
-{
-    Sum[rt]=Sum[rt&lt;&lt;1]+Sum[rt&lt;&lt;1|1];
-}
-void PushDown(int rt,int m)
-{
-    if(Lazy[rt])
-    {
-        Lazy[rt&lt;&lt;1]^=1;
-        Lazy[rt&lt;&lt;1|1]^=1;
-        Sum[rt&lt;&lt;1]=(m-(m&gt;&gt;1))-Sum[rt&lt;&lt;1];//异或(取反)，将原先状态全部翻转 
-        Sum[rt&lt;&lt;1|1]=(m&gt;&gt;1)-Sum[rt&lt;&lt;1|1];//该区间一共(r-l+1)&gt;&gt;1 个元素，减去自己即为异或后状态 
-        Lazy[rt]=0;
-    }
-}
-void Build(int l,int r,int rt)
-{
-    Lazy[rt]=0;
-    if(l==r)
-    {
-        int a;
-        scanf(&quot;%1d&quot;,&amp;a);
-        Sum[rt]= a?1:0;
-        //Sum[rt]= str[l]=='1'?1:0;
-        return;
-    }
-    int m=(l+r)&gt;&gt;1;
-    Build(l,m,rt&lt;&lt;1);
-    Build(m+1,r,rt&lt;&lt;1|1);
-    PushUp(rt);
-}
-void ModifyXor(int l,int r,int rt,int L,int R)
-{
-    if(L&lt;=l &amp;&amp; r&lt;=R)
-    {
-        Lazy[rt]^=1;
-        Sum[rt]=r-l+1-Sum[rt];
-        return;
-    }
-    PushDown(rt,r-l+1);
-    int m=(l+r)&gt;&gt;1;
-    if(L&lt;=m) ModifyXor(l,m,rt&lt;&lt;1,L,R);
-    if(m&lt;R) ModifyXor(m+1,r,rt&lt;&lt;1|1,L,R);
-    PushUp(rt);
-}
-int QuerySum(int l,int r,int rt,int L,int R)
-{
-    if(L&lt;=l &amp;&amp; r&lt;=R) return Sum[rt];
-    PushDown(rt,r-l+1);
-    int m=(l+r)&gt;&gt;1,res=0;
-    if(L&lt;=m) res+=QuerySum(l,m,rt&lt;&lt;1,L,R);
-    if(m&lt;R) res+=QuerySum(m+1,r,rt&lt;&lt;1|1,L,R);
-    return res;
-}
-
-int main()
-{
-    read(n);read(m);//scanf(&quot;%s&quot;,str+1);
-    Build(1,n,1);
-    for(int i=1;i&lt;=m;i++)
-    {
-        int p,l,r;
-        read(p);read(l);read(r);
-        if(p)
-          printf(&quot;%d\n&quot;,QuerySum(1,n,1,l,r));
-        else
-          ModifyXor(1,n,1,l,r);
-    }
-    return 0;
-}</code></pre>
+              <h3 id="作业内容与安排">作业内容与安排</h3>
+<blockquote>
+<p>语文:</p>
+<blockquote>
+<p>暑假作业本共26课</p>
+</blockquote>
+<p>数学：</p>
+<blockquote>
+<p>暑假作业本共29课<br>
+沈特作业</p>
+</blockquote>
+<p>英语：</p>
+<blockquote>
+<p>新概念3背诵<br>
+3500词</p>
+<p>语法</p>
+<p>五套卷子</p>
+</blockquote>
+<p>物理：</p>
+<blockquote>
+<p>11套卷子</p>
+</blockquote>
+<p>生物：</p>
+<blockquote>
+<p>暑假作业本14课</p>
+</blockquote>
+<p>技术</p>
+<blockquote>
+<p>五套卷子</p>
+</blockquote>
+</blockquote>
+<p>时间：7/23-8/29</p>
+<h2 id="作业计划">作业计划</h2>
+<h4 id="坚持每日活动">坚持每日活动：</h4>
+<ul>
+<li>阅读 40min</li>
+<li>锻炼 40min</li>
+<li>睡觉 23点前</li>
+<li>起床 8点前</li>
+<li>英语背诵 1页</li>
+</ul>
+<h4 id="阶段1-725-88-15天">阶段1 7.25-8.8 15天</h4>
+<blockquote>
+<p>完成大部分作业</p>
+</blockquote>
+<p>学习12天（图书馆开了就泡图书馆），休息3天</p>
+<ol>
+<li>语文  1.5课/天</li>
+<li>数学  1.5课/天，沈特有额外1课/天</li>
+<li>英语  单词1页/天，语法2课/天</li>
+<li>物理  卷子1套/天</li>
+<li>生物  1课/天</li>
+</ol>
+<h4 id="过渡日-89">过渡日 8.9</h4>
+<p>完成8.10网课作业</p>
+<h4 id="阶段2-810-822">阶段2 8.10-8.22</h4>
+<blockquote>
+<p>认真听网课，查漏补缺</p>
+</blockquote>
+<p>10天网课（图书馆）+1天休息（8.16）</p>
+<p>有课上课，无课写第二天作业。</p>
+<h4 id="休息日-823">休息日 8.23</h4>
+<h3 id="阶段3-824-829">阶段3 8.24-8.29</h3>
+<blockquote>
+<p>扫清作业，查漏补缺，准备考试</p>
+</blockquote>
+<p>不作每日安排，完成作业后复习即可。</p>
+<h2 id="复习计划to-be-continued">复习计划（to be  continued）</h2>
 
             </div>
             <div class="post-footer">
               <div class="meta">
                 <div class="info">
                   <i class="fa fa-sun-o"></i>
-                  <span class="date">2020-03-10</span>
+                  <span class="date">2020-07-24</span>
                   <i class="fa fa-tag"></i>
                   
-                  <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/5FBcboBQR/" title="线段树">线段树 </a>
-                  
-                  <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/Solution/" title="题解">题解 </a>
+                  <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/Dzu98mJSY/" title="备忘">备忘 </a>
                   
                 </div>
               </div>
