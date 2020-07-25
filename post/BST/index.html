@@ -5,7 +5,7 @@
    <meta charset="utf-8" />
   <title>二叉搜索树(Binary Search Tree,BST) | Huanyue&#39;s Blog</title>
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-  <link rel="stylesheet" href="https://xn--rhqzbx01dkolumh6qm.xyz//styles/main.css" />
+  <link rel="stylesheet" href="https://huan-yue.xyz/styles/main.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
    <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
@@ -17,7 +17,7 @@
    <div class="sidebar animated fadeInDown">
    <div class="logo-title">
     <div class="title">
-     <img src="https://xn--rhqzbx01dkolumh6qm.xyz//images/avatar.png?v=1595643545717" style="width:127px;" />
+     <img src="https://huan-yue.xyz/images/avatar.png?v=1595645630388" style="width:127px;" />
 
      <h3 title=""><a href="/">Huanyue</a></h3>
 
@@ -90,7 +90,7 @@
 <h2 id="概述">概述</h2>
 <p>二叉搜索树显然是一颗二叉树,它具有下列性质:</p>
 <p>对于每个结点,若其左子树不为空,则左子树上所有结点都小于该结点的值;右子树上的所有结点都大于该节点的值.</p>
-<figure data-type="image" tabindex="1"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902604679.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://huan-yue.xyz/post-images/1585902604679.png" alt="" loading="lazy"></figure>
 <h2 id="功能">功能</h2>
 <p>二叉搜索树维护的是一个集合，有以下功能</p>
 <ul>
@@ -180,11 +180,11 @@
 <p>因为后继是大于它的最小元素,因此如果其有右子树,那么直接返回右子树中的最小值.</p>
 <h4 id="没有该元素">没有该元素</h4>
 <p>如果没有该元素,那么显然是我们在搜索过程中递归到了某个不存在的叶子结点,虽然这个值在树中不存在,但可以构建一个,可以在该位置暂时插入一个,实际操作中可以不用实实在在将插入写出来,这样就转换成了情况2.</p>
-<figure data-type="image" tabindex="2"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902622743.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://huan-yue.xyz/post-images/1585902622743.png" alt="" loading="lazy"></figure>
 <p>例如上图,我们在查找值8的时候会递归入橙色点,那么我们在这建立一个虚拟的结点.</p>
 <h4 id="该元素无右子树">该元素无右子树</h4>
 <p>如果右子树为空,那么它一定市某棵最大子树的最大关键字,而这个最大子树根节点的父节点就是首个比它大的值.</p>
-<figure data-type="image" tabindex="3"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902628041.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://huan-yue.xyz/post-images/1585902628041.png" alt="" loading="lazy"></figure>
 <p>例如,在上面这张图中,8没有右子树,其为根节点为5的子树中的最大值,因此其后继是5的父节点10</p>
 <p>那么如何求得这个最大子树的根节点呢,通过观察可以得到该节点的性质.</p>
 <blockquote>
@@ -238,14 +238,14 @@
 <h2 id="删除">删除</h2>
 <p>删除的第一步显然是要先找到它,因此我们要先进行一遍搜索,找到该键值的位置,接下来考虑如何删除</p>
 <h3 id="1叶子结点">1.叶子结点</h3>
-<figure data-type="image" tabindex="4"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902636789.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://huan-yue.xyz/post-images/1585902636789.png" alt="" loading="lazy"></figure>
 <p>当其是叶子结点的时候,考虑直接删除父节点与它的关系,之后树的性质不变,因此可以直接删除.如上图,直接删去橙色线.</p>
 <h3 id="2有一个子节点">2.有一个子节点</h3>
-<figure data-type="image" tabindex="5"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902640863.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://huan-yue.xyz/post-images/1585902640863.png" alt="" loading="lazy"></figure>
 <p>由于其有子节点(8),因此在删除其后要考虑将以子节点为根的子树(这里只有8)放置于哪里.由于性质,父节点(5)一定比该结点的子树(7,8)小或者大,因此该结点的子树(8)也一定比其父节点小/大,因此,直接将其父节点(5)的与其子节点(8)相连即可.(孙子变儿子)</p>
-<figure data-type="image" tabindex="6"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902645689.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://huan-yue.xyz/post-images/1585902645689.png" alt="" loading="lazy"></figure>
 <h3 id="3有两个子节点">3.有两个子节点</h3>
-<figure data-type="image" tabindex="7"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902650029.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://huan-yue.xyz/post-images/1585902650029.png" alt="" loading="lazy"></figure>
 <p>有两个子节点，在删除时就需要考虑子树间的关系，这里直接给出删除方法</p>
 <blockquote>
 <p>将该节点的中序遍历上后一个节点（16）的值复制到该节点，再<strong>删除</strong>后一个节点（16）</p>
@@ -359,7 +359,7 @@ i 7
 ...
 </code></pre>
 <p>此时的树是</p>
-<figure data-type="image" tabindex="8"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1586052338506.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://huan-yue.xyz/post-images/1586052338506.png" alt="" loading="lazy"></figure>
 <p>为了解决这一问题,有<strong>红黑树,平衡树等数据结构</strong></p>
 <h2 id="总代码">总代码</h2>
 <pre><code class="language-cpp">/*
@@ -602,11 +602,11 @@ int main()
                   <span class="date">2020-04-03</span>
                   <i class="fa fa-tag"></i>
                   
-                  <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/OWPT2B8tl/" title="BST">BST </a>
+                  <a class="tag" href="https://huan-yue.xyz/tag/OWPT2B8tl/" title="BST">BST </a>
                   
-                  <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/gBwVvABDA/" title="数据结构">数据结构 </a>
+                  <a class="tag" href="https://huan-yue.xyz/tag/gBwVvABDA/" title="数据结构">数据结构 </a>
                   
-                  <a class="tag" href="https://xn--rhqzbx01dkolumh6qm.xyz/tag/AmB1Br-C5/" title="算法笔记">算法笔记 </a>
+                  <a class="tag" href="https://huan-yue.xyz/tag/AmB1Br-C5/" title="算法笔记">算法笔记 </a>
                   
                 </div>
               </div>
@@ -631,9 +631,9 @@ int main()
       </div>
     </div>
   </div>
-   <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/jquery.js"></script>
- <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/jquery-migrate-1.2.1.min.js"></script>
- <script src="https://xn--rhqzbx01dkolumh6qm.xyz//media/scripts/jquery.appear.js"></script>
+   <script src="https://huan-yue.xyz/media/scripts/jquery.js"></script>
+ <script src="https://huan-yue.xyz/media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://huan-yue.xyz/media/scripts/jquery.appear.js"></script>
  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
  </script>
 </body>

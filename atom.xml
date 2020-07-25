@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://xn--rhqzbx01dkolumh6qm.xyz/</id>
+    <id>https://huan-yue.xyz</id>
     <title>Huanyue&apos;s Blog</title>
-    <updated>2020-07-25T02:19:08.189Z</updated>
+    <updated>2020-07-25T02:53:51.905Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://xn--rhqzbx01dkolumh6qm.xyz/"/>
-    <link rel="self" href="https://xn--rhqzbx01dkolumh6qm.xyz/atom.xml"/>
+    <link rel="alternate" href="https://huan-yue.xyz"/>
+    <link rel="self" href="https://huan-yue.xyz/atom.xml"/>
     <subtitle>Do not go gentle into that good night</subtitle>
-    <logo>https://xn--rhqzbx01dkolumh6qm.xyz/images/avatar.png</logo>
-    <icon>https://xn--rhqzbx01dkolumh6qm.xyz/favicon.ico</icon>
+    <logo>https://huan-yue.xyz/images/avatar.png</logo>
+    <icon>https://huan-yue.xyz/favicon.ico</icon>
     <rights>All rights reserved 2020, Huanyue&apos;s Blog</rights>
     <entry>
         <title type="html"><![CDATA[2022暑假plan备忘]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/2020SummerPlam/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/2020SummerPlam/">
+        <id>https://huan-yue.xyz/post/2020SummerPlam/</id>
+        <link href="https://huan-yue.xyz/post/2020SummerPlam/">
         </link>
         <updated>2020-07-24T02:18:10.000Z</updated>
         <content type="html"><![CDATA[<h3 id="作业内容与安排">作业内容与安排</h3>
@@ -88,8 +88,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[《你坏》 ]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/youbad/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/youbad/">
+        <id>https://huan-yue.xyz/post/youbad/</id>
+        <link href="https://huan-yue.xyz/post/youbad/">
         </link>
         <updated>2020-07-20T14:23:51.000Z</updated>
         <content type="html"><![CDATA[<h1 id="你坏">《你坏》</h1>
@@ -145,8 +145,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[随手记录]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/Recording/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/Recording/">
+        <id>https://huan-yue.xyz/post/Recording/</id>
+        <link href="https://huan-yue.xyz/post/Recording/">
         </link>
         <updated>2020-07-18T14:14:06.000Z</updated>
         <content type="html"><![CDATA[<h4 id="小孩大冰">《小孩》大冰</h4>
@@ -160,8 +160,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[2020暑假阅读Plan]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/2020SummerReading/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/2020SummerReading/">
+        <id>https://huan-yue.xyz/post/2020SummerReading/</id>
+        <link href="https://huan-yue.xyz/post/2020SummerReading/">
         </link>
         <updated>2020-07-18T13:54:17.000Z</updated>
         <content type="html"><![CDATA[<h2 id="书目">书目</h2>
@@ -173,20 +173,20 @@
 <li>...</li>
 </ul>
 <h2 id="内容">内容</h2>
-<figure data-type="image" tabindex="1"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1595080494884.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://huan-yue.xyz/post-images/1595080494884.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[二叉搜索树(Binary Search Tree,BST)]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/BST/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/BST/">
+        <id>https://huan-yue.xyz/post/BST/</id>
+        <link href="https://huan-yue.xyz/post/BST/">
         </link>
         <updated>2020-04-03T08:29:14.000Z</updated>
         <content type="html"><![CDATA[<h1 id="二叉搜索树bst">二叉搜索树(BST)</h1>
 <h2 id="概述">概述</h2>
 <p>二叉搜索树显然是一颗二叉树,它具有下列性质:</p>
 <p>对于每个结点,若其左子树不为空,则左子树上所有结点都小于该结点的值;右子树上的所有结点都大于该节点的值.</p>
-<figure data-type="image" tabindex="1"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902604679.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://huan-yue.xyz/post-images/1585902604679.png" alt="" loading="lazy"></figure>
 <h2 id="功能">功能</h2>
 <p>二叉搜索树维护的是一个集合，有以下功能</p>
 <ul>
@@ -276,11 +276,11 @@
 <p>因为后继是大于它的最小元素,因此如果其有右子树,那么直接返回右子树中的最小值.</p>
 <h4 id="没有该元素">没有该元素</h4>
 <p>如果没有该元素,那么显然是我们在搜索过程中递归到了某个不存在的叶子结点,虽然这个值在树中不存在,但可以构建一个,可以在该位置暂时插入一个,实际操作中可以不用实实在在将插入写出来,这样就转换成了情况2.</p>
-<figure data-type="image" tabindex="2"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902622743.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://huan-yue.xyz/post-images/1585902622743.png" alt="" loading="lazy"></figure>
 <p>例如上图,我们在查找值8的时候会递归入橙色点,那么我们在这建立一个虚拟的结点.</p>
 <h4 id="该元素无右子树">该元素无右子树</h4>
 <p>如果右子树为空,那么它一定市某棵最大子树的最大关键字,而这个最大子树根节点的父节点就是首个比它大的值.</p>
-<figure data-type="image" tabindex="3"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902628041.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://huan-yue.xyz/post-images/1585902628041.png" alt="" loading="lazy"></figure>
 <p>例如,在上面这张图中,8没有右子树,其为根节点为5的子树中的最大值,因此其后继是5的父节点10</p>
 <p>那么如何求得这个最大子树的根节点呢,通过观察可以得到该节点的性质.</p>
 <blockquote>
@@ -334,14 +334,14 @@
 <h2 id="删除">删除</h2>
 <p>删除的第一步显然是要先找到它,因此我们要先进行一遍搜索,找到该键值的位置,接下来考虑如何删除</p>
 <h3 id="1叶子结点">1.叶子结点</h3>
-<figure data-type="image" tabindex="4"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902636789.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://huan-yue.xyz/post-images/1585902636789.png" alt="" loading="lazy"></figure>
 <p>当其是叶子结点的时候,考虑直接删除父节点与它的关系,之后树的性质不变,因此可以直接删除.如上图,直接删去橙色线.</p>
 <h3 id="2有一个子节点">2.有一个子节点</h3>
-<figure data-type="image" tabindex="5"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902640863.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://huan-yue.xyz/post-images/1585902640863.png" alt="" loading="lazy"></figure>
 <p>由于其有子节点(8),因此在删除其后要考虑将以子节点为根的子树(这里只有8)放置于哪里.由于性质,父节点(5)一定比该结点的子树(7,8)小或者大,因此该结点的子树(8)也一定比其父节点小/大,因此,直接将其父节点(5)的与其子节点(8)相连即可.(孙子变儿子)</p>
-<figure data-type="image" tabindex="6"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902645689.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://huan-yue.xyz/post-images/1585902645689.png" alt="" loading="lazy"></figure>
 <h3 id="3有两个子节点">3.有两个子节点</h3>
-<figure data-type="image" tabindex="7"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1585902650029.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://huan-yue.xyz/post-images/1585902650029.png" alt="" loading="lazy"></figure>
 <p>有两个子节点，在删除时就需要考虑子树间的关系，这里直接给出删除方法</p>
 <blockquote>
 <p>将该节点的中序遍历上后一个节点（16）的值复制到该节点，再<strong>删除</strong>后一个节点（16）</p>
@@ -455,7 +455,7 @@ i 7
 ...
 </code></pre>
 <p>此时的树是</p>
-<figure data-type="image" tabindex="8"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1586052338506.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://huan-yue.xyz/post-images/1586052338506.png" alt="" loading="lazy"></figure>
 <p>为了解决这一问题,有<strong>红黑树,平衡树等数据结构</strong></p>
 <h2 id="总代码">总代码</h2>
 <pre><code class="language-cpp">/*
@@ -693,8 +693,8 @@ int main()
     </entry>
     <entry>
         <title type="html"><![CDATA[写在十六周岁]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/16Write/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/16Write/">
+        <id>https://huan-yue.xyz/post/16Write/</id>
+        <link href="https://huan-yue.xyz/post/16Write/">
         </link>
         <updated>2020-04-02T09:05:36.000Z</updated>
         <content type="html"><![CDATA[<h3 id="序言">序言</h3>
@@ -734,8 +734,8 @@ int main()
     </entry>
     <entry>
         <title type="html"><![CDATA[Strassen算法]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/strassen/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/strassen/">
+        <id>https://huan-yue.xyz/post/strassen/</id>
+        <link href="https://huan-yue.xyz/post/strassen/">
         </link>
         <updated>2020-03-22T08:11:28.000Z</updated>
         <content type="html"><![CDATA[<h2 id="矩阵乘法">矩阵乘法</h2>
@@ -1000,8 +1000,8 @@ void Strassen(int n, T A[][N], T B[][N], T C[][N]) {
     </entry>
     <entry>
         <title type="html"><![CDATA[矩阵概述]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/matrix/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/matrix/">
+        <id>https://huan-yue.xyz/post/matrix/</id>
+        <link href="https://huan-yue.xyz/post/matrix/">
         </link>
         <updated>2020-03-22T04:37:55.000Z</updated>
         <content type="html"><![CDATA[<h2 id="矩阵与向量">矩阵与向量</h2>
@@ -1241,15 +1241,15 @@ struct Martix
     </entry>
     <entry>
         <title type="html"><![CDATA[分治法(partition)]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/partition/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/partition/">
+        <id>https://huan-yue.xyz/post/partition/</id>
+        <link href="https://huan-yue.xyz/post/partition/">
         </link>
         <updated>2020-03-22T01:54:05.000Z</updated>
         <content type="html"><![CDATA[<h2 id="概述">概述</h2>
 <p>很多算法都是<strong>递归</strong>的: 为了解决一个给定的问题,算法一次或多次递归地调用自身来解决紧密相关的若干个子问题.</p>
 <p>这些算法符合分治法的思想,分治,即&quot;分而治之&quot;:意思是分别治理；利用手段使国家、民族或宗教等产生分裂，然后对其进行控制和统治。出自《群经平议·周官二》 &quot; 凡邦之有疾病者，疕疡者造焉，则使医分而治之，是亦不自医也。&quot;</p>
 <p>分支算法在每层递归的时候都有三个步骤:</p>
-<figure data-type="image" tabindex="1"><img src="https://xn--rhqzbx01dkolumh6qm.xyz//post-images/1584842127646.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://huan-yue.xyz/post-images/1584842127646.png" alt="" loading="lazy"></figure>
 <h3 id="分解">分解</h3>
 <p>将原问题分为若干个子问题,这些子问题是原问题的规模较小的实例</p>
 <h3 id="解决">解决</h3>
@@ -1367,8 +1367,8 @@ int main()
     </entry>
     <entry>
         <title type="html"><![CDATA[有依赖的背包问题]]></title>
-        <id>https://xn--rhqzbx01dkolumh6qm.xyz/post/Relypack/</id>
-        <link href="https://xn--rhqzbx01dkolumh6qm.xyz/post/Relypack/">
+        <id>https://huan-yue.xyz/post/Relypack/</id>
+        <link href="https://huan-yue.xyz/post/Relypack/">
         </link>
         <updated>2020-03-18T02:05:17.000Z</updated>
         <content type="html"><![CDATA[<h2 id="问题模型">问题模型</h2>
