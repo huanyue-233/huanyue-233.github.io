@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>分组背包(Packet Backpack) | Huanyue Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://huanyue-233.github.io/styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://huanyue-233.github.io/images/avatar.png?v=1718854434037" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>记录每一点生活</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+    <div class="main">
+       <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+        <div class="autopagerize_page_element">
+          <div class="content">
+            <div class="post-page">
+              <div class="post animated fadeInDown">
+                <div class="post-title">
+                  <h3><a>
+                      分组背包(Packet Backpack)
+                    </a></h3>
+                </div>
+                <div class="post-content">
+                  <h2 id="问题模型">问题模型</h2>
+<p>有一个容量为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>W</mi></mrow><annotation encoding="application/x-tex">W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">W</span></span></span></span>的背包和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>件物品.第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>件物品的重量为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">w_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>,价值为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>v</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">v_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>,这些物品被划分为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Q</mi></mrow><annotation encoding="application/x-tex">Q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">Q</span></span></span></span>组,第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>组中有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Y_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>件物品,在同一组的物品种最多选则一件,最大化价值.</p>
+<h2 id="解析">解析</h2>
+<p>同样用01背包的思想,不同的是,在每组物品种还要进行一次枚举选择的物品</p>
+<p>状态:<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">f[i][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span>表示在前<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>组物品花费费用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>取得的最大值</p>
+<p>转移方程</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathsize="1.2em"><mi>f</mi><mo>[</mo><mi>k</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>f</mi><mo>[</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo><mo separator="true">,</mo><mi>f</mi><mo>[</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>j</mi><mo>−</mo><mi>w</mi><mo>[</mo><mi>k</mi><mo>]</mo><mo>]</mo><mo>+</mo><mi>v</mi><mo>[</mo><mi>k</mi><mo>]</mo><mo>)</mo></mstyle></mrow><annotation encoding="application/x-tex">\large f[k][j]=max(f[i-1][j],f[i-1][j-w[k]]+v[k])</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2em;vertical-align:-0.3em;"></span><span class="mord mathdefault sizing reset-size6 size7" style="margin-right:0.10764em;">f</span><span class="mopen sizing reset-size6 size7">[</span><span class="mord mathdefault sizing reset-size6 size7" style="margin-right:0.03148em;">k</span><span class="mclose sizing reset-size6 size7">]</span><span class="mopen sizing reset-size6 size7">[</span><span class="mord mathdefault sizing reset-size6 size7" style="margin-right:0.05724em;">j</span><span class="mclose sizing reset-size6 size7">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size7">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.2em;vertical-align:-0.3em;"></span><span class="mord mathdefault sizing reset-size6 size7">m</span><span class="mord mathdefault sizing reset-size6 size7">a</span><span class="mord mathdefault sizing reset-size6 size7">x</span><span class="mopen sizing reset-size6 size7">(</span><span class="mord mathdefault sizing reset-size6 size7" style="margin-right:0.10764em;">f</span><span class="mopen sizing reset-size6 size7">[</span><span class="mord mathdefault sizing reset-size6 size7">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size7">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.2em;vertical-align:-0.3em;"></span><span class="mord sizing reset-size6 size7">1</span><span class="mclose sizing reset-size6 size7">]</span><span class="mopen sizing reset-size6 size7">[</span><span class="mord mathdefault sizing reset-size6 size7" style="margin-right:0.05724em;">j</span><span class="mclose sizing reset-size6 size7">]</span><span class="mpunct sizing reset-size6 size7">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault sizing reset-size6 size7" style="margin-right:0.10764em;">f</span><span class="mopen sizing reset-size6 size7">[</span><span class="mord mathdefault sizing reset-size6 size7">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size7">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.2em;vertical-align:-0.3em;"></span><span class="mord sizing reset-size6 size7">1</span><span class="mclose sizing reset-size6 size7">]</span><span class="mopen sizing reset-size6 size7">[</span><span class="mord mathdefault sizing reset-size6 size7" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size7">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.2em;vertical-align:-0.3em;"></span><span class="mord mathdefault sizing reset-size6 size7" style="margin-right:0.02691em;">w</span><span class="mopen sizing reset-size6 size7">[</span><span class="mord mathdefault sizing reset-size6 size7" style="margin-right:0.03148em;">k</span><span class="mclose sizing reset-size6 size7">]</span><span class="mclose sizing reset-size6 size7">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size7">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.2em;vertical-align:-0.3em;"></span><span class="mord mathdefault sizing reset-size6 size7" style="margin-right:0.03588em;">v</span><span class="mopen sizing reset-size6 size7">[</span><span class="mord mathdefault sizing reset-size6 size7" style="margin-right:0.03148em;">k</span><span class="mclose sizing reset-size6 size7">]</span><span class="mclose sizing reset-size6 size7">)</span></span></span></span>其中为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>枚举的每组种的物品</p>
+<pre><code class="language-cpp">for(int i=1;k&lt;=Q;i++)
+    for(int j=V;j&gt;=0;j--)
+        for(int k=1;k&lt;=Y[i];k++)
+            f[j]=max{f[j],f[j-w[i][k]]+v[i][k]}
+</code></pre>
+<h2 id="例题">例题</h2>
+<p><a href="https://www.luogu.com.cn/problem/P1757">P1757 通天之分组背包</a></p>
+<p><a href="https://www.luogu.com.cn/problem/P5322">P5322 [BJOI2019]排兵布阵</a></p>
+
+                </div>
+                <div class="post-footer">
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
+                  <div class="meta">
+                    <div class="info">
+                      <i class="fa fa-sun-o"></i>
+                      <span class="date">
+                        2020-03-15
+                      </span>
+                      <i class="fa fa-tag"></i>
+                      
+                        <a class="tag" href="https://huanyue-233.github.io/tag/3Q3MlB_by/" title="背包问题">
+                          背包问题
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/AmB1Br-C5/" title="算法笔记">
+                          算法笔记
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/QyK_xR_oBg/" title="动态规划">
+                          动态规划
+                        </a>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '3543b998d4f18fad0973',
+    clientSecret: '9a86c027331cca9bc829c587d4faf12f1546e4d8',
+    repo: 'huanyue-233.github.io',
+    owner: 'huanyue-233',
+    admin: ['huanyue-233'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+                      
+                            
+            </div>
+          </div>
+        </div>
+         <script src="https://huanyue-233.github.io/media/scripts/jquery.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+
+</body>
+
+</html>

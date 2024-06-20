@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>题解 P1728 [PA2014]Parking | Huanyue Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://huanyue-233.github.io/styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://huanyue-233.github.io/images/avatar.png?v=1718854434037" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>记录每一点生活</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+    <div class="main">
+       <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+        <div class="autopagerize_page_element">
+          <div class="content">
+            <div class="post-page">
+              <div class="post animated fadeInDown">
+                <div class="post-title">
+                  <h3><a>
+                      题解 P1728 [PA2014]Parking
+                    </a></h3>
+                </div>
+                <div class="post-content">
+                  <h2 id="题目链接"><a href="https://www.luogu.com.cn/problem/P1728">题目链接</a></h2>
+<p>这么前面的题目竟然没有题解,赶紧来占个位</p>
+<p><s>这道题看上去很裸,实际上也很裸</s></p>
+<p>把车车看成矩形</p>
+<p>首先使这些矩形不相交</p>
+<p>就是一个矩形接一个矩形串起来(羊肉串)</p>
+<p>假如两个矩形需要调换的话，那么必须保证,两个矩形的宽相加<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>≤</mo><mi>w</mi></mrow><annotation encoding="application/x-tex">\leq w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span><br>
+如果都能满足就是合法的,否则不合法</p>
+<p>然后就<s>随便维护</s>一下就行了(树状数组/线段树)</p>
+<p>摆放顺序的话那么最右是最后一个放的，没有任何障碍，</p>
+<p>因此可以采用倒推,从大到小枚举位置,用树状数组维护前缀最值就可以了。</p>
+<p>如题解所述,代码也奇短无比</p>
+<pre><code class="language-cpp">/*
+ * @Author: Huanyue 
+ * @Date: 2020-02-13 10:42:52 
+ * @Last Modified by: Huanyue
+ * @Last Modified time: 2020-02-13 11:10:53
+ */
+
+#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;queue&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+#define rgi register
+typedef long long ll;
+using namespace std;
+
+const int N = 5e4 + 10;
+const int inf = 0x3f3f3f3f;
+
+inline void write(register int x)
+{
+    if (x &lt; 0)
+    {
+        putchar('-'), x = -x;
+    }
+    if (x &gt;= 10)
+    {
+        write(x / 10);
+    }
+    putchar('0' + x % 10);
+}
+
+inline int read()
+{
+    int x = 0, f = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9')
+    {
+        if (ch == '-')
+            f = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+    {
+        x = ((x &lt;&lt; 3) + (x &lt;&lt; 1) + (ch ^ 48));
+        ch = getchar();
+    }
+    return x * f;
+}
+
+struct mat
+{
+    int x1, y1, x2, y2, width, id;
+    friend bool operator&lt;(const mat &amp;a, const mat &amp;b)
+    {
+        if (a.x1 == b.x1)
+            return a.x2 &lt; b.x2;
+        return a.x1 &lt; b.x1;
+    }
+} initial[N], target[N];
+
+int n, w, rk[N];
+//树状数组
+int tree[N];
+inline int lowbit(int x)
+{
+    return x &amp; (-x);
+}
+inline void modify(int x, int v)
+{
+    for (rgi int i = x; i &lt;= n; i += lowbit(i))
+        tree[i] = max(tree[i], v);//维护前缀最大值
+}
+inline int query(int x)
+{
+    int ret = 0;
+    for (int i = x; i; i -= lowbit(i))
+        ret = max(ret, tree[i]);
+    return ret;
+}
+
+int main()
+{
+    int T = read();
+    while (T--)
+    {
+        memset(tree, 0, sizeof(tree));
+        memset(rk, 0, sizeof(rk)); //多组数据,接的memset
+        n = read(), w = read();
+        for (rgi int i = 1; i &lt;= n; i++)
+        {
+            initial[i].x1 = read();
+            initial[2].y1 = read();
+            initial[i].x2 = read();
+            initial[i].y2 = read();
+            if (initial[i].x1 &gt; initial[i].x2)
+                swap(initial[i].x1, initial[i].x2);
+            if (initial[i].y1 &gt; initial[i].y2)
+                swap(initial[i].y1, initial[i].y2);
+
+            initial[i].id = i;
+            initial[i].width = initial[i].y2 - initial[i].y1; //计算宽度
+        }
+        for (rgi int i = 1; i &lt;= n; i++)
+        {
+            target[i].x1 = read(), target[i].y1 = read(), target[i].x2 = read(), target[i].y2 = read();
+            if (target[i].x1 &gt; target[i].x2)
+                swap(target[i].x1, target[i].x2);
+            if (target[i].y1 &gt; target[i].y2)
+                swap(target[i].y1, target[i].y2);
+            target[i].id = i;
+            target[i].width = target[i].y2 - target[i].y1;
+        }
+
+        sort(initial + 1, initial + n + 1);
+        sort(target + 1, target + n + 1);
+
+        for (int i = 1; i &lt;= n; i++)
+            rk[initial[i].id] = i;
+        
+        bool flag = true;//答案标记
+
+        for (rgi int i = n; i; i--)
+        {
+            if (query(rk[target[i].id]) + target[i].width &gt; w)
+                flag = false;
+            if (!flag)
+                break;
+            modify(rk[target[i].id], target[i].width);
+        }
+        if (flag)
+            puts(&quot;TAK&quot;);
+        else
+            puts(&quot;NIE&quot;);
+    }
+    return 0;
+}
+</code></pre>
+
+                </div>
+                <div class="post-footer">
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
+                  <div class="meta">
+                    <div class="info">
+                      <i class="fa fa-sun-o"></i>
+                      <span class="date">
+                        2020-03-05
+                      </span>
+                      <i class="fa fa-tag"></i>
+                      
+                        <a class="tag" href="https://huanyue-233.github.io/tag/TV52WkBpw/" title="树状数组">
+                          树状数组
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/Solution/" title="题解">
+                          题解
+                        </a>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '3543b998d4f18fad0973',
+    clientSecret: '9a86c027331cca9bc829c587d4faf12f1546e4d8',
+    repo: 'huanyue-233.github.io',
+    owner: 'huanyue-233',
+    admin: ['huanyue-233'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+                      
+                            
+            </div>
+          </div>
+        </div>
+         <script src="https://huanyue-233.github.io/media/scripts/jquery.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+
+</body>
+
+</html>

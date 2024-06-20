@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>有依赖的背包问题 | Huanyue Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://huanyue-233.github.io/styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://huanyue-233.github.io/images/avatar.png?v=1718854434037" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>记录每一点生活</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+    <div class="main">
+       <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+        <div class="autopagerize_page_element">
+          <div class="content">
+            <div class="post-page">
+              <div class="post animated fadeInDown">
+                <div class="post-title">
+                  <h3><a>
+                      有依赖的背包问题
+                    </a></h3>
+                </div>
+                <div class="post-content">
+                  <h2 id="问题模型">问题模型</h2>
+<p>在01背包的基础上,第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个物品有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">t_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>个附件,每个附件也具有重量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>g</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">g_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>,附件依附于物品,具体的说,如果要选择附件,必须选择其依附的物品.</p>
+<h2 id="解析">解析</h2>
+<p>先仅仅考虑对于每个物品和附件的集合,如果暴力枚举,那么策略非常多,假设有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>个附件,策略有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{n+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span>种,并且无法用状态转移方程来表达如此多的策略.</p>
+<p>每个策略都是互斥的,也就是你仅能选择一中策略.那么利用分组背包,将每一个物品及其附件的选择策略作为一个物品.虽然转化为了分组背包,但依然有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{n+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span>种状态,显然需要优化.</p>
+<h2 id="优化">优化</h2>
+<p>对于不同的策略,实际上会有相同的费用,显然,相同的费用只要取最大的,其它都是冗余的,那么我们在组内通过一个01背包,处理出费用为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mn>0</mn><mo separator="true">,</mo><mi>W</mi><mo>−</mo><msub><mi>v</mi><mi>i</mi></msub><mo>]</mo></mrow><annotation encoding="application/x-tex">[0,W-v_i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">W</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">]</span></span></span></span>的最大价值然后应用分组背包即可了.</p>
+<h2 id="树上有依赖背包">树上有依赖背包</h2>
+<h3 id="问题模型-2">问题模型</h3>
+<p>将依赖关系通过一颗树给出,也就是对于附件还有附件,实际上涉及到了树形DP了,这里不给出解析.</p>
+<h3 id="例题">例题</h3>
+<p><a href="https://www.luogu.com.cn/problem/P1064">P1064 金明的预算方案</a></p>
+<p><a href="https://www.luogu.com.cn/problem/P1273">P1273 有线电视网</a></p>
+
+                </div>
+                <div class="post-footer">
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
+                  <div class="meta">
+                    <div class="info">
+                      <i class="fa fa-sun-o"></i>
+                      <span class="date">
+                        2020-03-18
+                      </span>
+                      <i class="fa fa-tag"></i>
+                      
+                        <a class="tag" href="https://huanyue-233.github.io/tag/3Q3MlB_by/" title="背包问题">
+                          背包问题
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/AmB1Br-C5/" title="算法笔记">
+                          算法笔记
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/QyK_xR_oBg/" title="动态规划">
+                          动态规划
+                        </a>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '3543b998d4f18fad0973',
+    clientSecret: '9a86c027331cca9bc829c587d4faf12f1546e4d8',
+    repo: 'huanyue-233.github.io',
+    owner: 'huanyue-233',
+    admin: ['huanyue-233'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+                      
+                            
+            </div>
+          </div>
+        </div>
+         <script src="https://huanyue-233.github.io/media/scripts/jquery.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+
+</body>
+
+</html>

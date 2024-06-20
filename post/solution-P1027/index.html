@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>题解 P1027 Car的旅行路线 | Huanyue Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://huanyue-233.github.io/styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://huanyue-233.github.io/images/avatar.png?v=1718854434037" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>记录每一点生活</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+    <div class="main">
+       <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+        <div class="autopagerize_page_element">
+          <div class="content">
+            <div class="post-page">
+              <div class="post animated fadeInDown">
+                <div class="post-title">
+                  <h3><a>
+                      题解 P1027 Car的旅行路线
+                    </a></h3>
+                </div>
+                <div class="post-content">
+                  <p>点乘得到直角推出第四个点,<br>
+建图:<br>
+城市内 铁路费用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>×</mo></mrow><annotation encoding="application/x-tex">\times</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">×</span></span></span></span>距离<br>
+不同城市 距离<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>×</mo></mrow><annotation encoding="application/x-tex">\times</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">×</span></span></span></span>单位费用<br>
+然后以起点城市的四个点跑四遍最短路.<br>
+再从终点城市四个点找到最小值.</p>
+<pre><code class="language-cpp">/*
+ * @Author: Huanyue 
+ * @Date: 2020-03-07 21:58:28 
+ * @Last Modified by:   Huanyue 
+ * @Last Modified time: 2020-03-07 21:58:28 
+ */
+
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#define ri register int
+using namespace std;
+
+const int MAXN = 160020;
+const double INF = 1e18;
+int tz, n, m, s, t, u[MAXN], v[MAXN], fst[MAXN], nxt[MAXN];
+double wf, x[MAXN], y[MAXN], wt[MAXN], w[MAXN], fm[10], fz[10], nowx[10], nowy[10], dis[MAXN], ans;
+bool book[MAXN];
+
+double dist(int a, int b)
+{
+    return sqrt((x[a] - x[b]) * (x[a] - x[b]) + (y[a] - y[b]) * (y[a] - y[b]));
+}
+
+void clean()
+{
+    m = 0, ans = INF;
+    memset(fst, 0, sizeof(fst));
+    memset(nxt, 0, sizeof(nxt));
+    memset(book, 0, sizeof(book));
+}
+
+struct node
+{
+    int num;
+    double c;
+};
+priority_queue&lt;node&gt; Q;
+bool operator&lt;(const node &amp;a, const node &amp;b)
+{
+    return a.c &gt; b.c;
+}
+
+void Dijkstra(int s)
+{
+    memset(book, 0, sizeof(book));
+    for (ri i = 1; i &lt;= n; i++)
+        dis[i] = INF;
+    dis[s] = 0;
+    Q.push((node){s, 0});
+    while (!Q.empty())
+    {
+        int nowx = Q.top().num;
+        Q.pop();
+        if (book[nowx])
+            continue;
+        book[nowx] = 1;
+        for (ri k = fst[nowx]; k &gt; 0; k = nxt[k])
+        {
+            if (dis[v[k]] &gt; dis[u[k]] + w[k])
+            {
+                dis[v[k]] = dis[u[k]] + w[k];
+                Q.push((node){v[k], dis[v[k]]});
+            }
+        }
+    }
+}
+
+void mathmatic(int num)
+{
+    for (ri i = 1; i &lt;= 3; i++)
+    {
+        int cnt = 0;
+        for (ri j = 1; j &lt;= 3; j++)
+        {
+            if (j == i)
+                continue;
+            cnt++;
+            fm[cnt] = x[(num - 1) * 4 + i] - x[(num - 1) * 4 + j], nowx[cnt] = x[(num - 1) * 4 + j];
+            fz[cnt] = y[(num - 1) * 4 + i] - y[(num - 1) * 4 + j], nowy[cnt] = y[(num - 1) * 4 + j];
+        }
+        if ((fm[1] == 0 &amp;&amp; fz[2] == 0) || (fm[2] == 0 &amp;&amp; fz[1] == 0))
+        {
+            double lx = x[(num - 1) * 4 + i] - nowx[1], ly = y[(num - 1) * 4 + i] - nowy[1];
+            x[num * 4] = nowx[2] - lx, y[num * 4] = nowy[2] - ly;
+            break;
+        }
+        if ((fm[1] * fm[2]) / (fz[1] * fz[2]) == -1)
+        {
+            double lx = x[(num - 1) * 4 + i] - nowx[1], ly = y[(num - 1) * 4 + i] - nowy[1];
+            x[num * 4] = nowx[2] - lx, y[num * 4] = nowy[2] - ly;
+            break;
+        }
+    }
+}
+
+void build()
+{
+    for (ri i = 1; i &lt;= n * 4; i++)
+        for (ri j = 1; j &lt;= n * 4; j++)
+        {
+            ++m;
+            u[m] = i, v[m] = j;
+            if ((i - 1) - (i - 1) % 4 == (j - 1) - (j - 1) % 4)
+                w[m] = dist(i, j) * wt[i];
+            else
+                w[m] = dist(i, j) * wf;
+            nxt[m] = fst[u[m]], fst[u[m]] = m;
+        }
+}
+
+void work()
+{
+    clean();
+    scanf(&quot;%d%lf%d%d&quot;, &amp;n, &amp;wf, &amp;s, &amp;t);
+    for (ri i = 1; i &lt;= n; i++)
+    {
+        for (ri j = 1; j &lt;= 3; j++)
+            scanf(&quot;%lf%lf&quot;, &amp;x[(i - 1) * 4 + j], &amp;y[(i - 1) * 4 + j]);
+        scanf(&quot;%lf&quot;, &amp;wt[(i - 1) * 4 + 1]);
+        for (ri j = 2; j &lt;= 4; j++)
+            wt[(i - 1) * 4 + j] = wt[(i - 1) * 4 + 1];
+        mathmatic(i);
+    }
+    build();
+    n *= 4;
+    for (ri i = 1; i &lt;= 4; i++)
+    {
+        Dijkstra((s - 1) * 4 + i);
+        for (ri j = 1; j &lt;= 4; j++)
+            ans = min(ans, dis[(t - 1) * 4 + j]);
+    }
+    printf(&quot;%.1f&quot;, floor(ans * 10 + 0.5) / 10);
+}
+
+int main()
+{
+    scanf(&quot;%d&quot;, &amp;tz);
+    for (ri i = 1; i &lt;= tz; i++)
+        work();
+    return 0;
+}</code></pre>
+
+                </div>
+                <div class="post-footer">
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
+                  <div class="meta">
+                    <div class="info">
+                      <i class="fa fa-sun-o"></i>
+                      <span class="date">
+                        2020-03-07
+                      </span>
+                      <i class="fa fa-tag"></i>
+                      
+                        <a class="tag" href="https://huanyue-233.github.io/tag/EpmeF0bv-1/" title="最短路">
+                          最短路
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/PLL_OPtZpH/" title="图论">
+                          图论
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/Solution/" title="题解">
+                          题解
+                        </a>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '3543b998d4f18fad0973',
+    clientSecret: '9a86c027331cca9bc829c587d4faf12f1546e4d8',
+    repo: 'huanyue-233.github.io',
+    owner: 'huanyue-233',
+    admin: ['huanyue-233'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+                      
+                            
+            </div>
+          </div>
+        </div>
+         <script src="https://huanyue-233.github.io/media/scripts/jquery.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+
+</body>
+
+</html>

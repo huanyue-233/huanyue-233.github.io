@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>题解 P1040 加分二叉树 | Huanyue Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://huanyue-233.github.io/styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://huanyue-233.github.io/images/avatar.png?v=1718854434037" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>记录每一点生活</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+    <div class="main">
+       <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+        <div class="autopagerize_page_element">
+          <div class="content">
+            <div class="post-page">
+              <div class="post animated fadeInDown">
+                <div class="post-title">
+                  <h3><a>
+                      题解 P1040 加分二叉树
+                    </a></h3>
+                </div>
+                <div class="post-content">
+                  <h2 id="题目链接"><a href="https://www.luogu.com.cn/problem/P1040">题目链接</a></h2>
+<p>显然,中序遍历是 <strong>左 根 右</strong> 的顺序</p>
+<p>因此,如果第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>号元素是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[l,r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>的根,那么<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>左边的数构成了其左子树,右边的数构成了其右子树</p>
+<p>具体的,设<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>l</mi><mo>]</mo><mo>[</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">f[l][r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[l,r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>构成子树的最大加分,设<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>o</mi><mi>o</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">root</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault">t</span></span></span></span>表示示最大加分时<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[l,r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>的根节点.</p>
+<p>那么显然有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>l</mi><mo>]</mo><mo>[</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">f[l][r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>=<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>l</mi><mo>]</mo><mo>[</mo><mi>r</mi><mi>o</mi><mi>o</mi><mi>t</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>∗</mo><mi>f</mi><mo>[</mo><mi>r</mi><mi>o</mi><mi>o</mi><mi>t</mi><mo>+</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>r</mi><mo>]</mo><mo>+</mo><mi>v</mi><mo>[</mo><mi>r</mi><mi>o</mi><mi>o</mi><mi>t</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">f[l][root-1]*f[root+1][r]+v[root]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault">t</span><span class="mclose">]</span></span></span></span></p>
+<p>这就像<strong>区间dp</strong>,满足一个大区间由小区间转移过来.</p>
+<p>首先,初始状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>i</mi><mo>]</mo><mo>=</mo><mi>v</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">f[i][i]=v[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span></p>
+<p>1.枚举区间长度(从小到大)</p>
+<p>2.枚举区间左节点</p>
+<p>3.枚举断点</p>
+<p>4.取max,记录root</p>
+<pre><code class="language-cpp">/*
+ * @Author: Huanyue 
+ * @Date: 2020-03-04 17:05:31 
+ * @Last Modified by: Huanyue
+ * @Last Modified time: 2020-03-05 16:37:37
+ */
+
+#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;queue&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+#define rgi register
+typedef long long ll;
+typedef unsigned long long ull;
+using namespace std;
+
+const int N = 50;
+const int inf = 0x3f3f3f3f;
+
+inline void write(register int x)
+{
+    if (x &lt; 0)
+    {
+        putchar('-'), x = -x;
+    }
+    if (x &gt;= 10)
+    {
+        write(x / 10);
+    }
+    putchar('0' + x % 10);
+}
+
+inline int read()
+{
+    int x = 0, f = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9')
+    {
+        if (ch == '-')
+            f = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+    {
+        x = ((x &lt;&lt; 3) + (x &lt;&lt; 1) + (ch ^ 48));
+        ch = getchar();
+    }
+    return x * f;
+}
+
+int n, v[39], f[47][47], i, j, k, root[49][49];
+void print(int l, int r)
+{
+    if (l &gt; r)
+        return;
+    if (l == r)
+    {
+        write(l);
+        putchar(' ');
+        return;
+    }
+    write(root[l][r]);
+    putchar(' ');
+    print(l, root[l][r] - 1);
+    print(root[l][r] + 1, r);
+}
+int main()
+{
+    n = read();
+    for (i = 1; i &lt;= n; i++)
+        v[i] = read();
+    for (i = 1; i &lt;= n; i++)
+    {
+        f[i][i] = v[i];
+        f[i][i - 1] = 1;
+    }
+    for (i = n; i &gt;= 1; i--)
+        for (j = i + 1; j &lt;= n; j++)
+            for (k = i; k &lt;= j; k++)
+            {
+                if (f[i][j] &lt; (f[i][k - 1] * f[k + 1][j] + f[k][k]))
+                {
+                    f[i][j] = f[i][k - 1] * f[k + 1][j] + f[k][k];
+                    root[i][j] = k;
+                }
+            }
+    write(f[1][n]);
+    putchar('\n');
+    print(1, n);
+    return 0;
+}
+</code></pre>
+
+                </div>
+                <div class="post-footer">
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
+                  <div class="meta">
+                    <div class="info">
+                      <i class="fa fa-sun-o"></i>
+                      <span class="date">
+                        2020-03-05
+                      </span>
+                      <i class="fa fa-tag"></i>
+                      
+                        <a class="tag" href="https://huanyue-233.github.io/tag/nPLwkiS1f/" title="dp">
+                          dp
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/0tsPCcebC/" title="区间dp">
+                          区间dp
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/Solution/" title="题解">
+                          题解
+                        </a>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '3543b998d4f18fad0973',
+    clientSecret: '9a86c027331cca9bc829c587d4faf12f1546e4d8',
+    repo: 'huanyue-233.github.io',
+    owner: 'huanyue-233',
+    admin: ['huanyue-233'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+                      
+                            
+            </div>
+          </div>
+        </div>
+         <script src="https://huanyue-233.github.io/media/scripts/jquery.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+
+</body>
+
+</html>

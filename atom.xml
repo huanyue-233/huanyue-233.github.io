@@ -1,0 +1,1421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://huanyue-233.github.io</id>
+    <title>Huanyue Blog</title>
+    <updated>2024-06-20T03:33:57.222Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://huanyue-233.github.io"/>
+    <link rel="self" href="https://huanyue-233.github.io/atom.xml"/>
+    <subtitle>记录每一点生活</subtitle>
+    <logo>https://huanyue-233.github.io/images/avatar.png</logo>
+    <icon>https://huanyue-233.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2024, Huanyue Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[图形学期末作业代码文档]]></title>
+        <id>https://huanyue-233.github.io/post/PyOpenGL_Ending/</id>
+        <link href="https://huanyue-233.github.io/post/PyOpenGL_Ending/">
+        </link>
+        <updated>2024-06-20T03:30:43.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="概述">概述</h2>
+<p>代码语言：Python</p>
+<p>使用的第三方库: <code>PyOpenGL</code> <code>numpy</code></p>
+<p>实现功能：1、2、3、4、5</p>
+<figure data-type="image" tabindex="1"><img src="https://huanyue-233.github.io/post-images/1718854340796.png" alt="" loading="lazy"></figure>
+<h2 id="功能实现">功能实现</h2>
+<h3 id="绘制三个几何体">绘制三个几何体</h3>
+<h4 id="三棱锥定义">三棱锥定义</h4>
+<pre><code class="language-python">def drawPyramid():
+    glBegin(GL_TRIANGLES)
+    # 前面
+    glNormal3f(0.0, 0.5, 0.5)
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(-1.0, -1.0, 1.0)
+    glVertex3f(1.0, -1.0, 1.0)
+    # 右面
+    glNormal3f(0.5, 0.5, 0.0)
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(1.0, -1.0, 1.0)
+    glVertex3f(1.0, -1.0, -1.0)
+    # 后面
+    glNormal3f(0.0, 0.5, -0.5)
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(1.0, -1.0, -1.0)
+    glVertex3f(-1.0, -1.0, -1.0)
+    # 左面
+    glNormal3f(-0.5, 0.5, 0.0)
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(-1.0, -1.0, -1.0)
+    glVertex3f(-1.0, -1.0, 1.0)
+    glEnd()
+    glBegin(GL_QUADS)
+    # 底面
+    glNormal3f(0.0, -1.0, 0.0)
+    glVertex3f(-1.0, -1.0, -1.0)
+    glVertex3f(1.0, -1.0, -1.0)
+    glVertex3f(1.0, -1.0, 1.0)
+    glVertex3f(-1.0, -1.0, 1.0)
+    glEnd()
+</code></pre>
+<h3 id="三个几何体绘制">三个几何体绘制</h3>
+<pre><code class="language-python">    set_material()  # 设置材质属性
+
+    # 绘制正方体
+    glPushMatrix()
+    glColor3f(1.0, 1.0, 1.0)  # 白色
+    glTranslatef(0.0, 0.0, 0.0)
+    apply_continuous_transformation()  # 应用持续变换
+    glutSolidCube(1.5)
+    glPopMatrix()
+
+    # 绘制球体
+    glPushMatrix()
+    glColor3f(1.0, 0.5, 0.5)  # 亮红色
+    glTranslatef(3.0, 0.0, 0.0)
+    apply_continuous_transformation()  # 应用持续变换
+    glutSolidSphere(1.0, 50, 50)
+    glPopMatrix()
+
+    # 绘制三棱锥
+    glPushMatrix()
+    glColor3f(0.0, 0.0, 1.0)  # 蓝色
+    glTranslatef(-3.0, 0.0, 0.0)
+    apply_continuous_transformation()  # 应用持续变换
+    drawPyramid()
+    glPopMatrix()
+
+    glutSwapBuffers()
+</code></pre>
+<h3 id="摄影机位置">摄影机位置</h3>
+<pre><code class="language-python">gluLookAt(0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+</code></pre>
+<h2 id="光源设置">光源设置</h2>
+<pre><code class="language-python">    light_pos1 = [-2.0, 0.0, 2.0, 1.0]  # 左前方
+    light_color1 = [0.0, 1.0, 1.0, 1.0]  # 绿色
+    glLightfv(GL_LIGHT0, GL_POSITION, light_pos1)
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color1)
+
+    light_pos2 = [2.0, 0.0, 2.0, 1.0] #右前方
+    light_color2 = [1.0, 1.0, 0.0, 1.0]  # 黄色
+    glLightfv(GL_LIGHT1, GL_POSITION, light_pos2)
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, light_color2)
+</code></pre>
+<p>左前方一个绿色光源，右前方一个黄色光源。</p>
+<h3 id="持续变换">持续变换</h3>
+<pre><code class="language-python">def update(value):
+    global angle, transform_counter
+    angle += 5.0  # 增加旋转速度
+    angle = angle % 360
+    transform_counter += 1
+    glutPostRedisplay()
+    glutTimerFunc(50, update, 0)  # 每50毫秒更新一次
+</code></pre>
+<p>通过update的自调用实现了对angle、transform_counter参数的持续更新。</p>
+<pre><code class="language-python">def apply_continuous_transformation():
+    global angle, last_switch_time, scale_factor, symmetry_direction, scaling_factor, scaling_direction
+    current_time = time.time()
+    if transformation_type == 0:
+        # 旋转变换
+        glRotatef(angle, 1.0, 1.0, 0.0)
+    elif transformation_type == 1:
+        # 错切变换
+        shear = np.identity(4)
+        shear[0, 1] = 0.1 * np.sin(angle / 180.0 * np.pi)  # 动态错切值
+        shear[1, 0] = 0.1 * np.sin(angle / 180.0 * np.pi)  # 动态错切值
+        glMultMatrixf(shear)
+    elif transformation_type == 2:
+        # 对称变换，每秒切换一次对称因子
+        if current_time - last_switch_time &gt;= 1.0:
+            scale_factor = -scale_factor
+            last_switch_time = current_time
+            symmetry_direction = 1 - symmetry_direction  # 切换对称方向
+        if symmetry_direction == 0:
+            scale = np.diag([scale_factor, 1.0, 1.0, 1.0])
+        else:
+            scale = np.diag([1.0, scale_factor, 1.0, 1.0])
+        glMultMatrixf(scale)
+    elif transformation_type == 3:
+        # 放大缩小变换
+        if scaling_factor &gt;= 1.5:
+            scaling_direction = -1
+        elif scaling_factor &lt;= 0.5:
+            scaling_direction = 1
+        scaling_factor += scaling_direction * 0.01
+        scale = np.diag([scaling_factor, scaling_factor, scaling_factor, 1.0])
+        glMultMatrixf(scale)
+</code></pre>
+<p><code>apply_continuous_transformation</code>函数中，根据<code>transformation_type</code>进行不同的变换，各个变换的参数值都有update函数动态更新，实现了持续变换。</p>
+<h2 id="设置控件">设置控件</h2>
+<pre><code class="language-python">def keyboard(key, x, y):
+    global transformation_type
+    if key == b'r':  # 按下 'r' 键进行旋转变换
+        transformation_type = 0
+    elif key == b's':  # 按下 's' 键进行错切变换
+        transformation_type = 1
+    elif key == b'c':  # 按下 'c' 键进行对称变换
+        transformation_type = 2
+    elif key == b'z':  # 按下 'z' 键进行放大缩小变换
+        transformation_type = 3
+</code></pre>
+<p>在键盘按下对应按键时，<code>keyboard</code>函数响应键盘事件，通过修改外部变量<code>transformation_type</code>的值改变所做的变换。</p>
+<h2 id="代码中遇到的问题及解决方案">代码中遇到的问题及解决方案</h2>
+<h3 id="三棱锥在旋转到背面时变黑">三棱锥在旋转到背面时变黑</h3>
+<figure data-type="image" tabindex="2"><img src="https://huanyue-233.github.io/post-images/1718854315066.png" alt="" loading="lazy"></figure>
+<p>如图所示，在旋转过程中三棱锥变成了完全黑色，经过搜索检查发现在<code>drawPyramid</code>函数中未给三棱锥添加面法向量，导致了OpenGL无法正确确定各个面的朝向，使得在旋转到背面时无法正确计算光照路径。</p>
+<h4 id="解决方案">解决方案：</h4>
+<p>在<code>drawPyramid</code>函数中给各个面添加法向量</p>
+<h3 id="物体本身颜色没有显现">物体本身颜色没有显现</h3>
+<figure data-type="image" tabindex="3"><img src="https://huanyue-233.github.io/post-images/1718854299357.png" alt="" loading="lazy"></figure>
+<p>我给三个几何体分别设置了蓝色、白色、浅红色，但是几何体颜色仅仅收光照影响，没有收到其原始颜色影响。</p>
+<p>经过检查，这是由于没有启动物体原本的材质导致的</p>
+<h4 id="解决方案-2">解决方案：</h4>
+<p>启用物体的材质光</p>
+<pre><code class="language-python">glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE)  # 使用顶点颜色作为材质的环境光和漫反射光
+</code></pre>
+<p>设置镜面反射属性</p>
+<pre><code class="language-python">def set_material():
+    specular = [1.0, 1.0, 1.0, 1.0]  # 镜面反射光
+    shininess = [50.0]  # 镜面指数
+
+    glMaterialfv(GL_FRONT, GL_SPECULAR, specular)
+    glMaterialfv(GL_FRONT, GL_SHININESS, shininess)
+</code></pre>
+<h3 id="源代码">源代码</h3>
+<pre><code class="language-python">import sys
+import random
+import numpy as np
+import time
+from OpenGL.GL import *
+from OpenGL.GLU import *
+from OpenGL.GLUT import *
+
+angle = 0.0
+transform_counter = 0
+start_time = None
+transformation_type = 0
+last_switch_time = 0
+scale_factor = 1.0
+symmetry_direction = 0  # 0: 水平, 1: 垂直
+scaling_factor = 1.0
+scaling_direction = 1  # 1: 放大, -1: 缩小
+
+def init():
+    glClearColor(0.0, 0.0, 0.0, 1.0)
+    glEnable(GL_DEPTH_TEST)
+    glEnable(GL_LIGHTING)
+    glEnable(GL_LIGHT0)
+    glEnable(GL_LIGHT1)
+
+def apply_continuous_transformation():
+    global angle, last_switch_time, scale_factor, symmetry_direction, scaling_factor, scaling_direction
+    current_time = time.time()
+    if transformation_type == 0:
+        # 旋转变换
+        glRotatef(angle, 1.0, 1.0, 0.0)
+    elif transformation_type == 1:
+        # 错切变换
+        shear = np.identity(4)
+        shear[0, 1] = 0.1 * np.sin(angle / 180.0 * np.pi)  # 动态错切值
+        shear[1, 0] = 0.1 * np.sin(angle / 180.0 * np.pi)  # 动态错切值
+        glMultMatrixf(shear)
+    elif transformation_type == 2:
+        # 对称变换，每秒切换一次对称因子
+        if current_time - last_switch_time &gt;= 1.0:
+            scale_factor = -scale_factor
+            last_switch_time = current_time
+            symmetry_direction = 1 - symmetry_direction  # 切换对称方向
+        if symmetry_direction == 0:
+            scale = np.diag([scale_factor, 1.0, 1.0, 1.0])
+        else:
+            scale = np.diag([1.0, scale_factor, 1.0, 1.0])
+        glMultMatrixf(scale)
+    elif transformation_type == 3:
+        # 放大缩小变换
+        if scaling_factor &gt;= 1.5:
+            scaling_direction = -1
+        elif scaling_factor &lt;= 0.5:
+            scaling_direction = 1
+        scaling_factor += scaling_direction * 0.01
+        scale = np.diag([scaling_factor, scaling_factor, scaling_factor, 1.0])
+        glMultMatrixf(scale)
+
+def display():
+    global angle, transform_counter, wait_counter
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+    gluLookAt(0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+
+    # 设置光源
+    light_pos1 = [-2.0, 0.0, 2.0, 1.0]  # 左前方
+    light_color1 = [0.0, 1.0, 1.0, 1.0]  # 亮青色
+    glLightfv(GL_LIGHT0, GL_POSITION, light_pos1)
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color1)
+
+    light_pos2 = [2.0, 0.0, 2.0, 1.0] #右前方
+    light_color2 = [1.0, 1.0, 0.0, 1.0]  # 亮黄色
+    glLightfv(GL_LIGHT1, GL_POSITION, light_pos2)
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, light_color2)
+
+    # 绘制正方体
+    glPushMatrix()
+    glColor3f(0.0, 1.0, 0.0)  # 绿色
+    glTranslatef(0.0, 0.0, 0.0)
+    apply_continuous_transformation()  # 应用持续变换
+    glutSolidCube(1.5)
+    glPopMatrix()
+
+    # 绘制球体
+    glPushMatrix()
+    glColor3f(1.0, 0.0, 0.0)  # 红色
+    glTranslatef(3.0, 0.0, 0.0)
+    apply_continuous_transformation()  # 应用持续变换
+    glutSolidSphere(1.0, 50, 50)
+    glPopMatrix()
+
+    # 绘制三棱锥
+    glPushMatrix()
+    glColor3f(0.0, 0.0, 1.0)  # 蓝色
+    glTranslatef(-3.0, 0.0, 0.0)
+    apply_continuous_transformation()  # 应用持续变换
+    drawPyramid()
+    glPopMatrix()
+
+    glutSwapBuffers()
+
+def drawPyramid():
+    glBegin(GL_TRIANGLES)
+    # 前面
+    glNormal3f(0.0, 0.5, 0.5)  # 为每个面指定法向量
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(-1.0, -1.0, 1.0)
+    glVertex3f(1.0, -1.0, 1.0)
+    # 右面
+    glNormal3f(0.5, 0.5, 0.0)
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(1.0, -1.0, 1.0)
+    glVertex3f(1.0, -1.0, -1.0)
+    # 后面
+    glNormal3f(0.0, 0.5, -0.5)
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(1.0, -1.0, -1.0)
+    glVertex3f(-1.0, -1.0, -1.0)
+    # 左面
+    glNormal3f(-0.5, 0.5, 0.0)
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(-1.0, -1.0, -1.0)
+    glVertex3f(-1.0, -1.0, 1.0)
+    glEnd()
+    glBegin(GL_QUADS)
+    # 底面
+    glNormal3f(0.0, -1.0, 0.0)
+    glVertex3f(-1.0, -1.0, -1.0)
+    glVertex3f(1.0, -1.0, -1.0)
+    glVertex3f(1.0, -1.0, 1.0)
+    glVertex3f(-1.0, -1.0, 1.0)
+    glEnd()
+
+
+def reshape(w, h):
+    glViewport(0, 0, w, h)
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    gluPerspective(45.0, float(w) / float(h), 1.0, 100.0)
+    glMatrixMode(GL_MODELVIEW)
+
+def update(value):
+    global angle, transform_counter
+    angle += 5.0  # 增加旋转速度
+    angle = angle % 360
+    transform_counter += 1
+    glutPostRedisplay()
+    glutTimerFunc(50, update, 0)  # 每50毫秒更新一次
+
+def keyboard(key, x, y):
+    global transformation_type
+    if key == b'r':  # 按下 'r' 键进行旋转变换
+        transformation_type = 0
+    elif key == b's':  # 按下 's' 键进行错切变换
+        transformation_type = 1
+    elif key == b'c':  # 按下 'c' 键进行对称变换
+        transformation_type = 2
+    elif key == b'z':  # 按下 'z' 键进行放大缩小变换
+        transformation_type = 3
+
+def main():
+    global start_time
+    start_time = time.time()
+    glutInit(sys.argv)
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
+    glutInitWindowSize(800, 600)
+    glutCreateWindow(&quot;Multiple Geometries with Lights&quot;)
+    init()
+    glutDisplayFunc(display)
+    glutReshapeFunc(reshape)
+    glutKeyboardFunc(keyboard)  # 注册键盘回调函数
+    glutTimerFunc(50, update, 0)  # 每50毫秒更新一次
+    glutMainLoop()
+
+if __name__ == &quot;__main__&quot;:
+    main()
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[人间最美是清欢]]></title>
+        <id>https://huanyue-233.github.io/post/qing2/</id>
+        <link href="https://huanyue-233.github.io/post/qing2/">
+        </link>
+        <updated>2020-11-20T13:49:25.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="人生最美是清欢">人生最美是清欢</h1>
+<ul>
+<li>
+<p>细雨斜风作晓寒，淡烟疏柳媚晴滩。入淮清洛渐漫漫。<br>
+雪沫乳花浮午盏，蓼茸蒿笋试春盘。人间有味是清欢。</p>
+</li>
+<li>
+<p>梨花淡白柳深青，柳絮飞时花满城。<br>
+惆怅东栏一株雪，人生看得几清明。</p>
+</li>
+</ul>
+<h4 id="有一种淡然与潇洒">《有一种淡然与潇洒》</h4>
+<ul>
+<li>
+<p>​	  近几年，我常在大陆的高中和大学巡回演讲，有很多学校甚至在万人以上。</p>
+<p>​	 一万多人的苦闷挤在一起，那也够惊人了。</p>
+<p>​	 大学生的苦闷是即将面对就业的问题，人生将何去何从？</p>
+<p>​	 这还是好解决的，人生的路有很多可能，只要有斗志，怎么走都会有路。</p>
+<p>​	 高中生的苦闷就可怕了，路只有一条。</p>
+<p>​	 因为路只有一条，每一次考试都不能放松，每一个分数都不可轻忽。</p>
+<p>​	 所有的高中生都为了分数，考试，高考而活着；所有的高中生，生活都是黑白的，平面的，单调的。</p>
+<p>​	 终有一天，高中生会上了大学，大学生会毕业，到那一天才会发现，真实的人生不是这样的。</p>
+<p>​	 大部分我们考一百分的学科，在人生里是无用的。</p>
+<p>​	 真实的人生却没有人能拿一百分，工作不会一百分，爱情不会一百分，婚姻不会一百分，人际关系不会一百分，健康状况不会一百分……</p>
+<p>没有完美的人生，才是人生的真情实景；人生永远不变的，就是每天都在改变。</p>
+<p>学生时代有六十分就很好了。</p>
+<p>另外的四十分，应该是懂不懂得生活，能不能爱与被爱，有没有幽默感，会不会欣赏美的事物。</p>
+<p>​	 在挫折与失败中学习，培养正向的能量。</p>
+<p>在不断流逝的时光中，了知人生的无常与悲情。</p>
+<p>在零碎破损的生活里，建立起自己的思想观点与价值体系。</p>
+<p>​	 在一切因缘的成住坏空，有一种淡然与潇洒。</p>
+<p>也许，只有在高中或大学时代，有生命的沉思，才不会被分数与考试淹埋。</p>
+<p>超越与淡然，生命就自由了。</p>
+</li>
+<li>
+<p>“清欢”是什么呢？ 清欢几乎是难以翻译的，可以说是“清淡的欢愉”，这种清淡的欢愉不是来自别处，正是来自对平静的、疏淡的、简朴的生活的一种热爱。当一个人可以品味出野菜的清香用过了山珍海味；或者一个人在路边的石头里看出了比钻石更引人的滋味，或者一个人听林间鸟鸣的声音感受到比提笼遛鸟更感动，或者甚至于体会了静静品一壶乌龙茶比起在喧闹的晚宴中更能清洗心灵……这些就是“清欢”。</p>
+</li>
+<li>
+<p>我觉得大可不必，人的生命虽然渺小短暂，但它像一扇晴窗，是由自己小的心眼里来照见大的世界。</p>
+</li>
+<li>
+<p>一扇晴窗，在面对时空的流变时飞进来春花，就有春花；飘进来萤火，就有萤火；传进秋声，就来了秋声；侵进冬寒，就有冬寒。闯进来情爱就有情爱，刺进来忧伤就有忧伤，一任什么事物到了我们的晴窗，都能让我们更真切的体验生命的深味。</p>
+</li>
+<li>
+<p>真实的智慧是来自平常的生活，是心海的一种体现，如果能听闻到心海的消息，一切都是道。</p>
+</li>
+<li>
+<p>岁月是明证，我们获得时候，真正感觉自己是存在的，岁月的脚步一走过，转眼便如云烟无形。</p>
+</li>
+<li></li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[人间有味是清欢]]></title>
+        <id>https://huanyue-233.github.io/post/qing/</id>
+        <link href="https://huanyue-233.github.io/post/qing/">
+        </link>
+        <updated>2020-10-25T03:36:03.000Z</updated>
+        <content type="html"><![CDATA[<h5 id="浣溪沙细雨斜风作晓寒">浣溪沙·细雨斜风作晓寒</h5>
+<p>细雨斜风作晓寒，淡烟疏柳媚晴滩。入淮清洛渐漫漫。</p>
+<p>雪沫乳花浮午盏，蓼茸蒿笋试春盘。人间有味是清欢。</p>
+<h3 id="摘选">摘选</h3>
+<ul>
+<li>
+<p>在我贫困的童年时代、颠踬无依的少年时代、禹禹独行的青年时代，我还能向往生命的美好，一直保持单纯的初心，因为我相信“人间有味是清欢”。</p>
+</li>
+<li>
+<p>我坐着，看老人整理庭院，不禁痴了。想起年轻时追寻生命的繁盛，到了中年时代，繁华落尽见真淳，直到花甲以后，才舍弃了幻化的繁华，回归到极简，在单纯之中看见美。</p>
+</li>
+<li>
+<p>生命若减到极简，一只蝴蝶就能找到无限的花园，一颗树里就有美丽的山，一朵云就是无垠的天空······</p>
+</li>
+<li>
+<p>十年夜雨心不冷，</p>
+<p>百鸟飞远天不远。</p>
+<p>千山越过水不渴，</p>
+<p>万花落尽春不尽。</p>
+</li>
+<li>
+<p>“清欢”是生命的减法，在我们舍弃了世俗的追逐和欲望捆绑，回到最单纯的欢喜，是生命里最有滋味的情境。</p>
+</li>
+<li>
+<p>虽然紧紧抱住生命的浮木，却一点也没有能力抵挡巨浪，只是随风浮沉。也才逐渐了解到因缘的不可思议，生命的大部分都是不可预约的。</p>
+</li>
+<li>
+<p>其实人生就如一片茶叶，只有在艰难险阻中沉浮，在痛苦心酸中磨砺，才能真正地体会到生活的原味和魅力。在哪一次次的沉浮历练中，生命变得光彩照人，芳香四溢。</p>
+</li>
+<li>
+<p>人生如茶，第一道茶苦若生命，第二道茶香似爱情，第三道茶淡如春风。</p>
+</li>
+<li>
+<p>成功辉煌的人生也必定具备几方面的素质：高尚的道德的情操，一定的才华素养，加上良好的人际关系和自己“世事洞明，人情练达”的社会生活驾驭本领。</p>
+</li>
+<li>
+<p>这其实没有什么秘诀，只是深信物质之外，还有一些能使我们快乐的事物不是来自物质。而且对这个世界保持微微喜悦的心情，知道在匮乏的生活里也能有丰满的快乐，便宜的实物也有好吃的味道，小环境里也有远大的梦想—这些卑中之尊、贱中之美、小中之大，乃至丑中之美、坏中之好，都是因微细喜悦的心情才能体会。</p>
+</li>
+<li>
+<p>在路边自由地喝杯木瓜牛奶，滋味不见得会比人参汤逊色呀！</p>
+</li>
+<li>
+<p>因缘固然能使我们相遇，也能使我们离散，只要我们足够明净，相遇时能听见互相心海的消息，即使是离散了，海潮仍然涌动，偶尔也会忆起，海面上的深夜，曾有过水母魅力的磷光点缀着黑暗。</p>
+<p>在时间上、在广大里、在黑暗中、在忧伤深处、在冷漠之际，我们若能时而真挚地对望一眼，知道石心里还有温暖的质地，也就够了。</p>
+</li>
+<li>
+<p>我猛然感受到两个可怕的想法：我每天都在同一时间走同一条路到学校接孩子放学，为什么三个月来都没有看见美丽的夕阳？如果我曾看见夕阳，为什么三个月来完全没有感觉？</p>
+<p>我为自己感到悲伤，但是更悲伤的是，想到这城市里，即使生命中没有风雨，也很少有人能真心欣赏这美丽的夕阳吧！</p>
+</li>
+<li>
+<p>朋友的情义是难以表明的，它在某些质地上比男女的爱情还要细致。若说爱情是彩陶，朋友则是白瓷，在黑暗中，白瓷能现出它那晶明的颜色；而在有光的时候，白瓷则有玉的温润，还有水晶的光泽。君不见在古董市场里，那些没有瑕疵的白瓷是多么名贵呀！</p>
+</li>
+<li>
+<p>包容朋友就如贝壳包容怀里的珍珠一样，珍珠虽然宝贵而明亮，但它是有可能使贝壳受伤的。贝壳要不受伤只有两个法子：一个是把珍珠磨圆，呈现出其最温润光芒的一面；一是使自己的血肉更柔软，才能包容那怀里外来的珍珠。前者是帮助朋友，使他成为“幽人”；后者是打开心胸，使自己常能“怀君”。</p>
+</li>
+<li>
+<p>幸福，常常是隐藏在平常事物中 ，只要加一点用心，平常事物就能变变得平凡、美好、庄严了。只要加一点用心，凡俗的日子就会变得可爱、可学、可想念了。就像不管我的年岁如何增长，不论我在天涯海角，只要一想到爸爸从凤山提回来的那一锅肉羹，心中依然有三十年前的汹涌热潮在滚动。肉羹可能会冷，生命中的爱与祝愿，却永远是热腾腾的；肉羹可能在动荡中会满溢出来，生活里被珍藏的真情蜜意则永不逝去。</p>
+</li>
+<li>
+<p>要寻找到生命最内在的本质，是不能有任何借口的，当我们还有借口，本质就不会显露出来。</p>
+<p>我对自己过去情感的受伤，姻缘的挫败也没有任何借口，这都是我生命中的必然之路，我也愿承担任何的批评，并把这些批评当做石阶，走向更高的位置来会看自己的人生。</p>
+<p>在风中跌倒，在爱中流泪，这都是人生不可避免的旅程。如果我们在每一段旅程，都蒙学习到更广大的胸怀，都能不失去真爱的勇气，美好的追求，那一切挫折不也都有深刻的意义吗？</p>
+</li>
+<li>
+<p>可见幸福并不是一种追求，而是一种对现状的满足。</p>
+</li>
+<li>
+<p>有许多许多人，他们在面对情爱的时候，最长挂在口中的是“随缘”，也就是随着因缘流转，缘生固然是好，缘灭也不悲忧，可是随缘总有天助的味道，完全随缘，就是完全的流转，将会留下不少的憾恨。</p>
+</li>
+<li>
+<p>我想，更好的态度是“惜缘”，珍惜今生每一次会面，珍惜今生的每一次爱情，甚至珍惜每一次姻缘的散灭，才使我们能相思，懂得相相思，使我们的意念如顺风的船，顺利地驶向目的地，但这种意念顺利的开拔，是不是让我们从相思中产生一些自觉呢？自觉到我们的生命所要驶去的方向，这样相思才不会因灼烧使我们堕落，且因距离而使我们清明。</p>
+</li>
+<li>
+<p>恋是美的，失是苦的，可是有恋就有失，有美就有苦，如果一个人不能尝苦，那么也就不能体会到那苦中的美。</p>
+</li>
+<li>
+<p>这世界本来就有相对的两面，欢乐有多少，忧患就有多少；恨有多切，爱就有那么深；祸兮福所倚，福兮祸所伏；所以我们要找到身心的平衡点，就要先认识这是个相对的世界。</p>
+</li>
+<li>
+<p>情爱，算是人间最浓烈的感觉了，若能存心如清茶、如素帕，那么不论得失，情义也不至于完全失去，自然也不会反目成仇了，转爱成恨了。只是即使淡如清茶还是忧欢的波澜，不能有清净的究竟，历史上的禅师以关心、治心、直心的方法来超越，使人能高高地站在忧欢之上。</p>
+</li>
+<li>
+<p>每天，都含着笑意，来与宇宙时空的无情、与岁月生命的多变，共同运转，那么在大化中，也会有江上明月，山间清风、岸边垂柳那样的美景，不断地映现。</p>
+</li>
+<li>
+<p>我一直深信人的心里也有一只天鹅，可以任思想和创造力无边地飞翔，而许多人受到欲望的捆绑，或在生活中被剪去飞行的壮志，或由于起飞的湖泊太想，久而久之，失去思想和创造的能力，也就失去自由和天空的心了。</p>
+</li>
+<li>
+<p>这真是一个动人的教化，苦瓜的本质是苦的，不会因圣水圣殿而改变，情爱是苦的，由情爱产生的生命本质也是苦的，这一点即使是修行者也不可能改变，何况是凡夫俗子！意思是，我们尝过情感与生命的大苦的人，并不能告诉别人失恋是该欢喜的事。因为它就是那么苦，这一层次是永不会变的，可是不吃苦瓜的人，永远不会知道苦瓜是苦的。&quot;现在，你煮熟了这苦的，当你吃的时候，你终于知道是苦的了，但第一口苦，第二、第三口就不会那么苦了！&quot;师父说。</p>
+<p>对待我们的生命与情爱也是这样的,时时准备受苦,不是期待苦瓜变甜,而是真正认识那苦的滋味,才是有智慧的态度 。</p>
+</li>
+<li>
+<p>快乐，不是一个地方，而是一个方向。——莎士比亚</p>
+</li>
+<li>
+<p>真正从孩子身上看见生命的至真至美的人会发现，孩子不只配得上甲加上两个苹果，每一个孩子都是甲加上十个苹果。</p>
+</li>
+<li>
+<p>我发现大陆家长很在意成绩，都想让孩子考第一名。其实，现在世界精英都不是当年的尖子生，他们在班级的排名是第7名到第17名。原因就是这些孩子人际关系更好，可以和第一名做朋友，也可以和最后一名做朋友，而且孩子压力小，生活更轻松，创意最好。</p>
+</li>
+<li>
+<p>浪漫就是浪费时间慢慢吃饭，浪费时间慢慢喝茶，浪费时间慢慢走，浪费时间慢慢变老。</p>
+</li>
+<li>
+<p>太阳是永远存才的，一如我们所爱的人，不管他是远离，死亡还是背弃，我们的思念永远不会失去。</p>
+</li>
+<li>
+<p>我以为，成功应该很快乐，应该每天带着“神秘微笑”。但事实上很难，因为每天从早到晚要开七八个会，还有要和很多你不喜欢的人约会、应酬。到最后，生命的时间和空间被挤压，发现自己已经很难静下心来写一篇文章，而且幽默和浪漫精神不见了，对年轻时候向往的东西都失去了兴趣。</p>
+</li>
+<li>
+<p>之所以讲觉悟，是因为现代社会，很多人看不到自己的心。我们把生活分成两部分，一部分是重要的生活，一部分是紧急的生活，会发现很多人都在过进击的生活，随波逐流，而不是过重要的生活。</p>
+<p>什么是重要的生活？陪着爱人散步，躺在草地上看星星，一个小孩有没有幽默感，懂不懂得爱与宽容，这些都是重要的。而每天着急上班、学习、考试是紧急的。当整体在紧急的事情里面打转的时候，“琴棋书画诗酒花”就会变成“柴米油盐酱醋茶”，要学会腾出一些空间，进入“重要的生活”。</p>
+</li>
+<li>
+<p>成功是今天比昨天更慈悲、更智慧、更懂爱与宽容。</p>
+</li>
+<li>
+<p>什么事浪漫？“浪费时间慢慢吃饭，浪费时间慢慢走，浪费时间慢慢喝茶······这些都是浪费”，浪漫其实就是创造一种时空、一种感受、一种向往、一种理想，在你的世俗土地上开出一朵玫瑰花。</p>
+<p>即使是被世俗捆绑，即便是处于人生低谷，也要时刻保持浪漫精神。求婚也并不一定需要房子、车子、票子，以及很大的钻戒，我只是写了“纵使才名冠江东，生生世世与君同”两句诗，妻子就感动异常，嫁给了我。</p>
+</li>
+<li>
+<p>人需要发展自己的特质，但是也要包容别人的不同，这个世界才会精彩。因此家长也不要总拿自己的孩子和别人家的作比较，因为辣椒不需要和茄子比较，辣椒只要自己够辣就好。</p>
+</li>
+<li>
+<p>如果你现在问我什么是成功，我会说，今天比昨天更慈悲，更智慧，更懂得爱与宽容，就是一种成功，如果每天都成功，连在一起就是一个成功的人生.不管你从哪里来，要去到哪里，人生不过就是这样，追求成为一个更好的，更具有精神和灵气的自己。</p>
+</li>
+<li>
+<p>在这个世界上，我们的意念都如在森林中的小鹿，迷乱地跳跃与奔跑，这纷乱的念头固然值得担忧，总还不偏离人的道路。一旦我们的意念顺着轨道往偏邪的道路如火车开去，出发的时候好像没有什么，走远了，就难以回头了。所以，向前走的时候每天反顾一下，看看自我意念的轨道是多么重要呀！</p>
+</li>
+<li>
+<p>今年的桂花都采尽了，今年的桂花茶也饮完了，秋日已尽，不必挂怀，我们已在心里埋下桂花的种子。“风波不信菱枝弱，月露谁教桂叶香”，明年的桂花一定会和今年一样香，明年遇到的人一定比今年更好。</p>
+</li>
+<li>
+<p>真正爱情的可贵不在于突破创造，而能够平静地相守才是真正的可贵。也许这样的思想是有些老态了，只企求一步步地走向未来，再也不希冀奔驰了，因为我认识“守静”不只是爱情，也是生命的最高的情操。那样的感觉像是：航过千辛万难、惊涛骇浪而渐渐驶进一个安全的港湾，纵然有万劫不磨的情爱，终也会倦于飘泊流浪吧！</p>
+</li>
+<li>
+<p>我们不能以过去的破碎作为借口，困在破碎之中。过去即使再破碎，也永远是过去了。</p>
+<p>我们也不能以过去的痛苦作为推托，束缚于痛苦。生命的着力点并不在过去，而是此时此地此人。</p>
+</li>
+<li>
+<p>每天的生活也真像一杯茶,大部分人的茶叶和茶具都很相近,然而善泡者泡出更清香的滋味,而善饮者饮到更细腻的消息。依我的经验，只有在无事时泡的茶最甘美，也惟有无事时喝的茶最有味。</p>
+</li>
+</ul>
+<h3 id="end-20201031">End 2020.10.31</h3>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[乖，摸摸头2.0 书摘]]></title>
+        <id>https://huanyue-233.github.io/post/touchhead2.0/</id>
+        <link href="https://huanyue-233.github.io/post/touchhead2.0/">
+        </link>
+        <updated>2020-08-22T14:36:30.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>
+<p>众人是不关心自己的，他们只关心自己熟悉的事物，越是缺少德行的社会，人们越是愿意占领道德制高点，已享受头羊引领羊群般的虚假快感。</p>
+</li>
+<li>
+<p>或许和这个世界上许多同学聚会一样，叙旧之外，少不了炫耀和吹嘘、数落和攀比，客客气气的俯视，心照不宣的鄙夷。</p>
+</li>
+<li>
+<p>从小，他就被教育要努力，要上进，被告知只有出人头地有名有利才叫有前途，被告知机会均等、天道酬勤······却没人告诉他，压根就不存在平等的起跑线。</p>
+<p>也没有人告诉他，不论行伍还是读书，这个世界对于他这种普通人家的子弟而言，上行通道有多狭窄，机遇有多稀缺。</p>
+<p>学校教育教了他很多，却从没教会他面对那些不公平的资源配置时，该如何去调整心态。</p>
+<p>学校只教他一种办法：好好读书。</p>
+</li>
+<li>
+<p>所有人都是公众价值观的帮凶，没有人会承认主谋是那套有着标准答案的价值观，以及那些冠冕堂皇的公平，就像没人了解那些同学聚会上到底发生了些什么。</p>
+</li>
+<li>
+<p>她一天比一天心慌，枕巾经常从半夜湿到天亮，每天清晨都用被子蒙住脑袋，不敢看窗外的天光，心里默念着：再晚一分钟起床吧······再晚一分钟起床吧·······</p>
+</li>
+<li>
+<p>时间无情第一，它才不在乎你是否还是一个孩子，你只要稍一耽搁、稍一犹豫，它立马帮你决定故事的结局。它会把你欠下的对不起，变成还不起。又会把很多对不起，变成来不及。</p>
+</li>
+<li>
+<p><strong>君子之交淡如水，小人之交甘若醴。</strong></p>
+</li>
+<li>
+<p>有时候君子之交比较好，有时候小人之家也不赖，但更多的时候当当普通朋友也挺不错的。</p>
+</li>
+<li>
+<p>我在路上走着，遇到了你，大家点头微笑，结伴一程。</p>
+<p>缘深缘浅，缘聚缘散，该分手时分手，改重复时重逢。</p>
+<p>你是我的普通朋友，我不奢望咱们的关系比水更淡泊，比酒更香浓。</p>
+<p>惜缘即可，不必攀缘</p>
+<p>同路人而已。</p>
+<p>能不远不近地彼此陪伴着，不是已经很好了吗。</p>
+</li>
+<li>
+<p>若你也曾爱过一座城，也在忆着一座城。</p>
+<p>若你也曾拥有过一些人，也曾失去过一些人分。</p>
+<p>若你也有过不舍也有过不甘，也有过酣畅淋漓也有过肝肠寸断。</p>
+<p>若人近中年的你也想徒劳地伸出双手最后抓住几缕关于年轻时代的光芒、霓彩、云烟·······</p>
+</li>
+<li>
+<p>其实世上哪儿有什么一见钟情，所谓的一见钟情，不过是你终于遇到了那个你一直想要的人而已。人海茫茫，遇之是幸，不遇是命。其实每个人都会遇到想要的人，可惜大多数人在遇到对方时，己身却并未做好准备，故而，往往遗憾地擦肩。</p>
+</li>
+<li>
+<p>你我都明白，这从来就不是个公平的世界。</p>
+<p>人们起点不同，路径不同，乃至遭遇不同，命运不同。</p>
+<p>有人认命，有人顺命，有人抗命，有人玩命，希望和失望交错而生，倏尔一生。</p>
+</li>
+</ul>
+<p>​		是啊，不是所有的忍耐都会苦尽甘来，不是所有的努力都会换来成功。</p>
+<p>​		他人随随便便就能获得的，于你而言或许只是个梦。</p>
+<ul>
+<li>
+<p>爱一个人，若能有条不紊地说出一二三四个理由来，</p>
+<p>那还叫爱吗？</p>
+</li>
+<li>
+<p>我的生活是过给我自己的，编剧是我，导演是我，主演是我，观众还是我，不是过给别人看的。</p>
+</li>
+<li>
+<p>世上没有什么命中注定，所谓命中注定，都机遇你过去和当下有意无意的选择。</p>
+<p>选择种善因，自得善果，果上又生因，因上又生果。</p>
+</li>
+<li>
+<p>没人告诉过我，很多人一辈子只能遇见一次，擦肩而过就是杳然一生。</p>
+</li>
+<li>
+<p>我不反主流，我烦的是单项选择。</p>
+<p>我不捧亚文化，我煮的是多元平衡。</p>
+<p>我不屑路径依赖，我写的是知行合一的人生。</p>
+<p>平行世界，多元生活，既可以朝九晚五，又能够浪迹天涯。</p>
+</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Do not go gentle into that good night]]></title>
+        <id>https://huanyue-233.github.io/post/goodnight/</id>
+        <link href="https://huanyue-233.github.io/post/goodnight/">
+        </link>
+        <updated>2020-08-04T13:28:40.000Z</updated>
+        <content type="html"><![CDATA[<p>Do not go gentle into that good night<br>
+Dylan Thomas, 1914 - 1953<br>
+Do not go gentle into that good night,<br>
+Old age should burn and rave at close of day;<br>
+Rage,rage against the dying of the light.<br>
+Though wise men at their end know dark is right,<br>
+Because their words had forked no lightning they<br>
+Do not go gentle into that good night.<br>
+Good men, the last wave by, crying how bright<br>
+Their frail deeds might have danced in a green bay,<br>
+Rage, rage against the dying of the light.<br>
+Wild men who caught and sang the sun in flight,<br>
+And learn, too late, they grieved it on its way,<br>
+Do not go gentle into that good night.<br>
+Grave men, near death, who see with blinding sight<br>
+Blind eyes could blaze like meteors and be gay,<br>
+Rage, rage against the dying of the light.</p>
+<p>And you, my father, there on the sad height,<br>
+Curse, bless, me now with your fierce tears, I pray.<br>
+Do not go gentle into that good night.<br>
+Rage, rage against the dying of the light.</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[墨菲定律书摘]]></title>
+        <id>https://huanyue-233.github.io/post/Murphy&apos;slaw/</id>
+        <link href="https://huanyue-233.github.io/post/Murphy&apos;slaw/">
+        </link>
+        <updated>2020-07-30T15:24:55.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>
+<p>一个人的自我观念是在与其他人的交往中形成的，一个人对自己的认识是其他人对于自己看法的反映，他所具有的这种自我感觉，是由别人的思想。别人对于自己的态度所决定的。</p>
+</li>
+<li>
+<p>我们是什么样的人，很多时候是由社会反馈决定的，别人认为我们什么样的人，我们就可能成为什么样的人。</p>
+</li>
+<li>
+<p>在我们的记忆中，会不自觉地夸大对自己有利的信息，而忽略对自己不利的部分。</p>
+</li>
+<li>
+<p>人们做决策前，思维往往会被所得到的第一信息所左右，第一信息就会像沉入海底的锚一样，把你的思维固定在某处，从而产生先入为主的歪曲认识。</p>
+</li>
+<li>
+<p>瓦伦达效应：越在意的，就越容易失去。</p>
+</li>
+<li>
+<p>很多时候，人们看到的世界，其实只是自己内心世界的一个投影而已。</p>
+</li>
+<li>
+<p>如果一件事情有可能以错误的方式被处理，那么，最终肯定会有人以错误的方式去处理它。</p>
+</li>
+<li>
+<p>当我们尽力去解决一个复杂的或者需要创造性思考的问题时，无论耗费多少精力都找不到正确的思路。在这种时候，暂时停止对问题的积极探索，反而可能会产生关键性的灵感，而这就是“酝酿效应”。</p>
+</li>
+<li>
+<p>很显然，这种把难题暂时放一放，穿插一些其他事情的做法，使人们不会陷入某一种固定的思维模式，能够采取新的步骤和方法，从而使问题更容易被解决。</p>
+</li>
+<li>
+<p>要相信我们的大脑，他比我们想象中的更强大。人脑中隐含着某种迅速而直接的洞察和领悟，这种能力被称为“灵感”或“直觉”。要相信，即便我们停止思考问题，大脑中收集到的资料也不会消极地储存在那里，它会一直在意识深处，重组、加工原理存储的那些资料，进而产生新的想法。</p>
+</li>
+<li>
+<p>要时刻提醒自己——凭直觉做出的决定也仅仅是直觉而已，毕竟不是真正意义上的理性决策，他没有其他依据。</p>
+</li>
+<li>
+<p>是的，我们应该多一些独立思考的精神，少一些盲从的从众行为，以免上当受骗，甚至血本无归——这才是健康的心理，这也是一种睿智的生存之道。</p>
+</li>
+<li>
+<p>设定一个高目标，就等于达成了一部分目标。有许多人一生无所建树，不是因为他们的能力不足，而是因为他们给自己定的目标不足以释放出全部潜能。</p>
+</li>
+<li>
+<p>“洛克定理”认为，目标并不是越高越好,更不应该不切实际.一个像篮球架一样&quot;跳一跳就能更得着&quot;的目标,才是最能激发人们积极性的.因此,&quot;洛克定律&quot;又被叫做&quot;篮球架定律&quot;。——目标要高，但是同样要合理。</p>
+</li>
+<li>
+<p>每个人的智能发展都是不均衡的，都有智能的强点和弱点，他们一旦找到自己智能的最佳点，使智能潜力得到充分发挥，便可取得惊人的成绩。这种现象就被称为“瓦拉赫效应”。</p>
+</li>
+<li>
+<p>因此，如果用“木桶原理”来指导个人发展，在自己不擅长的领域耗费巨大精力，结果就是早就出一个无所不能却又无所专的“通才”，甚至“庸才”。而现代社会分工日益细化，真正需求的人才，应当是某方面有特殊才能的“专才”。</p>
+</li>
+<li>
+<p>“瓦拉赫效应”并不是让我们彻底放弃自己短处，而是告诉我们，必须把有限的时间和精力放在最擅长的领域，这样才能获得最高的投入产出比。</p>
+</li>
+<li>
+<p>每天我们都在做很多事情，有些事情费了半天劲儿，却发现自己内心深处根本就认为这件事情毫无意义，只不过是因为“必须做”而不得不做。这时候，心中带着纠结，带着后悔，只想着尽快完事，却失去了把事情做到极致的内部驱动力。因此，无论做什么事，内心都要有一把尺子，衡量一下哪些事情是自己认为真正值得做的，哪些事情是让自己觉得做了有意义的。“选择你所爱的，爱你所选择的”，这样才能激发我们的斗志，心里才不空虚，才能够心安理得。</p>
+</li>
+<li>
+<p>最令人们称奇的是，这位建筑师当年刻在中央圆柱顶端的一行字：自信和真理只需要一根支柱。</p>
+<p>这根支柱是来自心灵深处最执着的坚持，很多时候，敢于坚持自己正确的选择，敢于在巨大的压力之下不改变自己的初衷，这本身就是一种勇气。所以，我们一旦发现或者选择了正确的东西，就一定要敢于说出自己的想法，敢于坚持自己的想法，并以此来指导自己的行动。水滴石穿，绳锯木断。如果三心二意，哪怕是天才，也将一事无成;只有仰仗恒心，点滴积累，才能获得成功。</p>
+</li>
+<li></li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[要原谅]]></title>
+        <id>https://huanyue-233.github.io/post/forgive/</id>
+        <link href="https://huanyue-233.github.io/post/forgive/">
+        </link>
+        <updated>2020-07-26T14:06:38.000Z</updated>
+        <content type="html"><![CDATA[<p>李小洛</p>
+<p>有一天，你要原谅<br>
+中途离开、变卦说谎的人<br>
+原谅他们越来越少的出场<br>
+原谅他们所剩不多的虚荣和时间</p>
+<p>原谅爱、纪律和荣誉<br>
+不确定的开始，确定的结局<br>
+原谅漂浮的命运，衰竭的神经<br>
+黄连和苦瓜，都要原谅</p>
+<p>原谅我现在，还不能大声说话<br>
+这世间还有一些漫长的阴天和雨天<br>
+头上的神明，他们有时候一言不发<br>
+你也要原谅他们</p>
+<p>原谅他们活着，或死去<br>
+原谅来得及，也原谅来不及<br>
+原谅燕子低飞，蝴蝶迁徙<br>
+池塘的水，就要干了<br>
+天空出现火烧的蘑菇<br>
+蚂蚁搬家，大雨将至</p>
+<p>我们每个人，手里都有一条蛇、一匹马<br>
+一寸黄金、一寸好光阴<br>
+原谅大家都有一本书<br>
+植物学、动物学<br>
+一头皮毛光滑、眉骨高挑的小兽<br>
+原谅我的骨管里刮着听不见的萧杀之秋</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[《你坏》 书摘]]></title>
+        <id>https://huanyue-233.github.io/post/youbad/</id>
+        <link href="https://huanyue-233.github.io/post/youbad/">
+        </link>
+        <updated>2020-07-20T14:23:51.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>
+<p>女人难过的时候，要不然带她出去逛逛街买东西，要不然就喂她吃点食儿。</p>
+</li>
+<li>
+<p>她有一个美丽的背影，修长的腿，纤细的脖颈和腰，看起来很好吃的样子。</p>
+</li>
+<li>
+<p>卖艺不丢人，人可以向往流浪，但这个词未必一定要和乞讨画上等号，它本应跟你自身的能力和魅力合而为一的。穷游这个词没错，但穷游的精髓不是一分钱不带白吃白喝，真正的穷游者皆为能挣多少钱走多远的路，有多广的人脉，行多远的天涯。偶尔厚着脸皮蹭车是可以，但要会感恩，须知道这个世界上没人欠你的。</p>
+</li>
+<li>
+<p>许多人问过我，你我是否曾重逢。</p>
+<p>他们并不明白，许多事情并不需要重逢，就像他们不会明白，那其实并不是一场旅行。</p>
+</li>
+<li>
+<p>你知道的哦，我不爱你，真的咱俩真谈不上爱，连喜欢也算不上吧。</p>
+<p>我想，你我之间的关系比陌生人多一点，比好朋友少一点，比擦肩而过复杂一点儿。</p>
+<p>一场历久弥新的萍水相逢。</p>
+<p>就像秋天里两片楼下的树叶，</p>
+<p>在空中交错片刻，</p>
+<p>然后一片落入水中随波逐流，一片飘在风里浪荡天涯。</p>
+</li>
+<li>
+<p>曾经有个朋友对我说，许多事情是永远说不明白的，做着做着就明白了。</p>
+<p>他说:很多事情就像敲鼓一样，敲着敲着手指就灵活了：该什么节奏就自然明白了。</p>
+<p>明白了。</p>
+<p>他还说：要能耐得住寂寞才行，不然全是扯淡。</p>
+</li>
+<li>
+<p>我还没变老，但心里已经装满了，很多东西慢的一斤溢出来了，很多事情已经记不太清楚,很多人已经模糊了长相或姓名。</p>
+</li>
+<li>
+<p>去他喵的平淡是真吧，愿迤逦抛物线中的你饱受欲扬先抑的成长。</p>
+</li>
+<li>
+<p>幸福或许是颗一直揣在你口袋里的糖，不过那些奇妙的甜，只能被舔过百般滋味后的味蕾品尝。</p>
+</li>
+<li>
+<p>33岁之前，在我的认知中，一直不明白如果一个人内心祖国强大，人生足够丰富的话，为什么一定要靠婚姻家庭来维系自我安全感。一直不明白，做人就一定要在规定的生理节点去按规定的生理节点去按规则出牌，也一直不明白为什么要为了结婚而结婚，为了家长而结婚，为了证明自己成熟让自己看起来不像个孩子而结婚。</p>
+</li>
+<li>
+<p>我喜欢孩子，尤其小小的乖乖的小姑娘，但如果说让我用放弃个体自由为代价，为了一个孩子而建立一份婚姻关系，用婚姻来换一个孩子，就宁愿孤独终老。</p>
+</li>
+<li>
+<p>对每一个孩子而言，原生家庭都是最基础的土壤，发芽抽条都在这块土壤上，只不过或肥沃或贫瘠，或长成扎实的树，或长成一棵根系浅浅的草，细想想，也是无奈，无法选择的事情太多，生死之外，还有原生土壤。</p>
+<p>那时候的你，是选择长成了一颗蒲公英吧，随风飘走，远离那块土壤。</p>
+</li>
+<li>
+<p>这买卖做的,也是没谁了,一两瓶白开水,换了她一颗心。</p>
+</li>
+<li>
+<p>大家在路上走着，遇到了就结伴一程，该分手就分手，该重逢就重逢，路人而已，能不远不近地批次陪伴一程，不是已经很好了吗。</p>
+</li>
+<li>
+<p>朋友啊朋友，你可曾想起了我</p>
+<p>如果你正享受幸福，请你忘记我</p>
+<p>朋友啊朋友，你可曾记起了我</p>
+<p>如果你正遭受不幸，请你告诉我</p>
+<p>朋友啊朋友，你可曾想起了我</p>
+<p>如果你有新的，你有新的彼岸，请你离开我，离开我</p>
+</li>
+<li>
+<p>笑骂由人,自在我知</p>
+</li>
+<li>
+<p>我们是心智蒙昧，人种退化的一代人，贪恋假安逸，畏于真选择。</p>
+<p>我们每一个人都曾听任经济社会的强制压榨和剥削。大把的光阴被暗蚀消磨。</p>
+<p>几乎没再脑容量去真正思辨自己的人生步履。</p>
+<p>又或者，往往我们要扮演完规定的一个角色，才能依仗着生了又灭了灭了又生的厌离心，去博得一个醍醐灌顶机会。可届时往往人过而立过奖行不惑，尚有意气，缺少胆气了。</p>
+<p>多少我们的同龄人一生被一种生活方式所桎梏，以为自己唯一接触过的生活、唯一触手摸得到的生活，就是终极答案。</p>
+</li>
+<li>
+<p>百人百相，千人千面，有人是勇进客，有人是安稳者，有人是体验者。</p>
+<p>孰对孰错，孰是孰非？</p>
+<p>属于大多数人的并不意味着属于所有人。</p>
+<p>属于小部分人的也并不代表着不属于人。</p>
+</li>
+<li>
+<p>平视是最基础的尊重。</p>
+<p>于众人而言，学会去平视那些不同的价值体系，总好过盲目仰视为明灯或盲目攻讦当杠精喷子。</p>
+<p>自洽是最高阶的自尊。</p>
+<p>于个体而言，只要是对自己负责任的，只是要精神自洽 的，哪种生活方式是天然带有原罪的呢？</p>
+</li>
+<li>
+<p>最为成熟健康的联结方式，是爱一个人、与她在一起，俩人共同努力，建立一种既不破坏自身的独立和完整、不失去自由和个性，又和谐、笃定、牢不可摧的关系。</p>
+<p>我们在这种关系中体会相互的关心、责任、尊重与了解，这种种经验帮助我们完善自己，最终，凭借这种关系，我们在享受自由的同事，确认与世界的联结、与无线的契合，也享受对世界与他人自发的肯定，关怀和馈赠。</p>
+<p>正因我们追求笃定和永恒。所以我们追求的爱。是与“这个人”的爱。经由这个人，我得到安放，经由这个人，我热爱生命，经由这个人，我从人性中跃起，又扎根进人性，经由这个人，我从蒙昧中获得自由，又不孤独惶惑。</p>
+<p>这，才是婚姻的本质。</p>
+<p>它是两个独立、自由、成熟的人，两个都具备爱的能力的人表达并实践一种契约，这契约直接回应人类的存在之惑。</p>
+</li>
+</ul>
+<p><strong>完结2020/7/30</strong></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[随手记录]]></title>
+        <id>https://huanyue-233.github.io/post/Recording/</id>
+        <link href="https://huanyue-233.github.io/post/Recording/">
+        </link>
+        <updated>2020-07-18T14:14:06.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>人生在世，无法选择的东西太多，出生就定好了的原生家庭，终其一生也洗不退的灰白底色。</li>
+<li>最貌似坚强的人最软弱，最懂得保护自己的人最不堪一击。</li>
+<li>不在乎先天不足，不介意已痴已贪，不落痕迹，也不在乎落不落下痕迹。</li>
+<li>从没想过让世界喜欢我，我做的一切，只为了让我喜欢我。</li>
+<li>六度分隔（Six Degrees of Separation）理论。简单地说：“你和任何一个陌生人之间所间隔的人不会超五个，也就是说，最多通过六个人你就能够认识任何一个陌生人。</li>
+</ul>
+<ul>
+<li>未拥有不奢望，得到了就珍惜，失去了就归去。</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[二叉搜索树(Binary Search Tree,BST)]]></title>
+        <id>https://huanyue-233.github.io/post/BST/</id>
+        <link href="https://huanyue-233.github.io/post/BST/">
+        </link>
+        <updated>2020-04-03T08:29:14.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="二叉搜索树bst">二叉搜索树(BST)</h1>
+<h2 id="概述">概述</h2>
+<p>二叉搜索树显然是一颗二叉树,它具有下列性质:</p>
+<p>对于每个结点,若其左子树不为空,则左子树上所有结点都小于该结点的值;右子树上的所有结点都大于该节点的值.</p>
+<figure data-type="image" tabindex="1"><img src="https://huanyue-233.github.io/post-images/1585902604679.png" alt="" loading="lazy"></figure>
+<h2 id="功能">功能</h2>
+<p>二叉搜索树维护的是一个集合，有以下功能</p>
+<ul>
+<li>查找 给定一个值，查询树中是否有该值,如果有,返回其位置</li>
+<li>插入 插入一个值(可以重复,据需要而定)</li>
+<li>删除 删除一个值</li>
+</ul>
+<h2 id="定义">定义</h2>
+<p>节点上应存储以下信息</p>
+<ul>
+<li>指针-&gt;左儿子 ls</li>
+<li>指针-&gt;右儿子 rs</li>
+<li>该节点的值 key</li>
+<li>指针-&gt;父节点 p</li>
+</ul>
+<pre><code class="language-cpp">struct node
+{
+    int ls, rs, key, p;
+} bst[1000];
+</code></pre>
+<p>如果没有子/父节点，因此设为一个特殊值，这里用0</p>
+<h2 id="前序遍历与中序遍历">前序遍历与中序遍历</h2>
+<h3 id="前序遍历">前序遍历</h3>
+<pre><code class="language-cpp">void preorder(Node *u) //前序遍历
+{
+    if (u == NIL)
+        return;
+    printf(&quot; %d&quot;, u-&gt;key);
+    preorder(u-&gt;ls);
+    preorder(u-&gt;rs);
+}
+</code></pre>
+<h3 id="中序遍历">中序遍历</h3>
+<pre><code class="language-cpp">void inorder(Node *u) //中序遍历
+{
+    if (u == NIL)
+        return;
+    inorder(u-&gt;ls);
+    printf(&quot; %d&quot;, u-&gt;key);
+    inorder(u-&gt;rs);
+}
+</code></pre>
+<h2 id="搜索">搜索</h2>
+<p>通过树的性质,如果查询的值比结点大,那么一定不在其左子树中,只需递归入右子树,反而反之.</p>
+<p>如果结点值相等,直接return 该结点编号</p>
+<p>如果该节点不等于查找的值,并且是叶子结点 return 0</p>
+<pre><code class="language-cpp">Node *search(Node *u, int k)
+{
+    while (u != NIL &amp;&amp; k != u-&gt;key)
+    {
+        if (k &lt; u-&gt;key)
+            u = u-&gt;ls;
+        else
+            u = u-&gt;rs;
+    }
+    return u;
+}
+</code></pre>
+<h2 id="最大关键字和最小关键字">最大关键字和最小关键字</h2>
+<p>从树根开始沿着左儿子指针一直走,知道遇到0为止,由于BST的性质,该元素一定是该树的最小元素</p>
+<pre><code class="language-cpp">int treemin(int x)
+{
+    while (x)
+        x = bst[x].ls;
+    return x;
+}
+</code></pre>
+<p>同理,不停向右能找到最大元素</p>
+<pre><code class="language-cpp">int treemax(int x)
+{
+    while (x)
+        x = bst[x].rs;
+    return x;
+}
+</code></pre>
+<h2 id="后继和前驱">后继和前驱</h2>
+<p>在线性表中,一个元素的后继和前驱定义为其前一个元素或后一个元素,而在BST这种树形结构中,后继和前驱定义为中序遍历所构成的线性表中的前一个元素或后一个元素.由于BST的性质,中序遍历是递增的.因此前驱一定是小于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>s</mi><mi>t</mi><mo>[</mo><mi>x</mi><mo>]</mo><mi mathvariant="normal">.</mi><mi>k</mi><mi>e</mi><mi>y</mi></mrow><annotation encoding="application/x-tex">bst[x].key</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mopen">[</span><span class="mord mathdefault">x</span><span class="mclose">]</span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>的最大元素,二后继是大于其的最小元素.当然,最小关键字没有前驱,最大关键字没有后继.</p>
+<p>因此这样定义<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>的前驱和后继</p>
+<p>前驱:小于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>的最大元素</p>
+<p>后继:大于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>的最小元素</p>
+<h3 id="后继">后继</h3>
+<p>分为三种情况</p>
+<p>1.没有该元素</p>
+<p>2.该元素无右子树</p>
+<p>3.该元素有右子树</p>
+<h4 id="有右子树">有右子树</h4>
+<p>因为后继是大于它的最小元素,因此如果其有右子树,那么直接返回右子树中的最小值.</p>
+<h4 id="没有该元素">没有该元素</h4>
+<p>如果没有该元素,那么显然是我们在搜索过程中递归到了某个不存在的叶子结点,虽然这个值在树中不存在,但可以构建一个,可以在该位置暂时插入一个,实际操作中可以不用实实在在将插入写出来,这样就转换成了情况2.</p>
+<figure data-type="image" tabindex="2"><img src="https://huanyue-233.github.io/post-images/1585902622743.png" alt="" loading="lazy"></figure>
+<p>例如上图,我们在查找值8的时候会递归入橙色点,那么我们在这建立一个虚拟的结点.</p>
+<h4 id="该元素无右子树">该元素无右子树</h4>
+<p>如果右子树为空,那么它一定市某棵最大子树的最大关键字,而这个最大子树根节点的父节点就是首个比它大的值.</p>
+<figure data-type="image" tabindex="3"><img src="https://huanyue-233.github.io/post-images/1585902628041.png" alt="" loading="lazy"></figure>
+<p>例如,在上面这张图中,8没有右子树,其为根节点为5的子树中的最大值,因此其后继是5的父节点10</p>
+<p>那么如何求得这个最大子树的根节点呢,通过观察可以得到该节点的性质.</p>
+<blockquote>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>是该子树的最大关键字</p>
+<p>该节点一定是父节点的左儿子</p>
+</blockquote>
+<p>因此求法如下</p>
+<p>设<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>的父节点,如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>的右儿子,令<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">x=y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>重复此步骤,如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">y=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>左儿子,那么<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>就是要找的最大子树的根节点,因此直接return y</p>
+<pre><code class="language-cpp">Node *treeSuccessor(Node *x)
+{
+    if (x-&gt;rs != NIL)
+        return treeMin(x-&gt;rs);
+    Node *y = x-&gt;p;
+    while (y != NIL &amp;&amp; x == y-&gt;rs)
+    {
+        x = y;
+        y = y-&gt;p;
+    }
+    return y;
+}
+</code></pre>
+<h3 id="前驱">前驱</h3>
+<p>与后继思想一样,自行脑补,直接放代码</p>
+<h2 id="插入">插入</h2>
+<p>根据定义，我们只要在插入时奖该元素与根节点进行比较，相等直接return，如果比它小，就递归入左子树，否则递归入右子树。</p>
+<pre><code class="language-cpp">void insert(int k) //插入
+{
+    Node *y = NIL, *x = root, *z;
+    z = (Node *)malloc(sizeof(Node)); //分配空间
+    z-&gt;key = k;
+    z-&gt;ls = NIL;
+    z-&gt;rs = NIL;
+    while (x != NIL)
+    {
+        y = x;
+        if (z-&gt;key &lt; x-&gt;key)
+            x = x-&gt;ls;
+        else
+            x = x-&gt;rs;
+    }
+
+    z-&gt;p = y;
+    if (y == NIL)
+        root = z;
+    else if (z-&gt;key &lt; y-&gt;key)
+        y-&gt;ls = z;
+    else
+        y-&gt;rs = z;
+}
+</code></pre>
+<h2 id="删除">删除</h2>
+<p>删除的第一步显然是要先找到它,因此我们要先进行一遍搜索,找到该键值的位置,接下来考虑如何删除</p>
+<h3 id="1叶子结点">1.叶子结点</h3>
+<figure data-type="image" tabindex="4"><img src="https://huanyue-233.github.io/post-images/1585902636789.png" alt="" loading="lazy"></figure>
+<p>当其是叶子结点的时候,考虑直接删除父节点与它的关系,之后树的性质不变,因此可以直接删除.如上图,直接删去橙色线.</p>
+<h3 id="2有一个子节点">2.有一个子节点</h3>
+<figure data-type="image" tabindex="5"><img src="https://huanyue-233.github.io/post-images/1585902640863.png" alt="" loading="lazy"></figure>
+<p>由于其有子节点(8),因此在删除其后要考虑将以子节点为根的子树(这里只有8)放置于哪里.由于性质,父节点(5)一定比该结点的子树(7,8)小或者大,因此该结点的子树(8)也一定比其父节点小/大,因此,直接将其父节点(5)的与其子节点(8)相连即可.(孙子变儿子)</p>
+<figure data-type="image" tabindex="6"><img src="https://huanyue-233.github.io/post-images/1585902645689.png" alt="" loading="lazy"></figure>
+<h3 id="3有两个子节点">3.有两个子节点</h3>
+<figure data-type="image" tabindex="7"><img src="https://huanyue-233.github.io/post-images/1585902650029.png" alt="" loading="lazy"></figure>
+<p>有两个子节点，在删除时就需要考虑子树间的关系，这里直接给出删除方法</p>
+<blockquote>
+<p>将该节点的中序遍历上后一个节点（16）的值复制到该节点，再<strong>删除</strong>后一个节点（16）</p>
+</blockquote>
+<p>这里显然用到了递归，但由于中序遍历的性质，递归删除的节点不可能有两个儿子。</p>
+<p>随后来证明其正确性</p>
+<p>由BST的性质，其中序遍历一定有序，因此后一个节点一定时比被删除节点大的最小节点。因此，将其复制上来后，左子树中的点一定比它小，右子树中的点依旧比它大，维护了BST的性质。</p>
+<pre><code class="language-cpp">void treeDelete(Node *z)
+{
+    Node *y;
+    Node *x;
+
+    //确定要删除的结点
+    if (z-&gt;ls == NIL || z-&gt;rs == NIL)
+        y = z;
+    else
+        y = treeSuccessor(z);
+    if (y-&gt;ls != NIL)
+        x = y-&gt;ls;
+    else
+        x = y-&gt;rs;
+
+    if (x != NIL)
+        x-&gt;p = y-&gt;p; //孙子变儿子
+
+    if (y-&gt;p == NIL)
+        root = x;
+    else if (y == y-&gt;p-&gt;ls)
+        y-&gt;p-&gt;ls = x;
+    else
+        y-&gt;p-&gt;rs = x;
+    if (y != z)
+        z-&gt;key = y-&gt;key;
+    free(y);
+    return;
+}
+
+</code></pre>
+<p>以下2020/4/5更新</p>
+<h2 id="拓展求排名第k的值">[拓展]求排名第K的值</h2>
+<h3 id="问题">问题</h3>
+<p>给定一颗BST,求排名为K的值(求第K大)</p>
+<h3 id="一般分析">一般分析</h3>
+<p>BST的中序遍历为升序,直接通过中序遍历输出第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span></span></span></span>个值,复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p>
+<p>这种做法虽然用到了BST性质,但依然达到了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>的复杂度,不如其他操作<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>h</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(h)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mclose">)</span></span></span></span>的复杂度.</p>
+<h2 id="优化做法">优化做法</h2>
+<p>假设我们知道根节点的排名为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mo>&lt;</mo><mi>K</mi></mrow><annotation encoding="application/x-tex">t &lt; K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65418em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span></span></span></span>,我们要查找的元素一定在根节点的右子树中,如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mo>&lt;</mo><mi>K</mi></mrow><annotation encoding="application/x-tex">t&lt;K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65418em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span></span></span></span>那么就在左子树中</p>
+<p>假设在右子树,因为根节点和左子树已经被排除了,所以要找元素在右子树中的排名为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi><mo>−</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">K-t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span>,如果此时我们知道该节点在此子树中的排名,就可以进一步解决了.这样就可以通过一个递归在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>h</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(h)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mclose">)</span></span></span></span>时间内解决问题了.</p>
+<p>但是这种方法需要提前知道每个节点在以其为根节点子树中的排名,需要预处理.</p>
+<p>这一处理并不难,因为BST具有左子树小于根节点的性质,因此根节点的排名就为其左子树的大小+1,那么只需预处理出每个结点的子树大小即可.</p>
+<p>在插入的时候,路径上所有结点的size+1,删除时同理.</p>
+<pre><code class="language-cpp">int rankk(int k)
+{
+    Node *u = root;
+    while (1)
+    {
+        int rk = 1;
+        if (u-&gt;ls != NIL)
+            rk += u-&gt;ls-&gt;size;
+        if (rk == k)
+            break;
+        if (k &gt; rk)
+        {
+            k -= rk;
+            u = u-&gt;rs;
+        }
+        else
+            u = u-&gt;ls;
+    }
+    return u-&gt;key;
+}
+</code></pre>
+<h2 id="拓展求k的排名">[拓展]求K的排名</h2>
+<h3 id="问题-2">问题</h3>
+<p>给定一个值<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span></span></span></span>,求其在BST中的排名</p>
+<h3 id="分析">分析</h3>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>中序遍历,嗯.</p>
+<p>继续用BST的性质实现<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>h</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(h)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mclose">)</span></span></span></span></p>
+<p>我们只要在search的过程中小小修改一下,在进入右子树时rank加上左子树的size+1,最后在加上左子树的size+1.</p>
+<pre><code class="language-cpp">int krank(int k)
+{
+    Node *u = root;
+    int rk = 0;
+    while (u != NIL &amp;&amp; k != u-&gt;key)
+    {
+        if (k &lt; u-&gt;key)
+            u = u-&gt;ls;
+        else
+        {
+            rk += u-&gt;ls-&gt;size + 1;
+            u = u-&gt;rs;
+        }
+    }
+    if (u-&gt;ls != NIL)
+        rk += u-&gt;ls-&gt;size;
+    return rk + 1;
+}
+</code></pre>
+<h2 id="复杂度分析">复杂度分析</h2>
+<p>我们发现BST的各项操作的复杂度都是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>h</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(h)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mclose">)</span></span></span></span>的</p>
+<p>其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mo>=</mo></mrow><annotation encoding="application/x-tex">h=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span></span></span>树的高度</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mo>∈</mo><mo>[</mo><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>n</mi><mo separator="true">,</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">h∈[log_2n,n]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">]</span></span></span></span></p>
+<p>当我们按照以下顺序时,复杂度将达到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p>
+<pre><code>i 1
+i 2
+i 3
+i 4
+i 5
+i 6
+i 7
+...
+</code></pre>
+<p>此时的树是</p>
+<figure data-type="image" tabindex="8"><img src="https://huanyue-233.github.io/post-images/1586052338506.png" alt="" loading="lazy"></figure>
+<p>为了解决这一问题,有<strong>红黑树,平衡树等数据结构</strong></p>
+<h2 id="总代码">总代码</h2>
+<pre><code class="language-cpp">/*
+    Author Huanyue
+    exBST
+    insert delete order search
+    ex&quot; rankk krank
+*/
+#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;cstdlib&gt;
+using namespace std;
+
+struct Node
+{
+    int key, size;
+    Node *rs, *ls, *p;
+};
+
+Node *root, *NIL;
+
+Node *treeMin(Node *x)
+{
+    while (x-&gt;ls != NIL)
+        x = x-&gt;ls;
+    return x;
+}
+
+Node *treeMax(Node *x)
+{
+    while (x-&gt;rs != NIL)
+        x = x-&gt;rs;
+    return x;
+}
+
+Node *treeSuccessor(Node *x)
+{
+    if (x-&gt;rs != NIL)
+        return treeMin(x-&gt;rs);
+    Node *y = x-&gt;p;
+    while (y != NIL &amp;&amp; x == y-&gt;rs)
+    {
+        x = y;
+        y = y-&gt;p;
+    }
+    return y;
+}
+
+void treeDelete(int k)
+{
+    Node *u = root;
+    while (u != NIL &amp;&amp; k != u-&gt;key)
+    {
+        u-&gt;size--;
+        if (k &lt; u-&gt;key)
+            u = u-&gt;ls;
+        else
+            u = u-&gt;rs;
+    }
+
+    Node *y;
+    Node *x;
+
+    //确定要删除的结点
+    if (u-&gt;ls == NIL || u-&gt;rs == NIL)
+        y = u;
+    else
+        y = treeSuccessor(u);
+    if (y-&gt;ls != NIL)
+        x = y-&gt;ls;
+    else
+        x = y-&gt;rs;
+
+    if (x != NIL)
+        x-&gt;p = y-&gt;p; //孙子变儿子
+
+    if (y-&gt;p == NIL)
+        root = x;
+    else if (y == y-&gt;p-&gt;ls)
+        y-&gt;p-&gt;ls = x;
+    else
+        y-&gt;p-&gt;rs = x;
+    if (y != u)
+        u-&gt;key = y-&gt;key;
+    free(y);
+    return;
+}
+
+void insert(int k) //插入
+{
+    Node *y = NIL, *x = root, *z;
+    z = (Node *)malloc(sizeof(Node)); //分配空间
+    z-&gt;key = k;
+    z-&gt;ls = NIL;
+    z-&gt;rs = NIL;
+    z-&gt;size = 1;
+    while (x != NIL)
+    {
+        x-&gt;size++;
+        y = x;
+        if (z-&gt;key &lt; x-&gt;key)
+            x = x-&gt;ls;
+        else
+            x = x-&gt;rs;
+    }
+
+    z-&gt;p = y;
+    if (y == NIL)
+        root = z;
+    else if (z-&gt;key &lt; y-&gt;key)
+        y-&gt;ls = z;
+    else
+        y-&gt;rs = z;
+}
+
+void inorder(Node *u) //中序遍历
+{
+    if (u == NIL)
+        return;
+    inorder(u-&gt;ls);
+    printf(&quot; %d&quot;, u-&gt;key);
+    inorder(u-&gt;rs);
+}
+
+void preorder(Node *u) //前序遍历
+{
+    if (u == NIL)
+        return;
+    printf(&quot; %d&quot;, u-&gt;key);
+    preorder(u-&gt;ls);
+    preorder(u-&gt;rs);
+}
+
+Node *search(Node *u, int k)
+{
+    while (u != NIL &amp;&amp; k != u-&gt;key)
+    {
+        if (k &lt; u-&gt;key)
+            u = u-&gt;ls;
+        else
+            u = u-&gt;rs;
+    }
+    return u;
+}
+
+int rankk(int k)
+{
+    Node *u = root;
+    while (1)
+    {
+        int rk = 1;
+        if (u-&gt;ls != NIL)
+            rk += u-&gt;ls-&gt;size;
+        if (rk == k)
+            break;
+        if (k &gt; rk)
+        {
+            k -= rk;
+            u = u-&gt;rs;
+        }
+        else
+            u = u-&gt;ls;
+    }
+    return u-&gt;key;
+}
+
+int krank(int k)
+{
+    Node *u = root;
+    int rk = 0;
+    while (u != NIL &amp;&amp; k != u-&gt;key)
+    {
+        if (k &lt; u-&gt;key)
+            u = u-&gt;ls;
+        else
+        {
+            rk += u-&gt;ls-&gt;size + 1;
+            u = u-&gt;rs;
+        }
+    }
+    if (u-&gt;ls != NIL)
+        rk += u-&gt;ls-&gt;size;
+    return rk + 1;
+}
+
+int main()
+{
+    int n, x;
+    char a;
+    cin &gt;&gt; n;
+    for (int i = 1; i &lt;= n; i++)
+    {
+        cin &gt;&gt; a;
+        if (a == 'f')
+        {
+            cin &gt;&gt; x;
+            Node *t = search(root, x);
+            if (t != NIL)
+                cout &lt;&lt; &quot;yes&quot; &lt;&lt; endl;
+            else
+                cout &lt;&lt; &quot;no&quot; &lt;&lt; endl;
+        }
+        else if (a == 'i')
+        {
+            cin &gt;&gt; x;
+            insert(x);
+        }
+        else if (a == 'p')
+        {
+            inorder(root);
+            cout &lt;&lt; endl;
+            preorder(root);
+            cout &lt;&lt; endl;
+        }
+        else if (a == 'd')
+        {
+            cin &gt;&gt; x;
+            treeDelete(x);
+        }
+        else if (a == 'r')
+        {
+            cin &gt;&gt; x;
+            cout &lt;&lt; rankk(x) &lt;&lt; endl;
+        }
+        else if (a == 'k')
+        {
+            cin &gt;&gt; x;
+            cout &lt;&lt; krank(x) &lt;&lt; endl;
+        }
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+</feed>

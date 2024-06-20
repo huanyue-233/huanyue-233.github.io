@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>题解 P5578 [PA2014]Fiolki | Huanyue Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://huanyue-233.github.io/styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://huanyue-233.github.io/images/avatar.png?v=1718854434037" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>记录每一点生活</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+    <div class="main">
+       <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+        <div class="autopagerize_page_element">
+          <div class="content">
+            <div class="post-page">
+              <div class="post animated fadeInDown">
+                <div class="post-title">
+                  <h3><a>
+                      题解 P5578 [PA2014]Fiolki
+                    </a></h3>
+                </div>
+                <div class="post-content">
+                  <h2 id="题目链接"><a href="https://www.luogu.com.cn/problem/P5578">题目链接</a></h2>
+<p>先考虑大模拟,直接进行模拟实验步骤有,同时在每一步反应中检测所有可生成的沉淀<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>m</mi><mi>k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(mk)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">)</span></span></span></span>,然后看数据范围,显然没有那么简单.</p>
+<p>同样我们可以通过数据范围可以猜到这大概是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>,重新读题</p>
+<p>第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个步骤是将第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>个瓶子内的所有液体倒入第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>b</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">b_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>个瓶子，此后第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>个瓶子<strong>不会再被</strong>用到。</p>
+<p>然后我们可以画一张图来清晰的表示这个过程</p>
+<figure data-type="image" tabindex="1"><img src="https://cdn.luogu.com.cn/upload/image_hosting/k1pm4ivs.png" alt="" loading="lazy"></figure>
+<p>这张图直接让我想起了政治老师在网课中说的: 窗外那绿油油的是什么,那不是树吗.</p>
+<p>我们不难发现</p>
+<p>1.这是二叉树构成的森林</p>
+<p>2.所有叶子节点就是我们的化学试剂</p>
+<p>3.沉淀就是两个试剂的<strong>LCA</strong></p>
+<p>同样,不难想到深度大,说明反应先发生,这样我们就只用按照反应顺序模拟就行了</p>
+<p>反应产生的沉淀是两个试剂中量较小的两倍</p>
+<p>答案是不是已经呼之欲出,看上去过程很<s>简单</s>,实际上实现有很多细节</p>
+<p>那就放CODE了</p>
+<pre><code class="language-cpp">/*
+ * @Author: Huanyue 
+ * @Date: 2020-02-13 07:45:25 
+ * @Last Modified by: Huanyue
+ * @Last Modified time: 2020-02-13 08:41:08
+ */
+
+#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;queue&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+#define rgi register
+typedef long long ll;
+using namespace std;
+
+inline void write(rgi int x)
+{
+    if (x &lt; 0)
+    {
+        putchar('-'), x = -x;
+    }
+    if (x &gt;= 10)
+    {
+        write(x / 10);
+    }
+    putchar('0' + x % 10);
+}
+
+inline int read()
+{
+    int x = 0, f = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9')
+    {
+        if (ch == '-')
+            f = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+    {
+        x = ((x &lt;&lt; 3) + (x &lt;&lt; 1) + (ch ^ 48));
+        ch = getchar();
+    }
+    return x * f;
+}
+
+const int N = 2e5 + 10;
+const int M = 2e5 + 10;
+ll ans;
+int n, m, k, head[N + M], cnt, pos[N];
+int g[N], dep[N + M], f[N + M][20], tot;
+
+struct Edge
+{
+    int next, to;
+} e[(N + M) &lt;&lt; 1]; //两倍开边
+struct Q
+{
+    int x, y, sc, dep, id;
+} q[500010];
+
+bool cmp(const Q &amp;a, const Q &amp;b)
+{
+    return a.dep == b.dep ? a.id &lt; b.id : a.dep &gt; b.dep;//深度优先
+}
+void add_edge(int x, int y)
+{
+    e[++cnt] = (Edge){head[x], y};
+    head[x] = cnt;
+    e[++cnt] = (Edge){head[y], x};
+    head[y] = cnt;
+}
+void dfs(int x)
+{
+    for (int i = 1; i &lt;= 19; i++)
+        f[x][i] = f[f[x][i - 1]][i - 1];
+    for (int i = head[x]; i; i = e[i].next)
+        if (e[i].to != f[x][0])
+        {
+            f[e[i].to][0] = x;
+            dep[e[i].to] = dep[x] + 1;
+            dfs(e[i].to);
+        }
+}
+int lca(int x, int y)
+{
+    if (dep[x] &lt; dep[y])
+        swap(x, y);
+    int d = dep[x] - dep[y];
+    for (int i = 19; i &gt;= 0; --i)
+        if ((d &gt;&gt; i) &amp; 1)
+            x = f[x][i];
+    if (x == y)
+        return x;
+    for (int i = 19; i &gt;= 0; --i)
+        if (f[x][i] != f[y][i])
+            x = f[x][i], y = f[y][i];
+    return f[x][0];
+}
+int main()
+{
+    n = read(), m = read(), k = read();
+
+    for (rgi int i = 1; i &lt;= n; i++)
+    {
+        pos[i] = i;
+        g[i] = read();
+    }
+
+    for (rgi int i = 1; i &lt;= m; i++)
+    {
+        int u = read(), v = read(), sc = n + i;
+        add_edge(pos[u], sc); //都向生成物加边
+        add_edge(pos[v], sc);
+        pos[v] = sc;
+    }
+    for (rgi int i = n + m; i &gt;= 1; --i) //注意是n+m,因为有m个反应物
+        if (!f[i][0])
+            dfs(i); //倍增LCA的预处理
+    for (rgi int i = 1; i &lt;= k; i++)
+    {
+        int c = read(), d = read(), sc;
+        sc = lca(c, d);
+        if (!sc)
+            continue;                           //无法生成就过
+        q[tot++] = (Q){c, d, sc, dep[sc], tot}; //加入模拟列表
+    }
+    sort(q, q + tot, cmp); //按照顺序反应
+    for (int i = 0; i &lt; tot; i++)
+    {
+        int x = q[i].x, y = q[i].y;
+        int use = min(g[x], g[y]);
+        g[x] -= use, g[y] -= use;
+        ans += (use &lt;&lt; 1);
+    }
+    printf(&quot;%lld\n&quot;, ans);
+    return 0;
+}
+</code></pre>
+
+                </div>
+                <div class="post-footer">
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
+                  <div class="meta">
+                    <div class="info">
+                      <i class="fa fa-sun-o"></i>
+                      <span class="date">
+                        2020-03-05
+                      </span>
+                      <i class="fa fa-tag"></i>
+                      
+                        <a class="tag" href="https://huanyue-233.github.io/tag/ujea-w4aH/" title="LCA">
+                          LCA
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/Solution/" title="题解">
+                          题解
+                        </a>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '3543b998d4f18fad0973',
+    clientSecret: '9a86c027331cca9bc829c587d4faf12f1546e4d8',
+    repo: 'huanyue-233.github.io',
+    owner: 'huanyue-233',
+    admin: ['huanyue-233'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+                      
+                            
+            </div>
+          </div>
+        </div>
+         <script src="https://huanyue-233.github.io/media/scripts/jquery.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+
+</body>
+
+</html>

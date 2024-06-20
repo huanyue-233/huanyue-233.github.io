@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>题解 P1541 乌龟棋 | Huanyue Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://huanyue-233.github.io/styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://huanyue-233.github.io/images/avatar.png?v=1718854434037" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>记录每一点生活</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+    <div class="main">
+       <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+        <div class="autopagerize_page_element">
+          <div class="content">
+            <div class="post-page">
+              <div class="post animated fadeInDown">
+                <div class="post-title">
+                  <h3><a>
+                      题解 P1541 乌龟棋
+                    </a></h3>
+                </div>
+                <div class="post-content">
+                  <h2 id="题目链接"><a href="https://www.luogu.com.cn/problem/P1541">题目链接</a></h2>
+<p>要么dp,要么搜索</p>
+<p>个人喜欢dp</p>
+<p>状态设计: <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>a</mi><mo>]</mo><mo>[</mo><mi>b</mi><mo>]</mo><mo>[</mo><mi>c</mi><mo>]</mo><mo>[</mo><mi>d</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">f[a][b][c][d]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">b</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">c</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">d</span><span class="mclose">]</span></span></span></span>表示用了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>张<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>,<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>张<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>,<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">c</span></span></span></span>张<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span>,<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">d</span></span></span></span>张<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>的最大得分.</p>
+<p>显然,这个状态是<strong>无后效性</strong>的,因此可以<strong>dp</strong>.</p>
+<p>初始状态:</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mn>0</mn><mo>]</mo><mo>[</mo><mn>0</mn><mo>]</mo><mo>[</mo><mn>0</mn><mo>]</mo><mo>[</mo><mn>0</mn><mo>]</mo><mo>=</mo><msub><mi>a</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">f[0][0][0][0]=a_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
+<p>其余初始化为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></p>
+<p>设<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi><mo>=</mo><mi>a</mi><mo>×</mo><mn>1</mn><mo>+</mo><mi>b</mi><mo>×</mo><mn>2</mn><mo>+</mo><mi>c</mi><mo>×</mo><mn>3</mn><mo>+</mo><mi>d</mi><mo>×</mo><mn>4</mn><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k=a\times 1+b\times2+c\times3+d\times4+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">c</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></p>
+<p>转移方程</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>a</mi><mo>]</mo><mo>[</mo><mi>b</mi><mo>]</mo><mo>[</mo><mi>c</mi><mo>]</mo><mo>[</mo><mi>d</mi><mo>]</mo><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>f</mi><mo>[</mo><mi>a</mi><mo>]</mo><mo>[</mo><mi>b</mi><mo>]</mo><mo>[</mo><mi>c</mi><mo>]</mo><mo>[</mo><mi>d</mi><mo>]</mo><mo separator="true">,</mo><mi>f</mi><mo>[</mo><mi>a</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>b</mi><mo>]</mo><mo>[</mo><mi>c</mi><mo>]</mo><mo>[</mo><mi>d</mi><mo>]</mo><mo>+</mo><msub><mi>a</mi><mi>k</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">f[a][b][c][d]=max(f[a][b][c][d],f[a-1][b][c][d]+a_k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">b</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">c</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">d</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">b</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">c</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">d</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">b</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">c</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">d</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<p>同理</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>a</mi><mo>]</mo><mo>[</mo><mi>b</mi><mo>]</mo><mo>[</mo><mi>c</mi><mo>]</mo><mo>[</mo><mi>d</mi><mo>]</mo><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>f</mi><mo>[</mo><mi>a</mi><mo>]</mo><mo>[</mo><mi>b</mi><mo>]</mo><mo>[</mo><mi>c</mi><mo>]</mo><mo>[</mo><mi>d</mi><mo>]</mo><mo separator="true">,</mo><mi>f</mi><mo>[</mo><mi>a</mi><mo>]</mo><mo>[</mo><mi>b</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>c</mi><mo>]</mo><mo>[</mo><mi>d</mi><mo>]</mo><mo>+</mo><msub><mi>a</mi><mi>k</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">f[a][b][c][d]=max(f[a][b][c][d],f[a][b-1][c][d]+a_k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">b</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">c</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">d</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">b</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">c</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">d</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">c</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">d</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>a</mi><mo>]</mo><mo>[</mo><mi>b</mi><mo>]</mo><mo>[</mo><mi>c</mi><mo>]</mo><mo>[</mo><mi>d</mi><mo>]</mo><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>f</mi><mo>[</mo><mi>a</mi><mo>]</mo><mo>[</mo><mi>b</mi><mo>]</mo><mo>[</mo><mi>c</mi><mo>]</mo><mo>[</mo><mi>d</mi><mo>]</mo><mo separator="true">,</mo><mi>f</mi><mo>[</mo><mi>a</mi><mo>]</mo><mo>[</mo><mi>b</mi><mo>]</mo><mo>[</mo><mi>c</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>d</mi><mo>]</mo><mo>+</mo><msub><mi>a</mi><mi>k</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">f[a][b][c][d]=max(f[a][b][c][d],f[a][b][c-1][d]+a_k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">b</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">c</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">d</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">b</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">c</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">d</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">b</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">c</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">d</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>a</mi><mo>]</mo><mo>[</mo><mi>b</mi><mo>]</mo><mo>[</mo><mi>c</mi><mo>]</mo><mo>[</mo><mi>d</mi><mo>]</mo><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>f</mi><mo>[</mo><mi>a</mi><mo>]</mo><mo>[</mo><mi>b</mi><mo>]</mo><mo>[</mo><mi>c</mi><mo>]</mo><mo>[</mo><mi>d</mi><mo>]</mo><mo separator="true">,</mo><mi>f</mi><mo>[</mo><mi>a</mi><mo>]</mo><mo>[</mo><mi>b</mi><mo>]</mo><mo>[</mo><mi>c</mi><mo>]</mo><mo>[</mo><mi>d</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>+</mo><msub><mi>a</mi><mi>k</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">f[a][b][c][d]=max(f[a][b][c][d],f[a][b][c][d-1]+a_k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">b</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">c</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">d</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">b</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">c</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">d</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">b</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">c</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<pre><code class="language-cpp">/*
+ * @Author: Huanyue 
+ * @Date: 2020-03-06 17:07:36 
+ * @Last Modified by: Huanyue
+ * @Last Modified time: 2020-03-06 17:08:17
+ */
+#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;string&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdlib&gt;
+
+using namespace std;
+
+int n, m;
+int pan[355], card[5], dp[45][45][45][45];
+
+int main()
+{
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    for (int i = 1; i &lt;= n; i++)
+        scanf(&quot;%d&quot;, &amp;pan[i]);
+    for (int i = 1; i &lt;= m; i++)
+    {
+        int k;
+        scanf(&quot;%d&quot;, &amp;k);
+        card[k]++;
+    }
+
+    dp[0][0][0][0] = pan[1];
+
+    for (int i = 0; i &lt;= card[1]; i++)
+        for (int j = 0; j &lt;= card[2]; j++)
+            for (int k = 0; k &lt;= card[3]; k++)
+                for (int l = 0; l &lt;= card[4]; l++)
+                {
+                    int pos = 1 + i * 1 + j * 2 + k * 3 + l * 4;
+                    if (i)
+                        dp[i][j][k][l] = max(dp[i][j][k][l], dp[i - 1][j][k][l] + pan[pos]);
+                    if (j)
+                        dp[i][j][k][l] = max(dp[i][j][k][l], dp[i][j - 1][k][l] + pan[pos]);
+                    if (k)
+                        dp[i][j][k][l] = max(dp[i][j][k][l], dp[i][j][k - 1][l] + pan[pos]);
+                    if (l)
+                        dp[i][j][k][l] = max(dp[i][j][k][l], dp[i][j][k][l - 1] + pan[pos]);
+                }
+
+    printf(&quot;%d\n&quot;, dp[card[1]][card[2]][card[3]][card[4]]);
+
+    return 0;
+}
+</code></pre>
+
+                </div>
+                <div class="post-footer">
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
+                  <div class="meta">
+                    <div class="info">
+                      <i class="fa fa-sun-o"></i>
+                      <span class="date">
+                        2020-03-06
+                      </span>
+                      <i class="fa fa-tag"></i>
+                      
+                        <a class="tag" href="https://huanyue-233.github.io/tag/nPLwkiS1f/" title="dp">
+                          dp
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/-aLgBfXk_m/" title="多维dp">
+                          多维dp
+                        </a>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '3543b998d4f18fad0973',
+    clientSecret: '9a86c027331cca9bc829c587d4faf12f1546e4d8',
+    repo: 'huanyue-233.github.io',
+    owner: 'huanyue-233',
+    admin: ['huanyue-233'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+                      
+                            
+            </div>
+          </div>
+        </div>
+         <script src="https://huanyue-233.github.io/media/scripts/jquery.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+
+</body>
+
+</html>

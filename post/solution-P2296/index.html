@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>题解 P2296 寻找道路 | Huanyue Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://huanyue-233.github.io/styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://huanyue-233.github.io/images/avatar.png?v=1718854434037" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>记录每一点生活</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+    <div class="main">
+       <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+        <div class="autopagerize_page_element">
+          <div class="content">
+            <div class="post-page">
+              <div class="post animated fadeInDown">
+                <div class="post-title">
+                  <h3><a>
+                      题解 P2296 寻找道路
+                    </a></h3>
+                </div>
+                <div class="post-content">
+                  <h2 id="题目链接"><a href="luogu.com.cn/problem/P2296">题目链接</a></h2>
+<p>这道题还是比较简单的</p>
+<p>反向建边,终点bfs,据题意删除所有无法到达的点</p>
+<p>从起点bfs找最短路,没了</p>
+<p>这道题细节还是比较多</p>
+<p>队列类模板+vector存图</p>
+<pre><code class="language-cpp">/*
+ * @Author: Huanyue 
+ * @Date: 2020-03-06 17:42:39 
+ * @Last Modified by: Huanyue
+ * @Last Modified time: 2020-03-06 19:27:38
+ */
+
+#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;queue&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+#define rgi register
+typedef long long ll;
+typedef unsigned long long ull;
+using namespace std;
+
+inline void write(register int x)
+{
+    if (x &lt; 0)
+    {
+        putchar('-'), x = -x;
+    }
+    if (x &gt;= 10)
+    {
+        write(x / 10);
+    }
+    putchar('0' + x % 10);
+}
+
+inline int read()
+{
+    int x = 0, f = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9')
+    {
+        if (ch == '-')
+            f = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+    {
+        x = ((x &lt;&lt; 3) + (x &lt;&lt; 1) + (ch ^ 48));
+        ch = getchar();
+    }
+    return x * f;
+}
+const int N = 10010, M = 200010;
+
+vector&lt;int&gt; g[N], _g[N];
+bool can[N], Can[N];
+int dis[N];
+
+const int QueueLen = 1e5;
+const int Error_Number = -1; //队列长度
+template &lt;class T&gt;
+class Queue //最普通的队列
+{
+public:
+    T Q[QueueLen];
+    int head, tail;
+    Queue()
+    {
+        head = tail = 0;
+    }
+    bool full();
+    bool empty();
+    void push(T x);
+    void pop();
+    T front();
+};
+
+template &lt;class T&gt;
+bool Queue&lt;T&gt;::full()
+{
+    if (tail == QueueLen)
+        return 1;
+    return 0;
+}
+
+template &lt;class T&gt;
+bool Queue&lt;T&gt;::empty()
+{
+    if (head == tail)
+        return true;
+    return false;
+}
+
+template &lt;class T&gt; //tail空
+void Queue&lt;T&gt;::push(T x)
+{
+    if (full())
+        return;
+    Q[tail++] = x;
+}
+
+template &lt;class T&gt;
+void Queue&lt;T&gt;::pop()
+{
+    if (empty())
+        return;
+    head++;
+}
+
+template &lt;class T&gt;
+T Queue&lt;T&gt;::front() //队首
+{
+    if (empty())
+        return Error_Number;
+    return Q[head];
+}
+int main()
+{
+    int n = read(), m = read();
+    for (rgi int i = 1; i &lt;= m; i++)
+    {
+        int u = read(), v = read();
+        g[u].push_back(v);
+        _g[v].push_back(u);
+    }
+    int s = read(), t = read();
+    can[t] = 1;
+    Queue&lt;int&gt; q;
+    q.push(t);
+    while (!q.empty())
+    {
+        int now = q.front();
+        q.pop();
+        for (vector&lt;int&gt;::iterator iter = _g[now].begin(); iter != _g[now].end(); iter++)
+        {
+            if (!can[*iter])
+            {
+                q.push(*iter);
+                can[*iter] = 1;
+            }
+        }
+    }
+    if (!can[s])
+    {
+        puts(&quot;-1&quot;);
+        return 0;
+    }
+    // cout &lt;&lt; &quot;!!!&quot;;
+    for (rgi int i = 1; i &lt;= n; i++)
+    {
+        if (can[i])
+        {
+            Can[i] = 1;
+            for (vector&lt;int&gt;::iterator iter = g[i].begin(); iter != g[i].end(); iter++)
+            {
+                if (!can[*iter])
+                {
+                    Can[i] = 0;
+                    break;
+                }
+            }
+        }
+    }
+    if (!Can[s])
+    {
+        puts(&quot;-1&quot;);
+        return 0;
+    }
+    // cout &lt;&lt; &quot;!!!&quot;;
+    dis[s] = 1;
+    q.push(s);
+    while (!q.empty())
+    {
+        int now = q.front();
+        q.pop();
+        if (now == t)
+        {
+            cout &lt;&lt; dis[t] - 1;
+            return 0;
+        }
+        for (vector&lt;int&gt;::iterator iter = g[now].begin(); iter != g[now].end(); iter++)
+        {
+            if (Can[*iter] &amp;&amp; !dis[*iter])
+            {
+                dis[*iter] = dis[now] + 1;
+                q.push(*iter);
+            }
+        }
+    }
+    cout &lt;&lt; &quot;-1&quot;;
+    return 0;
+}
+</code></pre>
+
+                </div>
+                <div class="post-footer">
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
+                  <div class="meta">
+                    <div class="info">
+                      <i class="fa fa-sun-o"></i>
+                      <span class="date">
+                        2020-03-06
+                      </span>
+                      <i class="fa fa-tag"></i>
+                      
+                        <a class="tag" href="https://huanyue-233.github.io/tag/ndAJyjNXZ/" title="bfs">
+                          bfs
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/EpmeF0bv-1/" title="最短路">
+                          最短路
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/PLL_OPtZpH/" title="图论">
+                          图论
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/Solution/" title="题解">
+                          题解
+                        </a>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '3543b998d4f18fad0973',
+    clientSecret: '9a86c027331cca9bc829c587d4faf12f1546e4d8',
+    repo: 'huanyue-233.github.io',
+    owner: 'huanyue-233',
+    admin: ['huanyue-233'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+                      
+                            
+            </div>
+          </div>
+        </div>
+         <script src="https://huanyue-233.github.io/media/scripts/jquery.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+
+</body>
+
+</html>

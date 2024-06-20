@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>动态规划总述 | Huanyue Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://huanyue-233.github.io/styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://huanyue-233.github.io/images/avatar.png?v=1718854434037" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>记录每一点生活</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+    <div class="main">
+       <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+        <div class="autopagerize_page_element">
+          <div class="content">
+            <div class="post-page">
+              <div class="post animated fadeInDown">
+                <div class="post-title">
+                  <h3><a>
+                      动态规划总述
+                    </a></h3>
+                </div>
+                <div class="post-content">
+                  <h2 id="简述">简述</h2>
+<p>动态规划( dynamic programming,简称DP),用于解决 多阶段决策过程(multistep decision process)的优化问题.</p>
+<h2 id="问题性质">问题性质</h2>
+<p>动态规划解决的问题常常具有以下性质:</p>
+<h3 id="1多阶段性">1.多阶段性</h3>
+<p>如果一类活动过程可以分为若干个互相联系的阶段，在每一个阶段都需作出决策(采取措施)，一个阶段的决策确定以后，常常影响到下一个阶段的决策，从而就完全确定了一个过程的活动路线，则称它为多阶段决策问题。</p>
+<h3 id="2最优子结构性质最优化原理">2.最优子结构性质(最优化原理)</h3>
+<p>一个最优化策略具有这样的性质，不论过去状态和决策如何，对前面的决策所形成的状态而言，余下的诸决策必须构成最优策略。简而言之，一个最优化策略的子策略总是最优的。一个问题满足最优化原理又称其具有最优子结构性质。</p>
+<h3 id="3无后效性独立性">3.无后效性(独立性)</h3>
+<p>各阶段按照一定的次序排列好之后，对于某个给定的阶段状态，它以前各阶段的状态无法直接影响它未来的决策，而只能通过当前的这个状态。换句话说，每个状态都是过去历史的一个完整总结。</p>
+<h3 id="4问题边界性">4.问题边界性</h3>
+<p>问题具有入口和出口</p>
+<h3 id="5子问题重叠性">5.子问题重叠性</h3>
+<p>动态规划将原来具有指数级时间复杂度的搜索算法改进成了具有多项式时间复杂度的算法。其中的关键在于解决冗余，这是动态规划算法的根本目的。动态规划实质上是一种以空间换时间的技术，它在实现的过程中，不得不存储产生过程中的各种状态，所以它的空间复杂度要大于其它的算法。</p>
+<h2 id="问题分类">问题分类</h2>
+<p><img src="https://huanyue-233.github.io/post-images/1584161858974.png" alt="" loading="lazy">![](C:\Users\文刀</p>
+<h3 id="1树形动规">1.树形动规</h3>
+<p>将所给问题的过程，按时间或空间特征分解成若干相互联系的阶段，以便按次序去求每阶段的解。</p>
+<p>顾名思义,拆解后的子问题往往是树形的</p>
+<h3 id="2线性动规">2.线性动规</h3>
+<p>线性动规以线性的方式解决问题.将母问题,以一维的形式展开求解</p>
+<h3 id="3背包问题">3.背包问题</h3>
+<p>模型:给定一组物品，每种物品都有自己的重量和价格，在限定的总重量内，我们如何选择，才能使得物品的总价格最高。</p>
+<p>根据物品的特殊限制,背包问题分为几种较为经典的模型</p>
+<figure data-type="image" tabindex="1"><img src="https://huanyue-233.github.io/post-images/1584161869976.png" alt="" loading="lazy"></figure>
+<h3 id="4区间动规">4.区间动规</h3>
+<p>母问题由区间构成的子问题解决</p>
+<h2 id="动态规划问题的解决方法">动态规划问题的解决方法</h2>
+<h3 id="1状态设计">1.状态设计</h3>
+<p>设计出简便的状态,方便解决问题,结果不一定是末状态</p>
+<h3 id="2处理初始状态">2.处理初始状态</h3>
+<p>动态规划具有边界性,需要预处理出初始状态</p>
+<h3 id="3设计转移方程">3.设计转移方程</h3>
+<p>根据设计的状态,推出状态间转移的方程</p>
+
+                </div>
+                <div class="post-footer">
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
+                  <div class="meta">
+                    <div class="info">
+                      <i class="fa fa-sun-o"></i>
+                      <span class="date">
+                        2020-03-14
+                      </span>
+                      <i class="fa fa-tag"></i>
+                      
+                        <a class="tag" href="https://huanyue-233.github.io/tag/AmB1Br-C5/" title="算法笔记">
+                          算法笔记
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/QyK_xR_oBg/" title="动态规划">
+                          动态规划
+                        </a>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '3543b998d4f18fad0973',
+    clientSecret: '9a86c027331cca9bc829c587d4faf12f1546e4d8',
+    repo: 'huanyue-233.github.io',
+    owner: 'huanyue-233',
+    admin: ['huanyue-233'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+                      
+                            
+            </div>
+          </div>
+        </div>
+         <script src="https://huanyue-233.github.io/media/scripts/jquery.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+
+</body>
+
+</html>

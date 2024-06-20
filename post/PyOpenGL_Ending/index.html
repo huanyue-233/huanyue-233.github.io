@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>图形学期末作业代码文档 | Huanyue Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://huanyue-233.github.io/styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://huanyue-233.github.io/images/avatar.png?v=1718854434037" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>记录每一点生活</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+    <div class="main">
+       <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+        <div class="autopagerize_page_element">
+          <div class="content">
+            <div class="post-page">
+              <div class="post animated fadeInDown">
+                <div class="post-title">
+                  <h3><a>
+                      图形学期末作业代码文档
+                    </a></h3>
+                </div>
+                <div class="post-content">
+                  <h2 id="概述">概述</h2>
+<p>代码语言：Python</p>
+<p>使用的第三方库: <code>PyOpenGL</code> <code>numpy</code></p>
+<p>实现功能：1、2、3、4、5</p>
+<figure data-type="image" tabindex="1"><img src="https://huanyue-233.github.io/post-images/1718854340796.png" alt="" loading="lazy"></figure>
+<h2 id="功能实现">功能实现</h2>
+<h3 id="绘制三个几何体">绘制三个几何体</h3>
+<h4 id="三棱锥定义">三棱锥定义</h4>
+<pre><code class="language-python">def drawPyramid():
+    glBegin(GL_TRIANGLES)
+    # 前面
+    glNormal3f(0.0, 0.5, 0.5)
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(-1.0, -1.0, 1.0)
+    glVertex3f(1.0, -1.0, 1.0)
+    # 右面
+    glNormal3f(0.5, 0.5, 0.0)
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(1.0, -1.0, 1.0)
+    glVertex3f(1.0, -1.0, -1.0)
+    # 后面
+    glNormal3f(0.0, 0.5, -0.5)
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(1.0, -1.0, -1.0)
+    glVertex3f(-1.0, -1.0, -1.0)
+    # 左面
+    glNormal3f(-0.5, 0.5, 0.0)
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(-1.0, -1.0, -1.0)
+    glVertex3f(-1.0, -1.0, 1.0)
+    glEnd()
+    glBegin(GL_QUADS)
+    # 底面
+    glNormal3f(0.0, -1.0, 0.0)
+    glVertex3f(-1.0, -1.0, -1.0)
+    glVertex3f(1.0, -1.0, -1.0)
+    glVertex3f(1.0, -1.0, 1.0)
+    glVertex3f(-1.0, -1.0, 1.0)
+    glEnd()
+</code></pre>
+<h3 id="三个几何体绘制">三个几何体绘制</h3>
+<pre><code class="language-python">    set_material()  # 设置材质属性
+
+    # 绘制正方体
+    glPushMatrix()
+    glColor3f(1.0, 1.0, 1.0)  # 白色
+    glTranslatef(0.0, 0.0, 0.0)
+    apply_continuous_transformation()  # 应用持续变换
+    glutSolidCube(1.5)
+    glPopMatrix()
+
+    # 绘制球体
+    glPushMatrix()
+    glColor3f(1.0, 0.5, 0.5)  # 亮红色
+    glTranslatef(3.0, 0.0, 0.0)
+    apply_continuous_transformation()  # 应用持续变换
+    glutSolidSphere(1.0, 50, 50)
+    glPopMatrix()
+
+    # 绘制三棱锥
+    glPushMatrix()
+    glColor3f(0.0, 0.0, 1.0)  # 蓝色
+    glTranslatef(-3.0, 0.0, 0.0)
+    apply_continuous_transformation()  # 应用持续变换
+    drawPyramid()
+    glPopMatrix()
+
+    glutSwapBuffers()
+</code></pre>
+<h3 id="摄影机位置">摄影机位置</h3>
+<pre><code class="language-python">gluLookAt(0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+</code></pre>
+<h2 id="光源设置">光源设置</h2>
+<pre><code class="language-python">    light_pos1 = [-2.0, 0.0, 2.0, 1.0]  # 左前方
+    light_color1 = [0.0, 1.0, 1.0, 1.0]  # 绿色
+    glLightfv(GL_LIGHT0, GL_POSITION, light_pos1)
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color1)
+
+    light_pos2 = [2.0, 0.0, 2.0, 1.0] #右前方
+    light_color2 = [1.0, 1.0, 0.0, 1.0]  # 黄色
+    glLightfv(GL_LIGHT1, GL_POSITION, light_pos2)
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, light_color2)
+</code></pre>
+<p>左前方一个绿色光源，右前方一个黄色光源。</p>
+<h3 id="持续变换">持续变换</h3>
+<pre><code class="language-python">def update(value):
+    global angle, transform_counter
+    angle += 5.0  # 增加旋转速度
+    angle = angle % 360
+    transform_counter += 1
+    glutPostRedisplay()
+    glutTimerFunc(50, update, 0)  # 每50毫秒更新一次
+</code></pre>
+<p>通过update的自调用实现了对angle、transform_counter参数的持续更新。</p>
+<pre><code class="language-python">def apply_continuous_transformation():
+    global angle, last_switch_time, scale_factor, symmetry_direction, scaling_factor, scaling_direction
+    current_time = time.time()
+    if transformation_type == 0:
+        # 旋转变换
+        glRotatef(angle, 1.0, 1.0, 0.0)
+    elif transformation_type == 1:
+        # 错切变换
+        shear = np.identity(4)
+        shear[0, 1] = 0.1 * np.sin(angle / 180.0 * np.pi)  # 动态错切值
+        shear[1, 0] = 0.1 * np.sin(angle / 180.0 * np.pi)  # 动态错切值
+        glMultMatrixf(shear)
+    elif transformation_type == 2:
+        # 对称变换，每秒切换一次对称因子
+        if current_time - last_switch_time &gt;= 1.0:
+            scale_factor = -scale_factor
+            last_switch_time = current_time
+            symmetry_direction = 1 - symmetry_direction  # 切换对称方向
+        if symmetry_direction == 0:
+            scale = np.diag([scale_factor, 1.0, 1.0, 1.0])
+        else:
+            scale = np.diag([1.0, scale_factor, 1.0, 1.0])
+        glMultMatrixf(scale)
+    elif transformation_type == 3:
+        # 放大缩小变换
+        if scaling_factor &gt;= 1.5:
+            scaling_direction = -1
+        elif scaling_factor &lt;= 0.5:
+            scaling_direction = 1
+        scaling_factor += scaling_direction * 0.01
+        scale = np.diag([scaling_factor, scaling_factor, scaling_factor, 1.0])
+        glMultMatrixf(scale)
+</code></pre>
+<p><code>apply_continuous_transformation</code>函数中，根据<code>transformation_type</code>进行不同的变换，各个变换的参数值都有update函数动态更新，实现了持续变换。</p>
+<h2 id="设置控件">设置控件</h2>
+<pre><code class="language-python">def keyboard(key, x, y):
+    global transformation_type
+    if key == b'r':  # 按下 'r' 键进行旋转变换
+        transformation_type = 0
+    elif key == b's':  # 按下 's' 键进行错切变换
+        transformation_type = 1
+    elif key == b'c':  # 按下 'c' 键进行对称变换
+        transformation_type = 2
+    elif key == b'z':  # 按下 'z' 键进行放大缩小变换
+        transformation_type = 3
+</code></pre>
+<p>在键盘按下对应按键时，<code>keyboard</code>函数响应键盘事件，通过修改外部变量<code>transformation_type</code>的值改变所做的变换。</p>
+<h2 id="代码中遇到的问题及解决方案">代码中遇到的问题及解决方案</h2>
+<h3 id="三棱锥在旋转到背面时变黑">三棱锥在旋转到背面时变黑</h3>
+<figure data-type="image" tabindex="2"><img src="https://huanyue-233.github.io/post-images/1718854315066.png" alt="" loading="lazy"></figure>
+<p>如图所示，在旋转过程中三棱锥变成了完全黑色，经过搜索检查发现在<code>drawPyramid</code>函数中未给三棱锥添加面法向量，导致了OpenGL无法正确确定各个面的朝向，使得在旋转到背面时无法正确计算光照路径。</p>
+<h4 id="解决方案">解决方案：</h4>
+<p>在<code>drawPyramid</code>函数中给各个面添加法向量</p>
+<h3 id="物体本身颜色没有显现">物体本身颜色没有显现</h3>
+<figure data-type="image" tabindex="3"><img src="https://huanyue-233.github.io/post-images/1718854299357.png" alt="" loading="lazy"></figure>
+<p>我给三个几何体分别设置了蓝色、白色、浅红色，但是几何体颜色仅仅收光照影响，没有收到其原始颜色影响。</p>
+<p>经过检查，这是由于没有启动物体原本的材质导致的</p>
+<h4 id="解决方案-2">解决方案：</h4>
+<p>启用物体的材质光</p>
+<pre><code class="language-python">glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE)  # 使用顶点颜色作为材质的环境光和漫反射光
+</code></pre>
+<p>设置镜面反射属性</p>
+<pre><code class="language-python">def set_material():
+    specular = [1.0, 1.0, 1.0, 1.0]  # 镜面反射光
+    shininess = [50.0]  # 镜面指数
+
+    glMaterialfv(GL_FRONT, GL_SPECULAR, specular)
+    glMaterialfv(GL_FRONT, GL_SHININESS, shininess)
+</code></pre>
+<h3 id="源代码">源代码</h3>
+<pre><code class="language-python">import sys
+import random
+import numpy as np
+import time
+from OpenGL.GL import *
+from OpenGL.GLU import *
+from OpenGL.GLUT import *
+
+angle = 0.0
+transform_counter = 0
+start_time = None
+transformation_type = 0
+last_switch_time = 0
+scale_factor = 1.0
+symmetry_direction = 0  # 0: 水平, 1: 垂直
+scaling_factor = 1.0
+scaling_direction = 1  # 1: 放大, -1: 缩小
+
+def init():
+    glClearColor(0.0, 0.0, 0.0, 1.0)
+    glEnable(GL_DEPTH_TEST)
+    glEnable(GL_LIGHTING)
+    glEnable(GL_LIGHT0)
+    glEnable(GL_LIGHT1)
+
+def apply_continuous_transformation():
+    global angle, last_switch_time, scale_factor, symmetry_direction, scaling_factor, scaling_direction
+    current_time = time.time()
+    if transformation_type == 0:
+        # 旋转变换
+        glRotatef(angle, 1.0, 1.0, 0.0)
+    elif transformation_type == 1:
+        # 错切变换
+        shear = np.identity(4)
+        shear[0, 1] = 0.1 * np.sin(angle / 180.0 * np.pi)  # 动态错切值
+        shear[1, 0] = 0.1 * np.sin(angle / 180.0 * np.pi)  # 动态错切值
+        glMultMatrixf(shear)
+    elif transformation_type == 2:
+        # 对称变换，每秒切换一次对称因子
+        if current_time - last_switch_time &gt;= 1.0:
+            scale_factor = -scale_factor
+            last_switch_time = current_time
+            symmetry_direction = 1 - symmetry_direction  # 切换对称方向
+        if symmetry_direction == 0:
+            scale = np.diag([scale_factor, 1.0, 1.0, 1.0])
+        else:
+            scale = np.diag([1.0, scale_factor, 1.0, 1.0])
+        glMultMatrixf(scale)
+    elif transformation_type == 3:
+        # 放大缩小变换
+        if scaling_factor &gt;= 1.5:
+            scaling_direction = -1
+        elif scaling_factor &lt;= 0.5:
+            scaling_direction = 1
+        scaling_factor += scaling_direction * 0.01
+        scale = np.diag([scaling_factor, scaling_factor, scaling_factor, 1.0])
+        glMultMatrixf(scale)
+
+def display():
+    global angle, transform_counter, wait_counter
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+    gluLookAt(0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+
+    # 设置光源
+    light_pos1 = [-2.0, 0.0, 2.0, 1.0]  # 左前方
+    light_color1 = [0.0, 1.0, 1.0, 1.0]  # 亮青色
+    glLightfv(GL_LIGHT0, GL_POSITION, light_pos1)
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color1)
+
+    light_pos2 = [2.0, 0.0, 2.0, 1.0] #右前方
+    light_color2 = [1.0, 1.0, 0.0, 1.0]  # 亮黄色
+    glLightfv(GL_LIGHT1, GL_POSITION, light_pos2)
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, light_color2)
+
+    # 绘制正方体
+    glPushMatrix()
+    glColor3f(0.0, 1.0, 0.0)  # 绿色
+    glTranslatef(0.0, 0.0, 0.0)
+    apply_continuous_transformation()  # 应用持续变换
+    glutSolidCube(1.5)
+    glPopMatrix()
+
+    # 绘制球体
+    glPushMatrix()
+    glColor3f(1.0, 0.0, 0.0)  # 红色
+    glTranslatef(3.0, 0.0, 0.0)
+    apply_continuous_transformation()  # 应用持续变换
+    glutSolidSphere(1.0, 50, 50)
+    glPopMatrix()
+
+    # 绘制三棱锥
+    glPushMatrix()
+    glColor3f(0.0, 0.0, 1.0)  # 蓝色
+    glTranslatef(-3.0, 0.0, 0.0)
+    apply_continuous_transformation()  # 应用持续变换
+    drawPyramid()
+    glPopMatrix()
+
+    glutSwapBuffers()
+
+def drawPyramid():
+    glBegin(GL_TRIANGLES)
+    # 前面
+    glNormal3f(0.0, 0.5, 0.5)  # 为每个面指定法向量
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(-1.0, -1.0, 1.0)
+    glVertex3f(1.0, -1.0, 1.0)
+    # 右面
+    glNormal3f(0.5, 0.5, 0.0)
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(1.0, -1.0, 1.0)
+    glVertex3f(1.0, -1.0, -1.0)
+    # 后面
+    glNormal3f(0.0, 0.5, -0.5)
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(1.0, -1.0, -1.0)
+    glVertex3f(-1.0, -1.0, -1.0)
+    # 左面
+    glNormal3f(-0.5, 0.5, 0.0)
+    glVertex3f(0.0, 1.0, 0.0)
+    glVertex3f(-1.0, -1.0, -1.0)
+    glVertex3f(-1.0, -1.0, 1.0)
+    glEnd()
+    glBegin(GL_QUADS)
+    # 底面
+    glNormal3f(0.0, -1.0, 0.0)
+    glVertex3f(-1.0, -1.0, -1.0)
+    glVertex3f(1.0, -1.0, -1.0)
+    glVertex3f(1.0, -1.0, 1.0)
+    glVertex3f(-1.0, -1.0, 1.0)
+    glEnd()
+
+
+def reshape(w, h):
+    glViewport(0, 0, w, h)
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    gluPerspective(45.0, float(w) / float(h), 1.0, 100.0)
+    glMatrixMode(GL_MODELVIEW)
+
+def update(value):
+    global angle, transform_counter
+    angle += 5.0  # 增加旋转速度
+    angle = angle % 360
+    transform_counter += 1
+    glutPostRedisplay()
+    glutTimerFunc(50, update, 0)  # 每50毫秒更新一次
+
+def keyboard(key, x, y):
+    global transformation_type
+    if key == b'r':  # 按下 'r' 键进行旋转变换
+        transformation_type = 0
+    elif key == b's':  # 按下 's' 键进行错切变换
+        transformation_type = 1
+    elif key == b'c':  # 按下 'c' 键进行对称变换
+        transformation_type = 2
+    elif key == b'z':  # 按下 'z' 键进行放大缩小变换
+        transformation_type = 3
+
+def main():
+    global start_time
+    start_time = time.time()
+    glutInit(sys.argv)
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
+    glutInitWindowSize(800, 600)
+    glutCreateWindow(&quot;Multiple Geometries with Lights&quot;)
+    init()
+    glutDisplayFunc(display)
+    glutReshapeFunc(reshape)
+    glutKeyboardFunc(keyboard)  # 注册键盘回调函数
+    glutTimerFunc(50, update, 0)  # 每50毫秒更新一次
+    glutMainLoop()
+
+if __name__ == &quot;__main__&quot;:
+    main()
+
+</code></pre>
+
+                </div>
+                <div class="post-footer">
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
+                  <div class="meta">
+                    <div class="info">
+                      <i class="fa fa-sun-o"></i>
+                      <span class="date">
+                        2024-06-20
+                      </span>
+                      <i class="fa fa-tag"></i>
+                      
+                        <a class="tag" href="https://huanyue-233.github.io/tag/3OqjXFjNT/" title="计算机图形学">
+                          计算机图形学
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/ne5-CeeRNn/" title="PyOpenGL">
+                          PyOpenGL
+                        </a>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '3543b998d4f18fad0973',
+    clientSecret: '9a86c027331cca9bc829c587d4faf12f1546e4d8',
+    repo: 'huanyue-233.github.io',
+    owner: 'huanyue-233',
+    admin: ['huanyue-233'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+                      
+                            
+            </div>
+          </div>
+        </div>
+         <script src="https://huanyue-233.github.io/media/scripts/jquery.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+
+</body>
+
+</html>

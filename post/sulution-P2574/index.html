@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>题解 P2574 XOR的艺术 | Huanyue Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://huanyue-233.github.io/styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://huanyue-233.github.io/images/avatar.png?v=1718854434037" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>记录每一点生活</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+    <div class="main">
+       <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+        <div class="autopagerize_page_element">
+          <div class="content">
+            <div class="post-page">
+              <div class="post animated fadeInDown">
+                <div class="post-title">
+                  <h3><a>
+                      题解 P2574 XOR的艺术
+                    </a></h3>
+                </div>
+                <div class="post-content">
+                  <p>据题意,变化就是将区间中的每个数异或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>,那么对于同一个点,异或两次可以忽略,<br>
+对于一个长度为len的区间,如果有n个1,那么异或后就有len-n个1<br>
+线段树板子,修改lazytag就行</p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+using namespace std;
+const int N=200005;
+
+int n,m,Sum[N&lt;&lt;2],Lazy[N&lt;&lt;2];
+//char str[N];
+
+void read(int &amp;now)
+{
+    now=0;char c=getchar();
+    while(c&lt;'0'||c&gt;'9')c=getchar();
+    while(c&gt;='0'&amp;&amp;c&lt;='9')now=now*10+c-'0',c=getchar();
+}
+
+void PushUp(int rt)
+{
+    Sum[rt]=Sum[rt&lt;&lt;1]+Sum[rt&lt;&lt;1|1];
+}
+void PushDown(int rt,int m)
+{
+    if(Lazy[rt])
+    {
+        Lazy[rt&lt;&lt;1]^=1;
+        Lazy[rt&lt;&lt;1|1]^=1;
+        Sum[rt&lt;&lt;1]=(m-(m&gt;&gt;1))-Sum[rt&lt;&lt;1];//异或(取反)，将原先状态全部翻转 
+        Sum[rt&lt;&lt;1|1]=(m&gt;&gt;1)-Sum[rt&lt;&lt;1|1];//该区间一共(r-l+1)&gt;&gt;1 个元素，减去自己即为异或后状态 
+        Lazy[rt]=0;
+    }
+}
+void Build(int l,int r,int rt)
+{
+    Lazy[rt]=0;
+    if(l==r)
+    {
+        int a;
+        scanf(&quot;%1d&quot;,&amp;a);
+        Sum[rt]= a?1:0;
+        //Sum[rt]= str[l]=='1'?1:0;
+        return;
+    }
+    int m=(l+r)&gt;&gt;1;
+    Build(l,m,rt&lt;&lt;1);
+    Build(m+1,r,rt&lt;&lt;1|1);
+    PushUp(rt);
+}
+void ModifyXor(int l,int r,int rt,int L,int R)
+{
+    if(L&lt;=l &amp;&amp; r&lt;=R)
+    {
+        Lazy[rt]^=1;
+        Sum[rt]=r-l+1-Sum[rt];
+        return;
+    }
+    PushDown(rt,r-l+1);
+    int m=(l+r)&gt;&gt;1;
+    if(L&lt;=m) ModifyXor(l,m,rt&lt;&lt;1,L,R);
+    if(m&lt;R) ModifyXor(m+1,r,rt&lt;&lt;1|1,L,R);
+    PushUp(rt);
+}
+int QuerySum(int l,int r,int rt,int L,int R)
+{
+    if(L&lt;=l &amp;&amp; r&lt;=R) return Sum[rt];
+    PushDown(rt,r-l+1);
+    int m=(l+r)&gt;&gt;1,res=0;
+    if(L&lt;=m) res+=QuerySum(l,m,rt&lt;&lt;1,L,R);
+    if(m&lt;R) res+=QuerySum(m+1,r,rt&lt;&lt;1|1,L,R);
+    return res;
+}
+
+int main()
+{
+    read(n);read(m);//scanf(&quot;%s&quot;,str+1);
+    Build(1,n,1);
+    for(int i=1;i&lt;=m;i++)
+    {
+        int p,l,r;
+        read(p);read(l);read(r);
+        if(p)
+          printf(&quot;%d\n&quot;,QuerySum(1,n,1,l,r));
+        else
+          ModifyXor(1,n,1,l,r);
+    }
+    return 0;
+}</code></pre>
+
+                </div>
+                <div class="post-footer">
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
+                  <div class="meta">
+                    <div class="info">
+                      <i class="fa fa-sun-o"></i>
+                      <span class="date">
+                        2020-03-10
+                      </span>
+                      <i class="fa fa-tag"></i>
+                      
+                        <a class="tag" href="https://huanyue-233.github.io/tag/5FBcboBQR/" title="线段树">
+                          线段树
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/Solution/" title="题解">
+                          题解
+                        </a>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '3543b998d4f18fad0973',
+    clientSecret: '9a86c027331cca9bc829c587d4faf12f1546e4d8',
+    repo: 'huanyue-233.github.io',
+    owner: 'huanyue-233',
+    admin: ['huanyue-233'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+                      
+                            
+            </div>
+          </div>
+        </div>
+         <script src="https://huanyue-233.github.io/media/scripts/jquery.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+
+</body>
+
+</html>

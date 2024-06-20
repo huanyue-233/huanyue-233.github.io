@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>题解 P1351 联合权值 | Huanyue Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://huanyue-233.github.io/styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://huanyue-233.github.io/images/avatar.png?v=1718854434037" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>记录每一点生活</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+    <div class="main">
+       <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+        <div class="autopagerize_page_element">
+          <div class="content">
+            <div class="post-page">
+              <div class="post animated fadeInDown">
+                <div class="post-title">
+                  <h3><a>
+                      题解 P1351 联合权值
+                    </a></h3>
+                </div>
+                <div class="post-content">
+                  <p>显然的,这个图是一颗无根树</p>
+<p>边权为一,说明这两个点之间有一个中结点,我们可以通过枚举中结点来实现计算.</p>
+<p>计算时,不能枚举两个结点.</p>
+<p>我们要计算</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathsize="1.44em"><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>t</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi></mrow></msubsup><msubsup><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>t</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi></mrow></msubsup><mn>2</mn><mo>×</mo><mi>i</mi><mo>×</mo><mi>j</mi></mstyle></mrow><annotation encoding="application/x-tex">\Large \sum \limits ^{total}_{i=1} \sum \limits ^{total} _ {j=1} 2 \times i \times j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.8034543999999997em;vertical-align:-1.5970072em;"></span><span class="mop op-limits sizing reset-size6 size8"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5322550000000001em;"><span style="top:-2.565995em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.4400049999999998em;"><span class="pstrut" style="height:3.44em;"></span><span><span class="mop op-symbol small-op">∑</span></span></span><span style="top:-4.390005em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.974005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits sizing reset-size6 size8"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5322550000000001em;"><span style="top:-2.565995em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.440005em;"><span class="pstrut" style="height:3.44em;"></span><span><span class="mop op-symbol small-op">∑</span></span></span><span style="top:-4.390005em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1090327777777778em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord sizing reset-size6 size8">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size8">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.069704em;vertical-align:-0.1199952em;"></span><span class="mord mathdefault sizing reset-size6 size8">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size8">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.2297023999999999em;vertical-align:-0.2799936em;"></span><span class="mord mathdefault sizing reset-size6 size8" style="margin-right:0.05724em;">j</span></span></span></span></p>
+<p>考虑如何转化,回想完全平方</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>a</mi><mo>+</mo><mi>b</mi><msup><mo>)</mo><mn>2</mn></msup><mo>=</mo><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>a</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">(a+b)^2=a^2+b^2+2ab</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span></span></span></span></p>
+<p>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>项有<br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathsize="1.44em"><mrow><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></msubsup><msubsup><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></msubsup><mn>2</mn><mo>×</mo><mi>i</mi><mo>×</mo><mi>j</mi><mo>+</mo><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></msubsup><msup><mi>i</mi><mn>2</mn></msup><mo>=</mo><mo>(</mo><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></msubsup><mi>i</mi><msup><mo>)</mo><mn>2</mn></msup></mrow></mstyle></mrow><annotation encoding="application/x-tex">\Large{ \sum \limits ^{n}_{i=1} \sum \limits ^{n} _ {j=1} 2 \times i \times j+\sum \limits ^ {n} _ {i=1}i^2= (\sum \limits _{i=1} ^ {n} i)^2 }</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.5395744000000002em;vertical-align:-1.5970072em;"></span><span class="mord sizing reset-size6 size8"><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.349005em;"><span style="top:-2.565995em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.4400049999999998em;"><span class="pstrut" style="height:3.44em;"></span><span><span class="mop op-symbol small-op">∑</span></span></span><span style="top:-4.390005em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.974005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3490050000000002em;"><span style="top:-2.565995em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.440005em;"><span class="pstrut" style="height:3.44em;"></span><span><span class="mop op-symbol small-op">∑</span></span></span><span style="top:-4.390005em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1090327777777778em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.349005em;"><span style="top:-2.565995em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.4400049999999998em;"><span class="pstrut" style="height:3.44em;"></span><span><span class="mop op-symbol small-op">∑</span></span></span><span style="top:-4.390005em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.974005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">i</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8105277777777777em;"><span style="top:-3.363em;margin-right:0.034722222222222224em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mopen">(</span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.349005em;"><span style="top:-2.565995em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.4400049999999998em;"><span class="pstrut" style="height:3.44em;"></span><span><span class="mop op-symbol small-op">∑</span></span></span><span style="top:-4.390005em;margin-left:0em;"><span class="pstrut" style="height:3.44em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.974005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">i</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8105277777777777em;"><span style="top:-3.363em;margin-right:0.034722222222222224em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size8 size6 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></p>
+<p>那么移项之后,可以发现,<strong>联合权值等于和的平方 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span> 平方和</strong></p>
+<p>最大权值只要找到最大的两个的两个权值就行了</p>
+<pre><code class="language-cpp">/*
+ * @Author: Huanyue 
+ * @Date: 2020-03-06 15:48:36 
+ * @Last Modified by:   Huanyue 
+ * @Last Modified time: 2020-03-06 15:48:36 
+ */
+#include &lt;cstdio&gt;
+using namespace std;
+struct edge
+{
+    int next;
+    int to;
+} a[400005];
+int edgenum, head[200005], w[200005];
+int n, ans, maxx;
+void add(int u, int v)
+{
+    a[++edgenum].next = head[u];
+    a[edgenum].to = v;
+    head[u] = edgenum;
+}
+int main()
+{
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 1; i &lt; n; i++)
+    {
+        int u, v;
+        scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+        add(u, v);
+        add(v, u);
+    }
+    for (int i = 1; i &lt;= n; i++)
+        scanf(&quot;%d&quot;, &amp;w[i]);
+    for (int i = 1; i &lt;= n; i++)
+    {
+        int max1 = 0, max2 = 0;
+        int t1 = 0, t2 = 0;
+        for (int j = head[i]; j; j = a[j].next)
+        {
+            if (w[a[j].to] &gt; max1)
+                max2 = max1, max1 = w[a[j].to];
+            else if (w[a[j].to] &gt; max2)
+                max2 = w[a[j].to];
+            t1 = (t1 + w[a[j].to]) % 10007;
+            t2 = (t2 + w[a[j].to] * w[a[j].to]) % 10007;
+        }
+        t1 = t1 * t1 % 10007;
+        ans = (ans + t1 + 10007 - t2) % 10007;
+        if (maxx &lt; max1 * max2)
+            maxx = max1 * max2;
+    }
+    printf(&quot;%d %d\n&quot;, maxx, ans);
+    return 0;
+}
+</code></pre>
+
+                </div>
+                <div class="post-footer">
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
+                  <div class="meta">
+                    <div class="info">
+                      <i class="fa fa-sun-o"></i>
+                      <span class="date">
+                        2020-03-06
+                      </span>
+                      <i class="fa fa-tag"></i>
+                      
+                        <a class="tag" href="https://huanyue-233.github.io/tag/XKtQVFCQJO/" title="数学">
+                          数学
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/Solution/" title="题解">
+                          题解
+                        </a>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '3543b998d4f18fad0973',
+    clientSecret: '9a86c027331cca9bc829c587d4faf12f1546e4d8',
+    repo: 'huanyue-233.github.io',
+    owner: 'huanyue-233',
+    admin: ['huanyue-233'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+                      
+                            
+            </div>
+          </div>
+        </div>
+         <script src="https://huanyue-233.github.io/media/scripts/jquery.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+
+</body>
+
+</html>

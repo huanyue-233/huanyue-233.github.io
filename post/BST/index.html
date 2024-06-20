@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+   <meta charset="utf-8" />
+  <title>二叉搜索树(Binary Search Tree,BST) | Huanyue Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://huanyue-233.github.io/styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</head>
+
+<body>
+
+   <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://huanyue-233.github.io/images/avatar.png?v=1718854434037" style="width:127px;" />
+
+     <h3 title=""><a href="/">Huanyue</a></h3>
+
+     <div class="description">
+      <p>记录每一点生活</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by Huanyue
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+    <div class="main">
+       <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="https://huanyue-233.github.io/tags">标签</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+        <div class="autopagerize_page_element">
+          <div class="content">
+            <div class="post-page">
+              <div class="post animated fadeInDown">
+                <div class="post-title">
+                  <h3><a>
+                      二叉搜索树(Binary Search Tree,BST)
+                    </a></h3>
+                </div>
+                <div class="post-content">
+                  <h1 id="二叉搜索树bst">二叉搜索树(BST)</h1>
+<h2 id="概述">概述</h2>
+<p>二叉搜索树显然是一颗二叉树,它具有下列性质:</p>
+<p>对于每个结点,若其左子树不为空,则左子树上所有结点都小于该结点的值;右子树上的所有结点都大于该节点的值.</p>
+<figure data-type="image" tabindex="1"><img src="https://huanyue-233.github.io/post-images/1585902604679.png" alt="" loading="lazy"></figure>
+<h2 id="功能">功能</h2>
+<p>二叉搜索树维护的是一个集合，有以下功能</p>
+<ul>
+<li>查找 给定一个值，查询树中是否有该值,如果有,返回其位置</li>
+<li>插入 插入一个值(可以重复,据需要而定)</li>
+<li>删除 删除一个值</li>
+</ul>
+<h2 id="定义">定义</h2>
+<p>节点上应存储以下信息</p>
+<ul>
+<li>指针-&gt;左儿子 ls</li>
+<li>指针-&gt;右儿子 rs</li>
+<li>该节点的值 key</li>
+<li>指针-&gt;父节点 p</li>
+</ul>
+<pre><code class="language-cpp">struct node
+{
+    int ls, rs, key, p;
+} bst[1000];
+</code></pre>
+<p>如果没有子/父节点，因此设为一个特殊值，这里用0</p>
+<h2 id="前序遍历与中序遍历">前序遍历与中序遍历</h2>
+<h3 id="前序遍历">前序遍历</h3>
+<pre><code class="language-cpp">void preorder(Node *u) //前序遍历
+{
+    if (u == NIL)
+        return;
+    printf(&quot; %d&quot;, u-&gt;key);
+    preorder(u-&gt;ls);
+    preorder(u-&gt;rs);
+}
+</code></pre>
+<h3 id="中序遍历">中序遍历</h3>
+<pre><code class="language-cpp">void inorder(Node *u) //中序遍历
+{
+    if (u == NIL)
+        return;
+    inorder(u-&gt;ls);
+    printf(&quot; %d&quot;, u-&gt;key);
+    inorder(u-&gt;rs);
+}
+</code></pre>
+<h2 id="搜索">搜索</h2>
+<p>通过树的性质,如果查询的值比结点大,那么一定不在其左子树中,只需递归入右子树,反而反之.</p>
+<p>如果结点值相等,直接return 该结点编号</p>
+<p>如果该节点不等于查找的值,并且是叶子结点 return 0</p>
+<pre><code class="language-cpp">Node *search(Node *u, int k)
+{
+    while (u != NIL &amp;&amp; k != u-&gt;key)
+    {
+        if (k &lt; u-&gt;key)
+            u = u-&gt;ls;
+        else
+            u = u-&gt;rs;
+    }
+    return u;
+}
+</code></pre>
+<h2 id="最大关键字和最小关键字">最大关键字和最小关键字</h2>
+<p>从树根开始沿着左儿子指针一直走,知道遇到0为止,由于BST的性质,该元素一定是该树的最小元素</p>
+<pre><code class="language-cpp">int treemin(int x)
+{
+    while (x)
+        x = bst[x].ls;
+    return x;
+}
+</code></pre>
+<p>同理,不停向右能找到最大元素</p>
+<pre><code class="language-cpp">int treemax(int x)
+{
+    while (x)
+        x = bst[x].rs;
+    return x;
+}
+</code></pre>
+<h2 id="后继和前驱">后继和前驱</h2>
+<p>在线性表中,一个元素的后继和前驱定义为其前一个元素或后一个元素,而在BST这种树形结构中,后继和前驱定义为中序遍历所构成的线性表中的前一个元素或后一个元素.由于BST的性质,中序遍历是递增的.因此前驱一定是小于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>s</mi><mi>t</mi><mo>[</mo><mi>x</mi><mo>]</mo><mi mathvariant="normal">.</mi><mi>k</mi><mi>e</mi><mi>y</mi></mrow><annotation encoding="application/x-tex">bst[x].key</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mopen">[</span><span class="mord mathdefault">x</span><span class="mclose">]</span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>的最大元素,二后继是大于其的最小元素.当然,最小关键字没有前驱,最大关键字没有后继.</p>
+<p>因此这样定义<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>的前驱和后继</p>
+<p>前驱:小于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>的最大元素</p>
+<p>后继:大于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>的最小元素</p>
+<h3 id="后继">后继</h3>
+<p>分为三种情况</p>
+<p>1.没有该元素</p>
+<p>2.该元素无右子树</p>
+<p>3.该元素有右子树</p>
+<h4 id="有右子树">有右子树</h4>
+<p>因为后继是大于它的最小元素,因此如果其有右子树,那么直接返回右子树中的最小值.</p>
+<h4 id="没有该元素">没有该元素</h4>
+<p>如果没有该元素,那么显然是我们在搜索过程中递归到了某个不存在的叶子结点,虽然这个值在树中不存在,但可以构建一个,可以在该位置暂时插入一个,实际操作中可以不用实实在在将插入写出来,这样就转换成了情况2.</p>
+<figure data-type="image" tabindex="2"><img src="https://huanyue-233.github.io/post-images/1585902622743.png" alt="" loading="lazy"></figure>
+<p>例如上图,我们在查找值8的时候会递归入橙色点,那么我们在这建立一个虚拟的结点.</p>
+<h4 id="该元素无右子树">该元素无右子树</h4>
+<p>如果右子树为空,那么它一定市某棵最大子树的最大关键字,而这个最大子树根节点的父节点就是首个比它大的值.</p>
+<figure data-type="image" tabindex="3"><img src="https://huanyue-233.github.io/post-images/1585902628041.png" alt="" loading="lazy"></figure>
+<p>例如,在上面这张图中,8没有右子树,其为根节点为5的子树中的最大值,因此其后继是5的父节点10</p>
+<p>那么如何求得这个最大子树的根节点呢,通过观察可以得到该节点的性质.</p>
+<blockquote>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>是该子树的最大关键字</p>
+<p>该节点一定是父节点的左儿子</p>
+</blockquote>
+<p>因此求法如下</p>
+<p>设<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>的父节点,如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>的右儿子,令<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">x=y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>重复此步骤,如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">y=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>左儿子,那么<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>就是要找的最大子树的根节点,因此直接return y</p>
+<pre><code class="language-cpp">Node *treeSuccessor(Node *x)
+{
+    if (x-&gt;rs != NIL)
+        return treeMin(x-&gt;rs);
+    Node *y = x-&gt;p;
+    while (y != NIL &amp;&amp; x == y-&gt;rs)
+    {
+        x = y;
+        y = y-&gt;p;
+    }
+    return y;
+}
+</code></pre>
+<h3 id="前驱">前驱</h3>
+<p>与后继思想一样,自行脑补,直接放代码</p>
+<h2 id="插入">插入</h2>
+<p>根据定义，我们只要在插入时奖该元素与根节点进行比较，相等直接return，如果比它小，就递归入左子树，否则递归入右子树。</p>
+<pre><code class="language-cpp">void insert(int k) //插入
+{
+    Node *y = NIL, *x = root, *z;
+    z = (Node *)malloc(sizeof(Node)); //分配空间
+    z-&gt;key = k;
+    z-&gt;ls = NIL;
+    z-&gt;rs = NIL;
+    while (x != NIL)
+    {
+        y = x;
+        if (z-&gt;key &lt; x-&gt;key)
+            x = x-&gt;ls;
+        else
+            x = x-&gt;rs;
+    }
+
+    z-&gt;p = y;
+    if (y == NIL)
+        root = z;
+    else if (z-&gt;key &lt; y-&gt;key)
+        y-&gt;ls = z;
+    else
+        y-&gt;rs = z;
+}
+</code></pre>
+<h2 id="删除">删除</h2>
+<p>删除的第一步显然是要先找到它,因此我们要先进行一遍搜索,找到该键值的位置,接下来考虑如何删除</p>
+<h3 id="1叶子结点">1.叶子结点</h3>
+<figure data-type="image" tabindex="4"><img src="https://huanyue-233.github.io/post-images/1585902636789.png" alt="" loading="lazy"></figure>
+<p>当其是叶子结点的时候,考虑直接删除父节点与它的关系,之后树的性质不变,因此可以直接删除.如上图,直接删去橙色线.</p>
+<h3 id="2有一个子节点">2.有一个子节点</h3>
+<figure data-type="image" tabindex="5"><img src="https://huanyue-233.github.io/post-images/1585902640863.png" alt="" loading="lazy"></figure>
+<p>由于其有子节点(8),因此在删除其后要考虑将以子节点为根的子树(这里只有8)放置于哪里.由于性质,父节点(5)一定比该结点的子树(7,8)小或者大,因此该结点的子树(8)也一定比其父节点小/大,因此,直接将其父节点(5)的与其子节点(8)相连即可.(孙子变儿子)</p>
+<figure data-type="image" tabindex="6"><img src="https://huanyue-233.github.io/post-images/1585902645689.png" alt="" loading="lazy"></figure>
+<h3 id="3有两个子节点">3.有两个子节点</h3>
+<figure data-type="image" tabindex="7"><img src="https://huanyue-233.github.io/post-images/1585902650029.png" alt="" loading="lazy"></figure>
+<p>有两个子节点，在删除时就需要考虑子树间的关系，这里直接给出删除方法</p>
+<blockquote>
+<p>将该节点的中序遍历上后一个节点（16）的值复制到该节点，再<strong>删除</strong>后一个节点（16）</p>
+</blockquote>
+<p>这里显然用到了递归，但由于中序遍历的性质，递归删除的节点不可能有两个儿子。</p>
+<p>随后来证明其正确性</p>
+<p>由BST的性质，其中序遍历一定有序，因此后一个节点一定时比被删除节点大的最小节点。因此，将其复制上来后，左子树中的点一定比它小，右子树中的点依旧比它大，维护了BST的性质。</p>
+<pre><code class="language-cpp">void treeDelete(Node *z)
+{
+    Node *y;
+    Node *x;
+
+    //确定要删除的结点
+    if (z-&gt;ls == NIL || z-&gt;rs == NIL)
+        y = z;
+    else
+        y = treeSuccessor(z);
+    if (y-&gt;ls != NIL)
+        x = y-&gt;ls;
+    else
+        x = y-&gt;rs;
+
+    if (x != NIL)
+        x-&gt;p = y-&gt;p; //孙子变儿子
+
+    if (y-&gt;p == NIL)
+        root = x;
+    else if (y == y-&gt;p-&gt;ls)
+        y-&gt;p-&gt;ls = x;
+    else
+        y-&gt;p-&gt;rs = x;
+    if (y != z)
+        z-&gt;key = y-&gt;key;
+    free(y);
+    return;
+}
+
+</code></pre>
+<p>以下2020/4/5更新</p>
+<h2 id="拓展求排名第k的值">[拓展]求排名第K的值</h2>
+<h3 id="问题">问题</h3>
+<p>给定一颗BST,求排名为K的值(求第K大)</p>
+<h3 id="一般分析">一般分析</h3>
+<p>BST的中序遍历为升序,直接通过中序遍历输出第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span></span></span></span>个值,复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p>
+<p>这种做法虽然用到了BST性质,但依然达到了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>的复杂度,不如其他操作<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>h</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(h)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mclose">)</span></span></span></span>的复杂度.</p>
+<h2 id="优化做法">优化做法</h2>
+<p>假设我们知道根节点的排名为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mo>&lt;</mo><mi>K</mi></mrow><annotation encoding="application/x-tex">t &lt; K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65418em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span></span></span></span>,我们要查找的元素一定在根节点的右子树中,如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mo>&lt;</mo><mi>K</mi></mrow><annotation encoding="application/x-tex">t&lt;K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65418em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span></span></span></span>那么就在左子树中</p>
+<p>假设在右子树,因为根节点和左子树已经被排除了,所以要找元素在右子树中的排名为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi><mo>−</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">K-t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span>,如果此时我们知道该节点在此子树中的排名,就可以进一步解决了.这样就可以通过一个递归在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>h</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(h)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mclose">)</span></span></span></span>时间内解决问题了.</p>
+<p>但是这种方法需要提前知道每个节点在以其为根节点子树中的排名,需要预处理.</p>
+<p>这一处理并不难,因为BST具有左子树小于根节点的性质,因此根节点的排名就为其左子树的大小+1,那么只需预处理出每个结点的子树大小即可.</p>
+<p>在插入的时候,路径上所有结点的size+1,删除时同理.</p>
+<pre><code class="language-cpp">int rankk(int k)
+{
+    Node *u = root;
+    while (1)
+    {
+        int rk = 1;
+        if (u-&gt;ls != NIL)
+            rk += u-&gt;ls-&gt;size;
+        if (rk == k)
+            break;
+        if (k &gt; rk)
+        {
+            k -= rk;
+            u = u-&gt;rs;
+        }
+        else
+            u = u-&gt;ls;
+    }
+    return u-&gt;key;
+}
+</code></pre>
+<h2 id="拓展求k的排名">[拓展]求K的排名</h2>
+<h3 id="问题-2">问题</h3>
+<p>给定一个值<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span></span></span></span>,求其在BST中的排名</p>
+<h3 id="分析">分析</h3>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>中序遍历,嗯.</p>
+<p>继续用BST的性质实现<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>h</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(h)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mclose">)</span></span></span></span></p>
+<p>我们只要在search的过程中小小修改一下,在进入右子树时rank加上左子树的size+1,最后在加上左子树的size+1.</p>
+<pre><code class="language-cpp">int krank(int k)
+{
+    Node *u = root;
+    int rk = 0;
+    while (u != NIL &amp;&amp; k != u-&gt;key)
+    {
+        if (k &lt; u-&gt;key)
+            u = u-&gt;ls;
+        else
+        {
+            rk += u-&gt;ls-&gt;size + 1;
+            u = u-&gt;rs;
+        }
+    }
+    if (u-&gt;ls != NIL)
+        rk += u-&gt;ls-&gt;size;
+    return rk + 1;
+}
+</code></pre>
+<h2 id="复杂度分析">复杂度分析</h2>
+<p>我们发现BST的各项操作的复杂度都是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>h</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(h)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mclose">)</span></span></span></span>的</p>
+<p>其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mo>=</mo></mrow><annotation encoding="application/x-tex">h=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span></span></span>树的高度</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mo>∈</mo><mo>[</mo><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>n</mi><mo separator="true">,</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">h∈[log_2n,n]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">]</span></span></span></span></p>
+<p>当我们按照以下顺序时,复杂度将达到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p>
+<pre><code>i 1
+i 2
+i 3
+i 4
+i 5
+i 6
+i 7
+...
+</code></pre>
+<p>此时的树是</p>
+<figure data-type="image" tabindex="8"><img src="https://huanyue-233.github.io/post-images/1586052338506.png" alt="" loading="lazy"></figure>
+<p>为了解决这一问题,有<strong>红黑树,平衡树等数据结构</strong></p>
+<h2 id="总代码">总代码</h2>
+<pre><code class="language-cpp">/*
+    Author Huanyue
+    exBST
+    insert delete order search
+    ex&quot; rankk krank
+*/
+#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;cstdlib&gt;
+using namespace std;
+
+struct Node
+{
+    int key, size;
+    Node *rs, *ls, *p;
+};
+
+Node *root, *NIL;
+
+Node *treeMin(Node *x)
+{
+    while (x-&gt;ls != NIL)
+        x = x-&gt;ls;
+    return x;
+}
+
+Node *treeMax(Node *x)
+{
+    while (x-&gt;rs != NIL)
+        x = x-&gt;rs;
+    return x;
+}
+
+Node *treeSuccessor(Node *x)
+{
+    if (x-&gt;rs != NIL)
+        return treeMin(x-&gt;rs);
+    Node *y = x-&gt;p;
+    while (y != NIL &amp;&amp; x == y-&gt;rs)
+    {
+        x = y;
+        y = y-&gt;p;
+    }
+    return y;
+}
+
+void treeDelete(int k)
+{
+    Node *u = root;
+    while (u != NIL &amp;&amp; k != u-&gt;key)
+    {
+        u-&gt;size--;
+        if (k &lt; u-&gt;key)
+            u = u-&gt;ls;
+        else
+            u = u-&gt;rs;
+    }
+
+    Node *y;
+    Node *x;
+
+    //确定要删除的结点
+    if (u-&gt;ls == NIL || u-&gt;rs == NIL)
+        y = u;
+    else
+        y = treeSuccessor(u);
+    if (y-&gt;ls != NIL)
+        x = y-&gt;ls;
+    else
+        x = y-&gt;rs;
+
+    if (x != NIL)
+        x-&gt;p = y-&gt;p; //孙子变儿子
+
+    if (y-&gt;p == NIL)
+        root = x;
+    else if (y == y-&gt;p-&gt;ls)
+        y-&gt;p-&gt;ls = x;
+    else
+        y-&gt;p-&gt;rs = x;
+    if (y != u)
+        u-&gt;key = y-&gt;key;
+    free(y);
+    return;
+}
+
+void insert(int k) //插入
+{
+    Node *y = NIL, *x = root, *z;
+    z = (Node *)malloc(sizeof(Node)); //分配空间
+    z-&gt;key = k;
+    z-&gt;ls = NIL;
+    z-&gt;rs = NIL;
+    z-&gt;size = 1;
+    while (x != NIL)
+    {
+        x-&gt;size++;
+        y = x;
+        if (z-&gt;key &lt; x-&gt;key)
+            x = x-&gt;ls;
+        else
+            x = x-&gt;rs;
+    }
+
+    z-&gt;p = y;
+    if (y == NIL)
+        root = z;
+    else if (z-&gt;key &lt; y-&gt;key)
+        y-&gt;ls = z;
+    else
+        y-&gt;rs = z;
+}
+
+void inorder(Node *u) //中序遍历
+{
+    if (u == NIL)
+        return;
+    inorder(u-&gt;ls);
+    printf(&quot; %d&quot;, u-&gt;key);
+    inorder(u-&gt;rs);
+}
+
+void preorder(Node *u) //前序遍历
+{
+    if (u == NIL)
+        return;
+    printf(&quot; %d&quot;, u-&gt;key);
+    preorder(u-&gt;ls);
+    preorder(u-&gt;rs);
+}
+
+Node *search(Node *u, int k)
+{
+    while (u != NIL &amp;&amp; k != u-&gt;key)
+    {
+        if (k &lt; u-&gt;key)
+            u = u-&gt;ls;
+        else
+            u = u-&gt;rs;
+    }
+    return u;
+}
+
+int rankk(int k)
+{
+    Node *u = root;
+    while (1)
+    {
+        int rk = 1;
+        if (u-&gt;ls != NIL)
+            rk += u-&gt;ls-&gt;size;
+        if (rk == k)
+            break;
+        if (k &gt; rk)
+        {
+            k -= rk;
+            u = u-&gt;rs;
+        }
+        else
+            u = u-&gt;ls;
+    }
+    return u-&gt;key;
+}
+
+int krank(int k)
+{
+    Node *u = root;
+    int rk = 0;
+    while (u != NIL &amp;&amp; k != u-&gt;key)
+    {
+        if (k &lt; u-&gt;key)
+            u = u-&gt;ls;
+        else
+        {
+            rk += u-&gt;ls-&gt;size + 1;
+            u = u-&gt;rs;
+        }
+    }
+    if (u-&gt;ls != NIL)
+        rk += u-&gt;ls-&gt;size;
+    return rk + 1;
+}
+
+int main()
+{
+    int n, x;
+    char a;
+    cin &gt;&gt; n;
+    for (int i = 1; i &lt;= n; i++)
+    {
+        cin &gt;&gt; a;
+        if (a == 'f')
+        {
+            cin &gt;&gt; x;
+            Node *t = search(root, x);
+            if (t != NIL)
+                cout &lt;&lt; &quot;yes&quot; &lt;&lt; endl;
+            else
+                cout &lt;&lt; &quot;no&quot; &lt;&lt; endl;
+        }
+        else if (a == 'i')
+        {
+            cin &gt;&gt; x;
+            insert(x);
+        }
+        else if (a == 'p')
+        {
+            inorder(root);
+            cout &lt;&lt; endl;
+            preorder(root);
+            cout &lt;&lt; endl;
+        }
+        else if (a == 'd')
+        {
+            cin &gt;&gt; x;
+            treeDelete(x);
+        }
+        else if (a == 'r')
+        {
+            cin &gt;&gt; x;
+            cout &lt;&lt; rankk(x) &lt;&lt; endl;
+        }
+        else if (a == 'k')
+        {
+            cin &gt;&gt; x;
+            cout &lt;&lt; krank(x) &lt;&lt; endl;
+        }
+    }
+    return 0;
+}
+</code></pre>
+
+                </div>
+                <div class="post-footer">
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
+                  <div class="meta">
+                    <div class="info">
+                      <i class="fa fa-sun-o"></i>
+                      <span class="date">
+                        2020-04-03
+                      </span>
+                      <i class="fa fa-tag"></i>
+                      
+                        <a class="tag" href="https://huanyue-233.github.io/tag/OWPT2B8tl/" title="BST">
+                          BST
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/gBwVvABDA/" title="数据结构">
+                          数据结构
+                        </a>
+                        
+                        <a class="tag" href="https://huanyue-233.github.io/tag/AmB1Br-C5/" title="算法笔记">
+                          算法笔记
+                        </a>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '3543b998d4f18fad0973',
+    clientSecret: '9a86c027331cca9bc829c587d4faf12f1546e4d8',
+    repo: 'huanyue-233.github.io',
+    owner: 'huanyue-233',
+    admin: ['huanyue-233'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+                      
+                            
+            </div>
+          </div>
+        </div>
+         <script src="https://huanyue-233.github.io/media/scripts/jquery.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery-migrate-1.2.1.min.js"></script>
+ <script src="https://huanyue-233.github.io/media/scripts/jquery.appear.js"></script>
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+
+</body>
+
+</html>
